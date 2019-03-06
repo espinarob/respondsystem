@@ -37,6 +37,7 @@ export default class HomeTemplate extends Component{
 							doSubmitPhoneNumberUpdate = {this.props.doSubmitPhoneNumberUpdate} />;
 			case Constants.USER_ROLES.CIVILIAN:
 				return 	<BystanderPage
+							doSubmitIncidentReport    = {this.props.doSubmitIncidentReport}
 							doSubmitChangePassword    = {this.props.doSubmitChangePassword}
 							doGetLoggedAccount        = {this.props.doGetLoggedAccount}
 							doLogoutAccount           = {this.props.doLogoutAccount}

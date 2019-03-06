@@ -79,15 +79,15 @@ export default class WelcomeDashboard extends Component{
 		    						height: '25%',
 		    						top: '25%',
 		    						color: '#454647',
-		    						paddingLeft: '21%',
 		    						borderWidth:2,
 		    						fontWeight: 'bold',
 		    						fontSize: 20,
 		    						position: 'relative',
 		    						borderRadius: 10,
-		    						paddingTop:'1%',
 		    						left: '20%',
-		    						borderColor: '#454647'
+		    						borderColor: '#454647',
+		    						textAlign: 'center',
+		    						textAlignVertical: 'center'
 		    				}}>
 		    					LOGIN
 		    				</Text>
@@ -100,15 +100,15 @@ export default class WelcomeDashboard extends Component{
 		    						height: '25%',
 		    						top: '33%',
 		    						color: '#454647',
-		    						paddingLeft: '19%',
 		    						borderWidth:2,
 		    						fontWeight: 'bold',
 		    						fontSize: 20,
 		    						position: 'relative',
 		    						borderRadius: 10,
-		    						paddingTop:'1%',
 		    						left: '20%',
-		    						borderColor: '#454647'
+		    						borderColor: '#454647',
+		    						textAlign: 'center',
+		    						textAlignVertical: 'center'
 		    				}}>
 		    					SIGN-UP
 		    				</Text>
@@ -118,7 +118,7 @@ export default class WelcomeDashboard extends Component{
 		    				height: '9%',
 		    				width: '80%',
 		    				textAlign: 'center',
-		    				top: '39%',
+		    				top: '37%',
 		    				left: '10%',
 		    				fontWeight: 'bold',
 		    				fontSize:15,

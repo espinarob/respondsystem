@@ -32,6 +32,8 @@ export default class BystanderMainPage extends Component{
 							doSetUserlocation         = {this.props.doSetUserlocation} />;
 			case Constants.CIVILIAN_MAIN_PAGE.REPORT_PAGE:
 				return 	<ReportPage
+							doSubmitIncidentReport    = {this.props.doSubmitIncidentReport}
+							doDisplayAlertMessage     = {this.props.doDisplayAlertMessage}
 							setBystanderMainOperation = {this.setBystanderMainOperation} />;
 		}
 	}

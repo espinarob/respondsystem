@@ -11,6 +11,12 @@ import {Platform,
 import {Container}   from 'native-base';
 import * as firebase from 'firebase';
 import SyncStorage   from 'sync-storage';
+import RNFetchBlob   from 'react-native-fetch-blob';
+
+const Blob = RNFetchBlob.polyfill.Blob;
+const fs = RNFetchBlob.fs;
+window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
+window.Blob = Blob;
 
 
 /* -- Custom Components  -- */
@@ -25,9 +31,10 @@ import HomeTemplate           from './commons/homeTemplate.js';
 
 export default class Main extends Component{
 
+
 	state = { 
 		operation               : Constants.PAGES.LOADING_PAGE,
-		loadingMessage          : Constants.LOADING_MESSAGES.SPLASH_SCREN,
+		loadingMessage          : Constants.LOADING_MESSAGES.SPLASH_SCREEN,
 		consoleDisplay          : '',
 		validOrganizations      : [],
 		accountLoggedDetails    : [],
@@ -49,7 +56,6 @@ export default class Main extends Component{
 			registerCallSign        : '',
 			registerRole            : Constants.USER_ROLES.CIVILIAN
 		}
-
 	}
 
 	/* -- Start of Initialization functions --*/
@@ -383,6 +389,77 @@ export default class Main extends Component{
 		this.setState({userLocation:coordinates});
 	}
 
+	submitIncidentReport = (data)=>{
+		console.log(data);
+		this.setState({loadingMessage:Constants.LOADING_MESSAGES.SUBMIT_REPORT});
+		this.setTemplateDisplay(Constants.PAGES.LOADING_PAGE);
+		const reportKey  = 	firebase
+								.database()
+								.ref("Reports")
+								.push();
+		this.uploadImageReports(data.imagePath,reportKey.key,Constants.DEFAULT_IMG_TYPE)
+		.then((response)=>{
+			reportKey
+				.update({
+					timeReported  : String(data.timeReported),
+					userLongitude : data.userLocation.longitude,
+					userLatitude  : data.userLocation.latitude,
+					userAltitude  : data.userLocation.altitude,
+					reportInfo    : String(data.reportInfo),
+					incidentType  : String(data.incidentType),
+					key           : String(reportKey.key),
+					bystanderKey  : String(this.state.accountLoggedDetails.key),
+					imgURL        : String(response),
+					addressName   : data.addressName
+				})
+				.then(()=>{
+					this.displayAlertMessage('Successfully submitted your report');
+					setTimeout(()=>this.displayAlertMessage(''),
+						Constants.CONSOLE_TIME_DISPLAY);
+					this.setState({loadingMessage:''});
+					this.setTemplateDisplay(Constants.PAGES.HOME_PAGE);
+				});
+		})
+		.catch((error)=>{
+			console.log(error);
+			this.displayAlertMessage('Error in submitting your report');
+			setTimeout(()=>this.displayAlertMessage(''),
+				Constants.CONSOLE_TIME_DISPLAY);
+			firebase
+				.database()
+				.ref("Reports/"+String(reportKey.key))
+				.remove();
+			this.setState({loadingMessage:''});
+			this.setTemplateDisplay(Constants.PAGES.HOME_PAGE);
+		});
+	}
+
+	uploadImageReports = (uri, imageName,mime = 'image/jpg')=>{
+    	return new Promise((resolve, reject) => {
+      		const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+      		let uploadBlob  = null;
+     		const imageRef  = firebase.storage().ref('imageReports').child(imageName);
+      		fs.readFile(uploadUri, 'base64')
+      		.then((data) => {
+        		return Blob.build(data, { type: `${mime};BASE64` })
+      		})
+      		.then((blob) => {
+        		uploadBlob = blob
+        		return imageRef.put(blob, { contentType: mime })
+      		})
+      		.then(() => {
+        		uploadBlob.close()
+       			 return imageRef.getDownloadURL()
+     		})
+      		.then((url) => {
+        		resolve(url)
+     		})
+      		.catch((error) => {
+        		reject(error)
+     	 	});
+   		});
+  	}		
+
 	/* -- End of Report Module -- */
 
 
@@ -586,10 +663,11 @@ export default class Main extends Component{
 				this.setState({loadingMessage:Constants.LOADING_MESSAGES.LOGGING_IN});
 				this.setTemplateDisplay(Constants.PAGES.LOADING_PAGE);
 				setTimeout(()=>{
+					this.setState({loadingMessage:''});
 					this.setTemplateDisplay(Constants.PAGES.HOME_PAGE);
 				},Constants.CONSOLE_TIME_DISPLAY);
 			}
-			else this.setState({operation: Constants.PAGES.WELCOME_PAGE});
+			else this.setState({operation:Constants.PAGES.WELCOME_PAGE});
 		},2500);
 	}
 
@@ -620,6 +698,7 @@ export default class Main extends Component{
 							doDisplayAlertMessage      = {this.displayAlertMessage} />;
 			case Constants.PAGES.HOME_PAGE:
 				return 	<HomeTemplate 
+							doSubmitIncidentReport     = {this.submitIncidentReport}
 							doSetUserlocation		   = {this.setUserLocation}
 							doLogoutAccount			   = {this.logoutAccount}
 							doGetLoggedAccount         = {this.state.accountLoggedDetails}

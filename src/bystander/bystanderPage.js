@@ -13,6 +13,7 @@ import Constants         from '../commons/Constants.js';
 import MorePage          from '../commons/MorePage.js';
 import ChangePassword    from '../commons/changePassword.js';
 import UserInformation   from '../commons/userInformation.js';
+import PhoneNumber       from '../commons/phoneNumber.js';
 import BystanderMainPage from './bystanderMainPage.js';
 
 export default class BystanderPage extends Component{
@@ -33,6 +34,8 @@ export default class BystanderPage extends Component{
 							doLogoutAccount           = {this.props.doLogoutAccount} />;
 			case Constants.CIVILIAN_PAGE.MAIN_PAGE:
 				return	<BystanderMainPage
+							doSubmitIncidentReport    = {this.props.doSubmitIncidentReport}
+							doDisplayAlertMessage     = {this.props.doDisplayAlertMessage}
 							doSetUserlocation         = {this.props.doSetUserlocation} />;
 			case Constants.COMMON_PAGE.CHANGE_PASS_PAGE:
 				return 	<ChangePassword

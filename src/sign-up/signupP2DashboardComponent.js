@@ -9,7 +9,8 @@ import {Platform,
 	TextInput,
 	TouchableWithoutFeedback,
 	Alert,
-	Picker} 
+	Picker,
+	CheckBox} 
 	from 'react-native';
 import { 
 	Container,
@@ -31,7 +32,8 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		bystanderColor    : Constants.USER_ROLES.CHOSEN_ROLE_COLOR,
 		responderColor    : Constants.USER_ROLES.NOT_CHOSEN_ROLE_COLOR,
 		userRoleContent   : Constants.USER_ROLES.CIVILIAN_CONTENT,
-		storeValid        : []
+		storeValid        : [],
+		termsFlag         : false,
 	}	
 
 	componentDidMount(){
@@ -45,6 +47,10 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 
 	organizationChange = (ItemValue,ItemIndex)=>{
 		this.setState({inputOrganization:ItemValue});
+	}
+
+	termsCheckbox = ()=>{
+		this.setState({termsFlag:!this.state.termsFlag});
 	}
 
 	changeUserRole = (role)=>{
@@ -70,7 +76,11 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 
 	submitRegistration = ()=>{
 		this.props.doDisplayAlertMessage('');
-		if(this.state.inputRole == Constants.USER_ROLES.RESPONDER && 
+		if(this.state.termsFlag == false){
+			this.props.doDisplayAlertMessage('Please read and agree on our terms of service');
+			setTimeout(()=>this.props.doDisplayAlertMessage(''),Constants.SIGNUP_FORMS.ERROR_TIME_DISPLAY);
+		}
+		else if(this.state.inputRole == Constants.USER_ROLES.RESPONDER && 
 			(this.state.inputOrganization.length==0 || this.state.inputCallSign.length==0)){
 			this.props.doDisplayAlertMessage('Please fill in the organization or call sign section');
 			setTimeout(()=>this.props.doDisplayAlertMessage(''),Constants.SIGNUP_FORMS.ERROR_TIME_DISPLAY);
@@ -313,9 +323,9 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    		</View>
 
 		    		<View style={{
-		    				height: '30%',
+		    				height: '28%',
 		    				width: '100%',
-		    				top: '6.5%',
+		    				top: '6%',
 		    				position: 'relative'
 		    		}}>
 		    			<Text style={{
@@ -412,20 +422,68 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 			    			</Text>
 			    		</View>	
 		    		</View>
+		    		<View style={{
+		    			height: '8%',
+		    			position: 'relative',
+		    			top: '6.5%',
+		    			flexDirection: 'row'
+		    		}}>
+		    			<CheckBox
+		    				value={this.state.termsFlag}
+		    				onChange={this.termsCheckbox}
+		    				style={{
+		    					width:'10%',
+		    					height:'90%',
+		    					position: 'relative',
+		    					left: '120%',
+		    					color: '#000'
+		    				}}/>
+		    			<Text style={{
+		    					height: '100%',
+		    					width: '30%',
+		    					position: 'relative',
+		    					left: '120%',
+		    					fontSize: 14,
+		    					color: '#000',
+		    					fontWeight: 'bold',
+		    					textAlign: 'center',
+		    					textAlignVertical : 'center'
+		    			}}>
+		    				Agree to terms of service
+		    			</Text>
+
+		    			<TouchableWithoutFeedback
+		    				onPress={()=>console.log('view')}>
+			    			<Text style={{
+			    					height: '100%',
+			    					width: '30%',
+			    					position: 'relative',
+			    					left: '135%',
+			    					fontSize: 14,
+			    					color: '#000',
+			    					fontWeight: 'bold',
+			    					textAlign: 'center',
+			    					borderLeftWidth:2,
+			    					textAlignVertical : 'center'
+			    			}}>
+			    				View terms of service
+			    			</Text>
+			    		</TouchableWithoutFeedback>
+		    		</View>
 
 		    		<TouchableWithoutFeedback
 		    			onPress={()=>this.submitRegistration()}>
 			    		<Text style={{
-			    				height: '6.7	%',
+			    				height: '6.7%',
 			    				width: '25%',
 			    				position: 'relative',
-			    				top: '11%',
+			    				top: '9%',
 			    				color:'#454647',
 			    				fontWeight: 'bold',
 			    				borderWidth:2,
 			    				left: '36%',
-			    				paddingLeft: '5%',
-			    				paddingTop: '2.5%'
+			    				textAlign: 'center',
+		    					textAlignVertical: 'center'
 			    		}}>
 			    			SUBMIT
 			    		</Text>

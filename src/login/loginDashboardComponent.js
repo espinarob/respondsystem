@@ -241,16 +241,16 @@ export default class LoginDashboard extends Component{
 			    		<TouchableWithoutFeedback
 			    			onPress={()=>this.submitLogin()}>
 				    		<Text style={{
-				    				height: '12%',
-				    				width: '25%',
+				    				height: '14%',
+				    				width: '30%',
 				    				position: 'relative',
-				    				top: '14%',
+				    				top: '13%',
 				    				color:'#454647',
 				    				fontWeight: 'bold',
 				    				borderWidth:2,
-				    				left: '36%',
-				    				paddingLeft: '5%',
-				    				paddingTop: '2.5%'
+				    				left: '35%',
+				    				textAlign: 'center',
+				    				textAlignVertical: 'center'
 				    		}}>
 				    			SUBMIT
 				    		</Text>

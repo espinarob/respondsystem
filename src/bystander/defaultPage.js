@@ -8,9 +8,10 @@ import {Platform,
 	TextInput,
 	TouchableWithoutFeedback} 
 	from 'react-native';
-import {Icon}    from 'native-base';
-import MapView from  'react-native-maps';
-import Constants from '../commons/Constants.js';
+import {Icon}      from 'native-base';
+import MapView     from  'react-native-maps';
+import Constants   from '../commons/Constants.js';
+import Geolocation from 'react-native-geolocation-service';
 
 export default class DefaultPage extends Component{
 
@@ -18,10 +19,9 @@ export default class DefaultPage extends Component{
 		userLocation: []
 	}
 	componentDidMount(){
-		navigator.geolocation.getCurrentPosition( (position)=>{
+		Geolocation.getCurrentPosition( (position)=>{
 			this.props.doSetUserlocation(position.coords);
 			this.setState({userLocation:position.coords});
-			console.log(position.coords);
 		}, (error) => console.log(JSON.stringify(error)));
 	}
 

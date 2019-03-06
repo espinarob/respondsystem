@@ -15,6 +15,7 @@ import ChangePassword    from '../commons/changePassword.js';
 import UserInformation   from '../commons/userInformation.js';
 import PhoneNumber       from '../commons/phoneNumber.js';
 import ResponderMainPage from './responderMainPage.js';
+import IncidentList      from './incidentList.js';
 
 export default class ResponderPage extends Component{
 
@@ -35,7 +36,7 @@ export default class ResponderPage extends Component{
 				return 	<ResponderMainPage
 							doLogoutAccount           = {this.props.doLogoutAccount} />;
 			case Constants.RESPONDER_PAGE.LIST_PAGE:
-				return;
+				return 	<IncidentList/>
 			case Constants.COMMON_PAGE.CHANGE_PASS_PAGE:
 				return 	<ChangePassword 
 							doSubmitChangePassword    = {this.props.doSubmitChangePassword}

@@ -8,7 +8,6 @@ const Constants = {
 		CIVILIAN_CONTENT        : `Bystanders gives report in general about nearby or occuring incidents.\nBecome part of the growing and helping community now!`,
 		RESPONDER_CONTENT       : `Responders are given privileges to validate incidents and able to provide assitance to those who needs help.\nBecome part of the growing and helping community now!`
 	},
-
 	CIVILIAN_PAGE               : {
 		MAIN_PAGE               : 'MAIN_PAGE',
 	},
@@ -47,11 +46,12 @@ const Constants = {
 	},  
 
 	LOADING_MESSAGES            : {
-		SPLASH_SCREN            : 'HELLO USER! WELCOME TO THE Res-Sys APPLICATION',
+		SPLASH_SCREEN           : 'HELLO USER! WELCOME TO THE Res-Sys APPLICATION',
 		OFFLINE                 : 'Offline: Please check on your internet service provider',
 		GETTING                 : 'Getting Connection. Please Wait...',
 		LOGGING_IN              : 'Getting your account, a moment..',
-		LOGGING_OUT             : 'Logging you out, a moment..'
+		LOGGING_OUT             : 'Logging you out, a moment..',
+		SUBMIT_REPORT           : 'Submitting your report. Please Wait...'
 	},
 
 	SIGNUP_FORMS                : {
@@ -73,6 +73,8 @@ const Constants = {
 	CACHE_ACCOUNT               : 'RES_SYS_ACCOUNT_CACHE',
 	CONSOLE_TIME_DISPLAY        : 4000,
 	MSG_REPORT_MAX_LENGTH       : 45,
+	INCIDENT_TYPE_MAX_LENGTH    : 45,
+
 	FIRE_BASE_CONFIG            : {
 		apiKey                  : "AIzaSyAUFpo4C2jL_ABEAQUJXkHXNwOCc4IMFT8",
 	    authDomain              : "resys-respondsystem.firebaseapp.com",
@@ -81,11 +83,28 @@ const Constants = {
 	    storageBucket           : "resys-respondsystem.appspot.com",
 	    messagingSenderId       : "208216134504"
 	},
+
 	INITIAL_ROUTE               : {
 		LATITUDE                : '14.565391',
 		LONGITUDE               : '121.045801'
-	}
+	},
 
+	UPLOAD_PHOTO_OPTIONS        : {
+  		title                   : 'Select Avatar',
+  		storageOptions          : {
+    		skipBackup          : true,
+    		path                : 'images'
+  		}
+	},
+
+	UPLOAD_IMAGE_LOG        : {
+		NO_IMAGE : 'No image is selected',
+		ERROR    : 'Invalid image type',
+		EXCEED   : 'Image file size exceeds limit',
+		SUCCESS  : 'One image selected'
+	},
+	IMAGE_FILE_SIZE_LIMIT : 10000000, // 10MB for firebase,
+	DEFAULT_IMG_TYPE      : 'image/jpg'
 }; 
 
 

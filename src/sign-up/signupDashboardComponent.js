@@ -90,7 +90,7 @@ export default class SignUpDashboard extends Component<Props> {
 			this.props.doDisplayAlertMessage(this.state.inputPhoneError);
 			setTimeout(()=>this.props.doDisplayAlertMessage(''),Constants.SIGNUP_FORMS.ERROR_TIME_DISPLAY);
 		}
-		else{ 
+		else{
 			const data = {
 				inputUsername        : this.state.inputUsername,
 				inputPassword        : this.state.inputPassword,
@@ -499,16 +499,16 @@ export default class SignUpDashboard extends Component<Props> {
 				    		<TouchableWithoutFeedback
 				    			onPress={()=>this.goToNextPageRegistration()}>
 					    		<Text style={{
-					    				height: '7%',
-					    				width: '27%',
+					    				height: '7.5%',
+					    				width: '30%',
 					    				position: 'relative',
-					    				top: '10%',
+					    				top: '9%',
 					    				color:'#454647',
 					    				fontWeight: 'bold',
 					    				borderWidth:2,
 					    				left: '35%',
-					    				paddingLeft: '5%',
-					    				paddingTop: '3%'
+					    				textAlign: 'center',
+		    							textAlignVertical: 'center'
 					    		}}>
 					    			PROCEED
 					    		</Text>

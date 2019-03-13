@@ -22,7 +22,8 @@ export default class DefaultPage extends Component{
 		Geolocation.getCurrentPosition( (position)=>{
 			this.props.doSetUserlocation(position.coords);
 			this.setState({userLocation:position.coords});
-		}, (error) => console.log(JSON.stringify(error)));
+		}, (error) => console.log(JSON.stringify(error)),
+		{ enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 });
 	}
 
 	displayMap = ()=>{

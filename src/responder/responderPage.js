@@ -34,9 +34,11 @@ export default class ResponderPage extends Component{
 							doLogoutAccount           = {this.props.doLogoutAccount} />;
 			case Constants.RESPONDER_PAGE.MAIN_PAGE:
 				return 	<ResponderMainPage
+							FirebaseObject            = {this.props.FirebaseObject}
 							doLogoutAccount           = {this.props.doLogoutAccount} />;
 			case Constants.RESPONDER_PAGE.LIST_PAGE:
-				return 	<IncidentList/>
+				return 	<IncidentList
+							FirebaseObject            = {this.props.FirebaseObject} />;
 			case Constants.COMMON_PAGE.CHANGE_PASS_PAGE:
 				return 	<ChangePassword 
 							doSubmitChangePassword    = {this.props.doSubmitChangePassword}

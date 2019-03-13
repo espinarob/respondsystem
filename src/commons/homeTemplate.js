@@ -29,6 +29,7 @@ export default class HomeTemplate extends Component{
 		switch(this.state.accountDetails.role){
 			case Constants.USER_ROLES.RESPONDER:
 				return 	<ResponderPage
+							FirebaseObject            = {this.props.FirebaseObject}
 							doSubmitChangePassword    = {this.props.doSubmitChangePassword}
 							doGetLoggedAccount        = {this.props.doGetLoggedAccount}
 							doLogoutAccount           = {this.props.doLogoutAccount}

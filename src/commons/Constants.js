@@ -28,10 +28,21 @@ const Constants = {
 		MAIN_PAGE               : 'MAIN_PAGE',
 		LIST_PAGE               : 'LIST_PAGE'
 	},
+
+	RESPONDER_MAIN_PAGE         : {
+		INCIDENT_PAGE           : 'REPORT_PAGE',
+		DEFAULT_PAGE            : 'DEFAULT_PAGE',
+	},
 	
 	CALL_SIGN_STATUS            : {
 		TAKEN                   : 'TAKEN',
 		NOT_TAKEN               : 'NOT_TAKEN'
+	},
+
+	REPORT_STATUS               : {
+		UNRESOLVED              : 'UNRESOLVED',
+		RESOLVED                : 'RESOLVED',
+		WAITING_FOR_AUTHORITY   : 'WAITING_FOR_AUTHORITY'
 	},
 
 	PAGES                       : {

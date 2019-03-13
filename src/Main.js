@@ -6,7 +6,8 @@ import {Platform,
 	Text, 
 	View, 
 	AsyncStorage,
-	NetInfo} 
+	NetInfo,
+	PermissionsAndroid} 
 	from 'react-native';
 import {Container}   from 'native-base';
 import * as firebase from 'firebase';
@@ -410,7 +411,9 @@ export default class Main extends Component{
 					key           : String(reportKey.key),
 					bystanderKey  : String(this.state.accountLoggedDetails.key),
 					imgURL        : String(response),
-					addressName   : data.addressName
+					addressName   : data.addressName,
+					reporter      : String(this.state.accountLoggedDetails.fullName),
+					reportStatus  : Constants.REPORT_STATUS.UNRESOLVED
 				})
 				.then(()=>{
 					this.displayAlertMessage('Successfully submitted your report');
@@ -462,7 +465,9 @@ export default class Main extends Component{
 
 	/* -- End of Report Module -- */
 
+	/* -- Start of Incident Module -- */
 
+	
 	/* -- Start of Common Functions -- */
 
 	submitChangePassword = (currentPassword,newPassword,confirmNewPassword)=>{
@@ -623,10 +628,12 @@ export default class Main extends Component{
 				});
 		}
 	}
+
 	/* -- End of Common Functions -- */
 
 
 	componentDidMount(){
+		this.askUserGPSPermission();
 		this.initializeStorage();
 		if(!firebase.apps.length){
 			firebase.initializeApp(Constants.FIRE_BASE_CONFIG);
@@ -681,6 +688,30 @@ export default class Main extends Component{
 		}
 	}
 
+	askUserGPSPermission = async()=>{
+		try {
+   			const granted = await PermissionsAndroid.request(
+   				PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+			 	{
+			        title: 'Location Persistence',
+			        message:
+			          'Respond System application needs access to your location',
+			        buttonNegative: 'Cancel',
+			        buttonPositive: 'OK',
+  				}
+			);
+			if(granted === PermissionsAndroid.RESULTS.GRANTED){
+		      	console.log('You can user user location');
+		    } 
+		    else{
+		      console.log('Location permission denied');
+		    }
+		} 
+		catch(error){
+    		console.log(error);
+	  	}	
+	}
+
 	mainTemplateDisplay = ()=>{
 		
 		switch(this.state.operation){
@@ -698,6 +729,7 @@ export default class Main extends Component{
 							doDisplayAlertMessage      = {this.displayAlertMessage} />;
 			case Constants.PAGES.HOME_PAGE:
 				return 	<HomeTemplate 
+							FirebaseObject             = {firebase}
 							doSubmitIncidentReport     = {this.submitIncidentReport}
 							doSetUserlocation		   = {this.setUserLocation}
 							doLogoutAccount			   = {this.logoutAccount}

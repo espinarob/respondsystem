@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Wed Mar 13 10:20:53 SGT 2019
+#Tue Mar 19 01:06:38 SGT 2019
 5.base=C\:\\Users\\ACER\\Desktop\\RespondSystem\\respondsystem\\android\\app\\build\\intermediates\\transforms\\mergeJniLibs\\debug\\0
 42.base=C\:\\Users\\ACER\\Desktop\\RespondSystem\\respondsystem\\android\\app\\build\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
 22.path=lib/x86/libfolly_json.so

@@ -16,27 +16,6 @@ import { Container,
 /* -- Custom Components  -- */
 import Constants from '../commons/Constants.js';
 
-const styles = StyleSheet.create({
-	loginCircleContainer: {
-	    borderWidth: 1,
-	    borderRadius: 2,
-	    borderColor: '#ddd',
-	    borderBottomWidth: 2,
-	    shadowColor: '#000',
-	    shadowOffset: { width: 20, height: 2 },
-	    shadowOpacity: 0.8,
-	    shadowRadius:20,
-	    elevation: 1,
-	    borderRadius: 100,
-		backgroundColor:'#fff',
-		height: '100%',
-		width: 59,
-		position:'relative',
-		left: 145,
-		paddingLeft:15.5,
-		paddingTop: 9
-  	}
-});
 
 
 export default class LoginDashboard extends Component{
@@ -109,14 +88,15 @@ export default class LoginDashboard extends Component{
 		    		<View style={{
 		    				height: '26%',
 		    				width: '100%',
-		    				top:'10%'
+		    				top:'11%',
+		    				alignItems: 'center'
 		    		}}>
 		    			<Text style={{
 		    					height:'50%',
 		    					width: '25%',
 		    					position: 'relative',
-		    					left: '38%',
-		    					paddingLeft:'5%'
+		    					textAlign: 'center',
+		    					textAlignVertical: 'center'
 		    			}}>
 		    				<Icon
 		    					style={{
@@ -130,18 +110,18 @@ export default class LoginDashboard extends Component{
 		    					height:'45%',
 		    					width: '50%',
 		    					position: 'relative',
-		    					left: '25%',
+		    					textAlign: 'center',
+		    					textAlignVertical: 'center',
 		    					fontSize: 40,
 		    					fontWeight:'bold',
-		    					color:'#454647',
-		    					paddingLeft:'5%'
+		    					color:'#454647'
 		    			}}>
 		    				Res-Sys
 		    			</Text>
 		    		</View>
 
 		    		<View style={{
-		    				height: '53%',
+		    				height: '54%',
 		    				width: '100%',
 		    				top: '12%',
 		    				position: 'relative'
@@ -153,7 +133,8 @@ export default class LoginDashboard extends Component{
 		    					left: '10%',
 		    					color:'#454647',
 		    					position: 'relative',
-		    					top: '10%'
+		    					top: '10%',
+		    					textAlignVertical:'center'
 		    			}}>
 		    				USERNAME
 		    			</Text>
@@ -165,7 +146,7 @@ export default class LoginDashboard extends Component{
 		    					top:'10%',
 		    					left:'10%',
 		    					fontSize:13,
-		    					paddingTop: '2%'
+		    					textAlignVertical: 'center'
 		    				}}	
 		    				maxLength={Constants.SIGNUP_FORMS.USERNAME_MAX_LENGTH}
 		    				placeholder='INPUT USERNAME HERE'
@@ -178,7 +159,8 @@ export default class LoginDashboard extends Component{
 		    					left: '10%',
 		    					color:'#454647',
 		    					position: 'relative',
-		    					top: '14%'
+		    					top: '14%',
+		    					textAlignVertical:'center'
 		    			}}>
 		    				PASSWORD
 		    			</Text>
@@ -198,7 +180,7 @@ export default class LoginDashboard extends Component{
 			    					width: '70%',
 			    					fontSize:13,
 			    					left: '10%',
-			    					paddingTop: '2%',
+			    					textAlignVertical: 'center',
 			    					position: 'relative'
 			    				}}	
 			    				secureTextEntry={this.state.hidePassword}
@@ -214,7 +196,8 @@ export default class LoginDashboard extends Component{
 				    					height: '55%',
 				    					width: '13%',
 				    					top: '5%',
-				    					paddingLeft: '1%'
+				    					textAlignVertical: 'center',
+				    					textAlign: 'center'
 				    			}}>
 				    				<Icon
 				    					style={{
@@ -226,25 +209,14 @@ export default class LoginDashboard extends Component{
 				    		</TouchableWithoutFeedback>
 			    		</View>
 
-			    		<Text style={{
-			    				width:'40%',
-			    				position: 'relative',
-			    				left: '20%',
-			    				textAlign: 'center',
-			    				height:'13%',
-			    				top:'13%',
-			    				color:'#454647',
-			    				fontSize: 13
-			    		}}>
-			    		</Text>
 
 			    		<TouchableWithoutFeedback
 			    			onPress={()=>this.submitLogin()}>
 				    		<Text style={{
-				    				height: '14%',
+				    				height: '15%',
 				    				width: '30%',
 				    				position: 'relative',
-				    				top: '13%',
+				    				top: '25%',
 				    				color:'#454647',
 				    				fontWeight: 'bold',
 				    				borderWidth:2,

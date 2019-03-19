@@ -12,13 +12,18 @@ import {Icon}      from 'native-base';
 import {Marker}    from 'react-native-maps'; 
 import MapView     from 'react-native-maps';
 import Constants   from '../commons/Constants.js';
-import Geolocation from 'react-native-geolocation-service';
+import geolib      from 'geolib';
 const  responderIcon  = require('../img/map-icon/responderIcon1.png');
+const  centerIcon     = require('../img/map-icon/centerIcon.png');
+const  emergencyIcon  = require('../img/map-icon/emergency.png');
+
 export default class DefaultPage extends Component{
 
 	state = {
-		userLocation: [],
-		allReports  : []
+		allReports        : [],
+		centerCoords      : [],
+		nearbyFlag        : false,
+		tracksViewChanges : false
 	}
 
 	getAllReports = ()=>{
@@ -39,49 +44,86 @@ export default class DefaultPage extends Component{
 			});
 	}
 
-	componentDidMount(){
-		this.getAllReports();
-		Geolocation.getCurrentPosition( (position)=>{
-			console.log(position.coords);
-			this.setState({userLocation:position.coords});
-		}, (error) => console.log(JSON.stringify(error)),
-		{ enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 });
+	getLocationCenterFocus = ()=>{
+		this.props.FirebaseObject
+			.database()
+			.ref("Center")
+			.once("value",snapshot=>{
+				if(snapshot.exists()){
+					const initCenterCoordinates = JSON.parse(JSON.stringify(snapshot.val()));
+					this.setState({centerCoords:initCenterCoordinates});
+				}
+			});
+
 	}
 
+	componentDidMount(){
+		this.getAllReports();
+		this.getLocationCenterFocus();
+	}
+
+
+	displayCenterLocation = ()=>{
+		if(this.state.centerCoords.length!=0){
+		 	return 	<Marker
+				      	coordinate={{latitude:this.state.centerCoords.latitude,
+				      		longitude:this.state.centerCoords.longitude}}
+				      	title={'Center Location'}
+				      	description={String(Number(this.state.centerCoords.radius)/1000)+
+				      		'kms. around this center is accepted'}>
+
+				      	<Image source={centerIcon}
+				      		style={{height:40,width:40}}/>
+				    </Marker>
+		}
+		else return;
+	}
+
+
 	displayMarker = ()=>{
-		if(this.state.allReports.length!=0){
-			return 	this.state.allReports.map(report => (
-				    	<Marker
-					      	coordinate={{latitude:report.userLatitude,
-					      		longitude:report.userLongitude}}
-					      	title={report.incidentType}
-					      	key  ={report.key}
-					      	description={report.reportInfo}/>
-				  	));
+		return 	this.state.allReports.map(report => {
+					if(report.reportStatus == Constants.REPORT_STATUS.UNRESOLVED){
+						return 	<Marker
+							      	coordinate={{latitude:report.userLatitude,
+							      		longitude:report.userLongitude}}
+							      	title={report.incidentType}
+							      	key  ={report.key}
+							      	description={report.reportInfo}>
+							      	<Image source={emergencyIcon}
+						      		style={{height:40,width:40}}/>
+							    </Marker>
+					}	
+			  	});
+	}
+
+	displayUsersLocation = ()=>{
+		if(this.props.doGetMylocation.latitude){
+			return 	<Marker
+				      	coordinate={{latitude:this.props.doGetMylocation.latitude,
+				      		longitude:this.props.doGetMylocation.longitude}}
+			      		tracksViewChanges = {false}
+				      	title={'Hello responder!'}
+				      	description={'Here is your location'}>
+
+				      	<Image source={responderIcon}
+				      		style={{height:45,width:45}}/>
+				    </Marker>
 		}
 		else return;
 	}
 
 	displayMap = ()=>{
-		if(this.state.userLocation.latitude){
+		if(this.props.doGetMylocation.latitude){
 			return	<MapView style = {{height:'100%',width: '100%'}}
 						provider={MapView.PROVIDER_GOOGLE}
 			            region = {{
-			                latitude: this.state.userLocation.latitude,
-			                longitude: this.state.userLocation.longitude,
+			                latitude: this.props.doGetMylocation.latitude,
+			                longitude: this.props.doGetMylocation.longitude,
 			                latitudeDelta: 0.0922*2,
 			                longitudeDelta: 0.0421*2,
 		                }}>
-		                <Marker
-					      	coordinate={{latitude:this.state.userLocation.latitude,
-					      		longitude:this.state.userLocation.longitude}}
-					      	title={'Hello responder!'}
-					      	description={'Here is your location'}>
-
-					      	<Image source={responderIcon}
-					      		style={{height:45,width:45}}/>
-					    </Marker>
-		                {this.displayMarker()}
+		             	{this.displayUsersLocation()}
+		             	{this.displayMarker()}
         			</MapView>
 		}
 		else{
@@ -105,8 +147,7 @@ export default class DefaultPage extends Component{
 	    					top: '6%',
 	    					width:'60%',
 	    					position: 'absolute',
-	    					left: '20%',
-	    					borderRightWidth:2,
+	    					left: '20.3%',
 	    					fontWeight: 'bold',
 	    					fontSize: 14,
 	    					color: '#000',
@@ -144,7 +185,6 @@ export default class DefaultPage extends Component{
     					top:'5%',
     					position: 'absolute',
     					textAlign: 'center',
-    					borderRadius: 100,
     					textAlignVertical: 'center',
     					fontSize: 11,
     					left: '80%',

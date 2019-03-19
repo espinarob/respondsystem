@@ -9,19 +9,27 @@ import {Platform,
 	TouchableWithoutFeedback} 
 	from 'react-native';
 import {Icon}    from 'native-base';
-import Constants         from '../commons/Constants.js';
-import MorePage          from '../commons/MorePage.js';
-import ChangePassword    from '../commons/changePassword.js';
-import UserInformation   from '../commons/userInformation.js';
-import PhoneNumber       from '../commons/phoneNumber.js';
-import ResponderMainPage from './responderMainPage.js';
-import IncidentList      from './incidentList.js';
+import Constants           from '../commons/Constants.js';
+import MorePage            from '../commons/MorePage.js';
+import ChangePassword      from '../commons/changePassword.js';
+import UserInformation     from '../commons/userInformation.js';
+import PhoneNumber         from '../commons/phoneNumber.js';
+import ResponderMainPage   from './responderMainPage.js';
+import IncidentList        from './incidentList.js';
+import IncidentDetailsPage from './incidentDetailsPage.js';
+import ResolvePage         from './resolvePage.js';
 
 export default class ResponderPage extends Component{
 
 	state = {
-		userOperation: Constants.RESPONDER_PAGE.MAIN_PAGE 
+		userOperation : Constants.RESPONDER_PAGE.MAIN_PAGE,
+		reportDetails : {}
 	}
+
+	setReportDetails = (report)=>{
+		this.setState({reportDetails:report});
+	}
+
 	setHomePage = (operation)=>{
 		this.setState({userOperation:operation});
 	}
@@ -35,10 +43,22 @@ export default class ResponderPage extends Component{
 			case Constants.RESPONDER_PAGE.MAIN_PAGE:
 				return 	<ResponderMainPage
 							FirebaseObject            = {this.props.FirebaseObject}
+							doGetMylocation           = {this.props.doGetMylocation}
 							doLogoutAccount           = {this.props.doLogoutAccount} />;
 			case Constants.RESPONDER_PAGE.LIST_PAGE:
 				return 	<IncidentList
-							FirebaseObject            = {this.props.FirebaseObject} />;
+							doGetMylocation           = {this.props.doGetMylocation}
+							FirebaseObject            = {this.props.FirebaseObject}
+							doSetHomePage             = {this.setHomePage} 
+							doSetReportDetails        = {this.setReportDetails} />;
+			case Constants.RESPONDER_PAGE.INCIDENT_DETAILS: 
+				return  <IncidentDetailsPage 
+							doGetReportDetails        = {this.state.reportDetails}
+							doSetHomePage             = {this.setHomePage} />;
+			case Constants.RESPONDER_PAGE.RESOLVE_PAGE:
+				return  <ResolvePage
+							doGetReportDetails        = {this.state.reportDetails}
+							doSetHomePage             = {this.setHomePage} />;
 			case Constants.COMMON_PAGE.CHANGE_PASS_PAGE:
 				return 	<ChangePassword 
 							doSubmitChangePassword    = {this.props.doSubmitChangePassword}
@@ -63,7 +83,7 @@ export default class ResponderPage extends Component{
 	    return (
 	    	<React.Fragment>
 	    		<View style={{
-	    				height: '91%',
+	    				height: '92%',
 	    				width: '100%',
 	    				backgroundColor: '#fff',
 	    				flexDirection:'row',
@@ -73,7 +93,7 @@ export default class ResponderPage extends Component{
 	    		</View>
 
 	    		<View style={{
-	    				height: '9%',
+	    				height: '8%',
 	    				width: '100%',
 	    				backgroundColor: '#88ef92',
 	    				flexDirection:'row'
@@ -89,9 +109,9 @@ export default class ResponderPage extends Component{
 		    						height: '100%',
 		    						width: '100%',
 		    						fontSize: 14,
-		    						paddingTop: '7%',
 		    						fontWeight: 'bold',
-		    						textAlign: 'center'
+		    						textAlign: 'center',
+		    						textAlignVertical: 'center'
 		    				}}>
 			    				<Icon
 			    					style={{
@@ -115,9 +135,9 @@ export default class ResponderPage extends Component{
 		    						height: '100%',
 		    						width: '100%',
 		    						fontSize: 14,
-		    						paddingTop: '7%',
 		    						fontWeight: 'bold',
-		    						textAlign: 'center'
+		    						textAlign: 'center',
+		    						textAlignVertical: 'center'
 		    				}}>
 			    				<Icon
 			    					style={{
@@ -140,10 +160,10 @@ export default class ResponderPage extends Component{
 		    				<Text style={{
 		    						height: '100%',
 		    						width: '100%',
-		    						fontSize: 14,
 		    						paddingTop: '7%',
 		    						fontWeight: 'bold',
-		    						textAlign: 'center'
+		    						textAlign: 'center',
+		    						textAlignVertical: 'center'
 		    				}}>
 		    					<Icon
 			    					style={{

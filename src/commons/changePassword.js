@@ -55,7 +55,7 @@ export default class ChangePassword extends Component{
 		    					fontWeight: 'bold',
 		    					textAlign: 'center',
 		    					position: 'relative',
-		    					paddingTop: '1.5%',
+		    					textAlignVertical: 'center',
 		    					left: '10%'
 		    			}}>	
 		    				<Icon
@@ -71,8 +71,8 @@ export default class ChangePassword extends Component{
 	    					width: '55%',
 	    					height: '100%',
 	    					fontSize: 16,
-	    					paddingTop: '3.4%',
 	    					textAlign: 'center',
+	    					textAlignVertical: 'center',
 	    					left: '100%'
 	    			}}>
 	    				CHANGE PASSWORD
@@ -85,8 +85,9 @@ export default class ChangePassword extends Component{
 	    				fontWeight:'bold',
 	    				top: '5%',
 	    				position: 'relative',
-	    				width: '30%',
-	    				left: '10%'
+	    				width: '40%',
+	    				left: '10%',
+	    				textAlignVertical: 'center'
 	    		}}>
 	    			Current Password
 	    		</Text>
@@ -110,8 +111,9 @@ export default class ChangePassword extends Component{
 	    				fontWeight:'bold',
 	    				top: '5.5%',
 	    				position: 'relative',
-	    				width: '30%',
-	    				left: '10%'
+	    				width: '40%',
+	    				left: '10%',
+	    				textAlignVertical: 'center'
 	    		}}>
 	    			New Password
 	    		</Text>
@@ -135,10 +137,11 @@ export default class ChangePassword extends Component{
 	    				height: '5%',
 	    				fontSize:13,
 	    				fontWeight:'bold',
-	    				top: '6.0%',
+	    				top: '6%',
 	    				position: 'relative',
-	    				width: '50%',
-	    				left: '10%'
+	    				width: '40%',
+	    				left: '10%',
+	    				textAlignVertical: 'center'
 	    		}}>
 	    			Confirm New Password
 	    		</Text>
@@ -167,7 +170,7 @@ export default class ChangePassword extends Component{
 		    				left: '35%',
 		    				position: 'relative',
 		    				top: '20%',
-		    				paddingTop: '3%',
+		    				textAlignVertical: 'center',
 		    				borderWidth:2,
 		    				borderColor : '#454647'
 		    		}}>

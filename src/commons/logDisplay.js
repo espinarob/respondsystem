@@ -34,9 +34,9 @@ export default class LogDisplay extends Component{
     						backgroundColor: '#000',
     						color:'#fff',
     						fontWeight:'bold',
-    						paddingTop:'2%',
     						fontSize: 13,
-    						textAlign: 'center'
+    						textAlign: 'center',
+                            textAlignVertical: 'center'
     			}}>
     				{this.props.doGetMessage}
     			</Text>

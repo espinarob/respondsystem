@@ -36,14 +36,15 @@ export default class WelcomeDashboard extends Component{
 		    		<View style={{
 		    				height: '26%',
 		    				width: '100%',
-		    				top:'23%'
+		    				top:'23%',
+		    				alignItems: 'center'
 		    		}}>
 		    			<Text style={{
 		    					height:'50%',
 		    					width: '25%',
 		    					position: 'relative',
-		    					left: '36%',
-		    					paddingLeft:'5%'
+		    					textAlignVertical: 'center',
+		    					textAlign : 'center',
 		    			}}>
 		    				<Icon
 		    					style={{
@@ -57,11 +58,11 @@ export default class WelcomeDashboard extends Component{
 		    					height:'45%',
 		    					width: '50%',
 		    					position: 'relative',
-		    					left: '23%',
 		    					fontSize: 40,
 		    					fontWeight:'bold',
 		    					color:'#454647',
-		    					paddingLeft:'5%'
+		    					textAlignVertical: 'center',
+		    					textAlign : 'center',
 		    			}}>
 		    				Res-Sys
 		    			</Text>
@@ -118,6 +119,7 @@ export default class WelcomeDashboard extends Component{
 		    				height: '9%',
 		    				width: '80%',
 		    				textAlign: 'center',
+		    				textAlignVertical: 'center',
 		    				top: '37%',
 		    				left: '10%',
 		    				fontWeight: 'bold',

@@ -115,8 +115,8 @@ export default class UserInformation extends Component{
 		    					fontSize: 15,
 		    					fontWeight: 'bold',
 		    					textAlign: 'center',
+		    					textAlignVertical: 'center',
 		    					position: 'relative',
-		    					paddingTop: '1.5%',
 		    					left: '10%'
 		    			}}>	
 		    				<Icon
@@ -132,8 +132,8 @@ export default class UserInformation extends Component{
 	    					width: '55%',
 	    					height: '100%',
 	    					fontSize: 16,
-	    					paddingTop: '3.4%',
 	    					textAlign: 'center',
+	    					textAlignVertical: 'center',
 	    					left: '100%'
 	    			}}>
 	    				USER INFORMATION
@@ -152,7 +152,8 @@ export default class UserInformation extends Component{
 	    					left: '30%',
 	    					width: '40%',
 	    					fontSize: 15,
-	    					textAlign: 'center'
+	    					textAlign: 'center',
+	    					textAlignVertical: 'center'
 	    			}}>
 	    				<Icon
 	    					style={{
@@ -178,7 +179,7 @@ export default class UserInformation extends Component{
 	    					left: '13%',
 	    					textAlign:'center',
 	    					fontSize: 15,
-	    					paddingTop: '2%'
+	    					textAlignVertical: 'center'
 	    			}}>
 	    				Full Name
 	    			</Text>
@@ -209,7 +210,7 @@ export default class UserInformation extends Component{
 	    					left: '13%',
 	    					textAlign:'center',
 	    					fontSize: 15,
-	    					paddingTop: '2%'
+	    					textAlignVertical: 'center'
 	    			}}>
 	    				Address
 	    			</Text>
@@ -239,7 +240,7 @@ export default class UserInformation extends Component{
 	    					left: '13%',
 	    					textAlign:'center',
 	    					fontSize: 15,
-	    					paddingTop: '2%'
+	    					textAlignVertical: 'center'
 	    			}}>
 	    				Birthday
 	    			</Text>
@@ -269,7 +270,7 @@ export default class UserInformation extends Component{
 	    					left: '13%',
 	    					textAlign:'center',
 	    					fontSize: 15,
-	    					paddingTop: '2%'
+	    					textAlignVertical: 'center'
 	    			}}>
 	    				E-mail Address
 	    			</Text>
@@ -299,7 +300,7 @@ export default class UserInformation extends Component{
 	    					left: '13%',
 	    					textAlign:'center',
 	    					fontSize: 15,
-	    					paddingTop: '2%'
+	    					textAlignVertical: 'center'
 	    			}}>
 	    				Role
 	    			</Text>
@@ -309,10 +310,10 @@ export default class UserInformation extends Component{
 	    					width: '60%',
 	    					left: '30%',
 	    					position: 'relative',
-	    					paddingTop: '3%',
+	    					textAlign: 'center',	
+	    					textAlignVertical: 'center',
 	    					fontSize: 15,
-	    					color: '#000',
-	    					paddingLeft: '2.2%'
+	    					color: '#000'
 	    			}}>
 	    				{this.state.role}
 	    			</Text>
@@ -331,7 +332,7 @@ export default class UserInformation extends Component{
 	    					left: '13%',
 	    					textAlign:'center',
 	    					fontSize: 15,
-	    					paddingTop: '2%'
+	    					textAlignVertical: 'center'
 	    			}}>
 	    				Account Username
 	    			</Text>
@@ -340,10 +341,10 @@ export default class UserInformation extends Component{
 	    					width: '60%',
 	    					left: '30%',
 	    					position: 'relative',
-	    					paddingTop: '3%',
+	    					textAlign: 'center',	
+	    					textAlignVertical: 'center',
 	    					fontSize: 15,
-	    					color: '#000',
-	    					paddingLeft: '2.2%'
+	    					color: '#000'
 	    			}}>
 	    				{this.state.username}
 	    			</Text>
@@ -363,7 +364,7 @@ export default class UserInformation extends Component{
 	    					left: '13%',
 	    					textAlign:'center',
 	    					fontSize: 11,
-	    					paddingTop: '3%'
+	    					textAlignVertical: 'center'
 	    			}}>
 	    				Organization{'\n'}and Call Sign
 	    			</Text>
@@ -372,10 +373,10 @@ export default class UserInformation extends Component{
 	    					width: '60%',
 	    					left: '30%',
 	    					position: 'relative',
-	    					paddingTop: '3%',
+	    					textAlign: 'center',	
+	    					textAlignVertical: 'center',
 	    					fontSize: 15,
-	    					color: '#000',
-	    					paddingLeft: '2.2%'
+	    					color: '#000'
 	    			}}>
 	    				{this.state.role == Constants.USER_ROLES.CIVILIAN ?
 	    					'Not Applicable': String(this.state.organization)+ 
@@ -389,11 +390,11 @@ export default class UserInformation extends Component{
 		    		<Text style={{
 		    				height: '8%',
 		    				textAlign: 'center',
+		    				textAlignVertical: 'center',
 		    				width: '30%',
 		    				left: '35%',
 		    				position: 'relative',
 		    				top: '10%',
-		    				paddingTop: '3%',
 		    				borderWidth:2,
 		    				borderColor : '#454647',
 		    				color: '#000'

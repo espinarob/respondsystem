@@ -37,18 +37,18 @@ export default class MorePage extends Component{
 	    				flexDirection: 'row'
 	    		}}>
 	    			<Text style={{
-	    					width: '23%',
+	    					width: '24%',
 	    					height: '100%',
 	    					position: 'relative',
 	    					left: '20%',
 	    					paddingTop: '4.5%',
 	    					textAlign: 'center',
-	    					borderRadius: 100,
+	    					textAlignVertical : 'center',
 	    					backgroundColor : '#454647'
 	    			}}>
 	    				<Icon
 	    					style={{
-	    						fontSize:40,
+	    						fontSize:50,
 	    						color: '#fff'
 	    					}}
 	    					name='user'
@@ -61,7 +61,9 @@ export default class MorePage extends Component{
 	    					paddingLeft: '3%',
 	    					left: '23%',
 	    					fontSize: 16,
-	    					fontWeight: 'bold'
+	    					fontWeight: 'bold',
+	    					textAlignVertical: 'center',
+	    					textAlign: 'center'
 	    			}}>
 	    				Res-Sys Message: Hello user, you may view and update your account information in this section
 	    			</Text>
@@ -77,7 +79,8 @@ export default class MorePage extends Component{
 	    					height: '100%',
 	    					width: '70%',
 	    					left: '50%',
-	    					fontSize: 14
+	    					fontSize: 14,
+	    					textAlignVertical:'center'
 	    			}}>
 	    				ACCOUNT AND SUPPORT
 	    			</Text>
@@ -94,11 +97,11 @@ export default class MorePage extends Component{
 	    				onPress={()=>this.props.doLogoutAccount()}>
 		    			<Text style={{
 		    					height: '100%',
-		    					width: '50%',
+		    					width: '70%',
 		    					left: '35%',
 		    					fontSize: 20,
 		    					fontWeight: 'bold',
-		    					paddingTop: '2%'
+		    					textAlignVertical: 'center'
 		    			}}>
 		    				Logout Account
 		    			</Text>
@@ -115,11 +118,11 @@ export default class MorePage extends Component{
 	    		}}>
 	    			<Text style={{
 	    					height: '100%',
-	    					width: '50%',
+	    					width: '70%',
 	    					left: '35%',
 	    					fontSize: 20,
 	    					fontWeight: 'bold',
-	    					paddingTop: '2%'
+	    					textAlignVertical: 'center'
 	    			}}>
 	    				Report a Problem
 	    			</Text>
@@ -134,11 +137,11 @@ export default class MorePage extends Component{
 	    		}}>
 	    			<Text style={{
 	    					height: '100%',
-	    					width: '50%',
+	    					width: '70%',
 	    					left: '35%',
 	    					fontSize: 20,
 	    					fontWeight: 'bold',
-	    					paddingTop: '2%'
+	    					textAlignVertical: 'center'
 	    			}}>
 	    				Legal Policies
 	    			</Text>
@@ -155,7 +158,8 @@ export default class MorePage extends Component{
 	    					height: '100%',
 	    					width: '70%',
 	    					left: '50%',
-	    					fontSize: 14
+	    					fontSize: 14,
+	    					textAlignVertical: 'center'
 	    			}}>
 	    				YOUR PROFILE
 	    			</Text>
@@ -172,11 +176,11 @@ export default class MorePage extends Component{
 	    				onPress={()=>this.props.doSetHomePage(Constants.COMMON_PAGE.CHANGE_PASS_PAGE)}>
 		    			<Text style={{
 		    					height: '100%',
-		    					width: '50%',
+		    					width: '70%',
 		    					left: '35%',
 		    					fontSize: 20,
 		    					fontWeight: 'bold',
-		    					paddingTop: '2%'
+	    						textAlignVertical: 'center'
 		    			}}>
 		    				Change Password
 		    			</Text>
@@ -194,11 +198,11 @@ export default class MorePage extends Component{
 	    				onPress={()=>this.props.doSetHomePage(Constants.COMMON_PAGE.USER_INFO_PAGE)}>
 		    			<Text style={{
 		    					height: '100%',
-		    					width: '60%',
+		    					width: '70%',
 		    					left: '35%',
 		    					fontSize: 20,
 		    					fontWeight: 'bold',
-		    					paddingTop: '2%'
+	    						textAlignVertical: 'center'
 		    			}}>
 		    				User Information
 		    			</Text>
@@ -216,11 +220,11 @@ export default class MorePage extends Component{
 	    				onPress={()=>this.props.doSetHomePage(Constants.COMMON_PAGE.PHONE_NUMBER)}>
 		    			<Text style={{
 		    					height: '100%',
-		    					width: '60%',
+		    					width: '70%',
 		    					left: '35%',
 		    					fontSize: 20,
 		    					fontWeight: 'bold',
-		    					paddingTop: '2%'
+	    						textAlignVertical: 'center'
 		    			}}>
 		    				Phone Number
 		    			</Text>

@@ -34,9 +34,10 @@ export default class BystanderPage extends Component{
 							doLogoutAccount           = {this.props.doLogoutAccount} />;
 			case Constants.CIVILIAN_PAGE.MAIN_PAGE:
 				return	<BystanderMainPage
+							FirebaseObject            = {this.props.FirebaseObject}
 							doSubmitIncidentReport    = {this.props.doSubmitIncidentReport}
 							doDisplayAlertMessage     = {this.props.doDisplayAlertMessage}
-							doSetUserlocation         = {this.props.doSetUserlocation} />;
+							doGetMylocation           = {this.props.doGetMylocation} />;
 			case Constants.COMMON_PAGE.CHANGE_PASS_PAGE:
 				return 	<ChangePassword
 							doSubmitChangePassword    = {this.props.doSubmitChangePassword}
@@ -60,7 +61,7 @@ export default class BystanderPage extends Component{
 	    return (
 	    	<React.Fragment>
 	    		<View style={{
-	    				height: '91%',
+	    				height: '92%',
 	    				width: '100%',
 	    				backgroundColor: '#fff',
 	    				flexDirection:'row',
@@ -70,7 +71,7 @@ export default class BystanderPage extends Component{
 	    		</View>
 
 	    		<View style={{
-	    				height: '9%',
+	    				height: '8%',
 	    				width: '100%',
 	    				backgroundColor: '#88ef92',
 	    				flexDirection:'row'
@@ -86,9 +87,9 @@ export default class BystanderPage extends Component{
 		    						height: '100%',
 		    						width: '100%',
 		    						fontSize: 14,
-		    						paddingTop: '7%',
 		    						fontWeight: 'bold',
-		    						textAlign: 'center'
+		    						textAlign: 'center',
+		    						textAlignVertical: 'center'
 		    				}}>
 			    				<Icon
 			    					style={{
@@ -112,7 +113,7 @@ export default class BystanderPage extends Component{
 		    						height: '100%',
 		    						width: '100%',
 		    						fontSize: 14,
-		    						paddingTop: '7%',
+		    						textAlignVertical: 'center',
 		    						fontWeight: 'bold',
 		    						textAlign: 'center'
 		    				}}>

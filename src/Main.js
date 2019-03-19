@@ -13,6 +13,7 @@ import {Container}   from 'native-base';
 import * as firebase from 'firebase';
 import SyncStorage   from 'sync-storage';
 import RNFetchBlob   from 'react-native-fetch-blob';
+import Geolocation from 'react-native-geolocation-service';
 
 const Blob = RNFetchBlob.polyfill.Blob;
 const fs = RNFetchBlob.fs;
@@ -337,7 +338,7 @@ export default class Main extends Component{
 		})
 		.catch((error)=>{
 			console.log(error);
-		})
+		});
 	}
 
 	checkCacheForLogin = ()=>{
@@ -386,12 +387,7 @@ export default class Main extends Component{
 
 	/* -- Start of Report Module -- */
 
-	setUserLocation = (coordinates)=>{
-		this.setState({userLocation:coordinates});
-	}
-
 	submitIncidentReport = (data)=>{
-		console.log(data);
 		this.setState({loadingMessage:Constants.LOADING_MESSAGES.SUBMIT_REPORT});
 		this.setTemplateDisplay(Constants.PAGES.LOADING_PAGE);
 		const reportKey  = 	firebase
@@ -467,6 +463,10 @@ export default class Main extends Component{
 
 	/* -- Start of Incident Module -- */
 
+
+	/* -- End ofIncident Module -- */
+
+	
 	
 	/* -- Start of Common Functions -- */
 
@@ -702,6 +702,7 @@ export default class Main extends Component{
 			);
 			if(granted === PermissionsAndroid.RESULTS.GRANTED){
 		      	console.log('You can user user location');
+		      	this.getUserLocation();
 		    } 
 		    else{
 		      console.log('Location permission denied');
@@ -711,6 +712,16 @@ export default class Main extends Component{
     		console.log(error);
 	  	}	
 	}
+
+	getUserLocation = ()=>{
+		Geolocation.watchPosition((position)=>{
+			this.setState({userLocation:position.coords});
+			console.log('Got the location');
+		}, (error) => console.log(JSON.stringify(error)),
+		{ enableHighAccuracy: true});
+	}
+
+
 
 	mainTemplateDisplay = ()=>{
 		
@@ -731,12 +742,12 @@ export default class Main extends Component{
 				return 	<HomeTemplate 
 							FirebaseObject             = {firebase}
 							doSubmitIncidentReport     = {this.submitIncidentReport}
-							doSetUserlocation		   = {this.setUserLocation}
 							doLogoutAccount			   = {this.logoutAccount}
 							doGetLoggedAccount         = {this.state.accountLoggedDetails}
 							doSubmitChangePassword     = {this.submitChangePassword}
 							doDisplayAlertMessage      = {this.displayAlertMessage}
 							doSubmitUpdatedInfo        = {this.submitUpdatedInfo}
+							doGetMylocation            = {this.state.userLocation}
 							doSubmitPhoneNumberUpdate  = {this.submitPhoneNumberUpdate} />;
 			case Constants.PAGES.SIGN_UP_PAGE:
 				return <SignUpDashboard

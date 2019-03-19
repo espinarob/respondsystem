@@ -26,11 +26,12 @@ const Constants = {
 
 	RESPONDER_PAGE              : {
 		MAIN_PAGE               : 'MAIN_PAGE',
-		LIST_PAGE               : 'LIST_PAGE'
+		LIST_PAGE               : 'LIST_PAGE',
+		INCIDENT_DETAILS        : 'INCIDENT_DETAILS',
+		RESOLVE_PAGE            : 'RESOLVE_PAGE'
 	},
 
 	RESPONDER_MAIN_PAGE         : {
-		INCIDENT_PAGE           : 'REPORT_PAGE',
 		DEFAULT_PAGE            : 'DEFAULT_PAGE',
 	},
 	
@@ -85,7 +86,9 @@ const Constants = {
 	CONSOLE_TIME_DISPLAY        : 4000,
 	MSG_REPORT_MAX_LENGTH       : 45,
 	INCIDENT_TYPE_MAX_LENGTH    : 45,
+	REPORT_REMARKS_MAX_LENGTH   : 45,
 
+	
 	FIRE_BASE_CONFIG            : {
 		apiKey                  : "AIzaSyAUFpo4C2jL_ABEAQUJXkHXNwOCc4IMFT8",
 	    authDomain              : "resys-respondsystem.firebaseapp.com",

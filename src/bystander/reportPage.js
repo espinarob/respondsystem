@@ -13,6 +13,7 @@ import Geolocation from 'react-native-geolocation-service';
 import ImagePicker from 'react-native-image-picker';
 import Constants   from '../commons/Constants.js';
 import Geocoder    from 'react-native-geocoding';
+import geolib      from 'geolib';
 
 
 export default class ReportPage extends Component{
@@ -27,13 +28,15 @@ export default class ReportPage extends Component{
     	imageLog       : Constants.UPLOAD_IMAGE_LOG.NO_IMAGE,
     	imageSuccess   : false,
     	locationFlag   : false,
-    	userLocation   : {},
     	reportInfo     : '',
     	incidentType   : '',
-    	addressName    : ''
-	}
+    	addressName    : '',
+    	centerCoords   : {},
+    	userLocation   : {}
+	}	
 
 	componentDidMount(){
+		this.getLocationCenterFocus();
 		Geolocation.getCurrentPosition( (position)=>{
 			
 			fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+
@@ -52,10 +55,24 @@ export default class ReportPage extends Component{
 		}, (error) => {
 			//console.log(JSON.stringify(error));
 			this.setState({locationFlag:false});
-		});
+		},
+		{ enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 });
 
 		let today = new Date();
 		this.setState({timeReported:today.toString()});
+
+	}
+
+	getLocationCenterFocus = ()=>{
+		this.props.FirebaseObject
+			.database()
+			.ref("Center")
+			.once("value",snapshot=>{
+				if(snapshot.exists()){
+					const initCenterCoordinates = JSON.parse(JSON.stringify(snapshot.val()));
+					this.setState({centerCoords:initCenterCoordinates});
+				}
+			});
 
 	}
 
@@ -111,8 +128,25 @@ export default class ReportPage extends Component{
 	}
 
 
+	isInsideMaximumRange = ()=>{
+		const result = 	geolib.isPointInCircle(
+						    {latitude: Number(this.state.userLocation.latitude), 
+						    	longitude: Number(this.state.userLocation.longitude) },
+						    {latitude: Number(this.state.centerCoords.latitude), 
+						    	longitude: Number(this.state.centerCoords.longitude) },
+						    this.state.centerCoords.radius
+						);
+		/*console.log(geolib.getDistance(
+		     {latitude: Number(this.state.userLocation.latitude), 
+		    	longitude: Number(this.state.userLocation.longitude) },
+		    {latitude: Number(this.state.centerCoords.latitude), 
+		    	longitude: Number(this.state.centerCoords.longitude) }
+		)); */
+		return result;
+	}
+
 	submitReport = ()=>{
-		if(this.state.userLocation == false){
+		if(this.state.locationFlag == false){
 			this.props.doDisplayAlertMessage('Error: We couldn\'t get your location');
 			setTimeout(()=>this.props.doDisplayAlertMessage(''),Constants.CONSOLE_TIME_DISPLAY);
 		}
@@ -126,6 +160,10 @@ export default class ReportPage extends Component{
 		}
 		else if(this.state.incidentType.length==0){
 			this.props.doDisplayAlertMessage('Please fill in type of incident');
+			setTimeout(()=>this.props.doDisplayAlertMessage(''),Constants.CONSOLE_TIME_DISPLAY);
+		}
+		else if(this.isInsideMaximumRange() == false){
+			this.props.doDisplayAlertMessage('The location is not supported by the application');
 			setTimeout(()=>this.props.doDisplayAlertMessage(''),Constants.CONSOLE_TIME_DISPLAY);
 		}
 		else {
@@ -164,7 +202,7 @@ export default class ReportPage extends Component{
 		    					fontWeight: 'bold',
 		    					textAlign: 'center',
 		    					position: 'relative',
-		    					paddingTop: '1.5%',
+		    					textAlignVertical: 'center',
 		    					left: '10%'
 		    			}}>	
 		    				<Icon
@@ -179,17 +217,18 @@ export default class ReportPage extends Component{
 	    		</View>
 
 	    		<View style={{
-	    				height: '7%',
+	    				height: '8%',
 	    				width:'100%',
 	    				position: 'relative',
-	    				top: '2%'
+	    				top: '3%'
 	    		}}>	
 	    			<Text style={{
 	    					height: '100%',
 	    					width: '100%',
 	    					fontSize:20,
 	    					fontWeight: 'bold',
-	    					textAlign: 'center'
+	    					textAlign: 'center',
+	    					textAlignVertical: 'center'
 	    			}}>
 	    				<Icon
 	    					style={{
@@ -210,6 +249,7 @@ export default class ReportPage extends Component{
 	    				position: 'relative',
 	    				fontSize: 12,
 	    				fontWeight: 'bold',
+	    				textAlignVertical: 'center',
 	    				left: '10%'
 	    		}}>
 	    			Time and Date: {this.state.timeReported}
@@ -236,6 +276,7 @@ export default class ReportPage extends Component{
 	    				borderBottomWidth:1,
 	    				top: '5.2%',
 	    				left: '10%',
+	    				textAlignVertical: 'center',
 	    				borderColor :'#454647'
 	    			}}	
 	    			onChangeText={(reportInfo)=>this.setState({reportInfo:reportInfo})}
@@ -245,10 +286,11 @@ export default class ReportPage extends Component{
 	    		<Text style={{
 	    				height:'3.9%',
 	    				width:'50%',
-	    				top: '6.7%',
+	    				top: '8%',
 	    				position: 'relative',
 	    				fontSize: 12,
 	    				fontWeight: 'bold',
+	    				textAlignVertical: 'center',
 	    				left: '10%'
 	    		}}>
 	    			Upload Photo
@@ -258,8 +300,9 @@ export default class ReportPage extends Component{
 	    				height: '6.3%',
 	    				width:'100%',
 	    				position: 'relative',
-	    				top: '9%',
-	    				flexDirection: 'row'
+	    				top: '13%',
+	    				flexDirection: 'row',
+	    				justifyContent : 'space-evenly'
 	    		}}>
 		    		<TouchableWithoutFeedback
 		    			onPress={()=>this.selectPhoto()}>
@@ -269,9 +312,9 @@ export default class ReportPage extends Component{
 			    				position: 'relative',
 			    				fontSize: 20,
 			    				fontWeight: 'bold',
-			    				left: '135%',
 			    				borderWidth: 2,
 			    				textAlign: 'center',
+			    				textAlignVertical: 'center',
 			    				borderColor :'#454647',
 			    				borderRadius: 5
 			    		}}>
@@ -283,9 +326,10 @@ export default class ReportPage extends Component{
 			    			fontSize: 15,
 			    			fontWeight: 'bold',
 			    			position: 'relative',
-			    			left: '160%',
 			    			width: '40%',
-			    			paddingTop: '2%'
+			    			paddingTop: '2%',
+			    			textAlign: 'center',
+			    			textAlignVertical: 'center'
 			    	}}>
 			    		{this.state.imageLog}
 			    	</Text>
@@ -298,7 +342,8 @@ export default class ReportPage extends Component{
 	    				position: 'relative',
 	    				fontSize: 12,
 	    				fontWeight: 'bold',
-	    				left: '10%'
+	    				left: '10%',
+	    				textAlignVertical: 'center'
 	    		}}>
 	    			Type of Incident
 	    		</Text>
@@ -312,6 +357,7 @@ export default class ReportPage extends Component{
 	    				borderBottomWidth:2,
 	    				top: '10%',
 	    				left: '10%',
+	    				textAlignVertical: 'center',
 	    				borderColor :'#454647'
 	    			}}	
 	    			onChangeText = {(incidentType)=>this.setState({incidentType:incidentType})}

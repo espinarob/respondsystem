@@ -8,29 +8,6 @@ import Constants              from '../commons/Constants.js';
 import ErrorConnectionPage    from '../commons/errorConnectionPage.js';
 import SignUpPartTwoDashboard from './signupP2DashboardComponent.js';
 
-const styles = StyleSheet.create({
-	signUpCircleContainer: {
-	    borderWidth: 1,
-	    borderRadius: 2,
-	    borderColor: '#ddd',
-	    borderBottomWidth: 2,
-	    shadowColor: '#000',
-	    shadowOffset: { width: 20, height: 2 },
-	    shadowOpacity: 0.8,
-	    shadowRadius:20,
-	    elevation: 1,
-	    borderRadius: 100,
-		backgroundColor:'#fff',
-		height: '100%',
-		width: 59,
-		position:'relative',
-		left: 150,
-		paddingLeft:15.5,
-		paddingTop: 9
-  	}
-});
-
-
 export default class SignUpDashboard extends Component<Props> {
 
 	state = {
@@ -100,7 +77,7 @@ export default class SignUpDashboard extends Component<Props> {
 				inputFullName        : this.state.inputFullName,
 				inputHomeAddress     : this.state.inputHomeAddress,
 				inputPhoneNumber     : this.state.inputPhoneNumber
-			}
+			} 
 			this.props.doSaveFirstCredential(data);
 		}
 	}
@@ -210,16 +187,17 @@ export default class SignUpDashboard extends Component<Props> {
 				    		</View>
 
 				    		<View style={{
-				    				height: '26%',
+				    				height: '24%',
 				    				width: '100%',
-				    				top:'5%'
+				    				top:'4%',
+				    				alignItems: 'center'
 				    		}}>
 				    			<Text style={{
 				    					height:'50%',
 				    					width: '25%',
 				    					position: 'relative',
-				    					left: '38%',
-				    					paddingLeft:'5%'
+				    					textAlignVertical: 'center',
+				    					textAlign: 'center'
 				    			}}>
 				    				<Icon
 				    					style={{
@@ -233,11 +211,11 @@ export default class SignUpDashboard extends Component<Props> {
 				    					height:'45%',
 				    					width: '50%',
 				    					position: 'relative',
-				    					left: '25%',
 				    					fontSize: 40,
 				    					fontWeight:'bold',
 				    					color:'#454647',
-				    					paddingLeft:'5%'
+				    					textAlignVertical: 'center',
+				    					textAlign: 'center'
 				    			}}>
 				    				Res-Sys
 				    			</Text>
@@ -246,14 +224,15 @@ export default class SignUpDashboard extends Component<Props> {
 				    		<View style={{
 				    				height:'5%',
 				    				width:'100%',
-				    				top:'8%',
+				    				top:'8.6%',
 				    				flexDirection: 'row'
 				    		}}>	
 				    			<Text style={{
 				    					width: '38%',
 				    					fontSize: 14,
 				    					position: 'relative',
-				    					left: '30%'
+				    					left: '30%',
+				    					textAlignVertical: 'center'
 				    			}}>
 				    				CREATE USERNAME
 				    			</Text>
@@ -262,7 +241,8 @@ export default class SignUpDashboard extends Component<Props> {
 				    					width: '38%',
 				    					fontSize: 14,
 				    					position: 'relative',
-				    					left: '170%'
+				    					left: '170%',
+				    					textAlignVertical: 'center'
 				    			}}>
 				    				CREATE PASSWORD
 				    			</Text>
@@ -281,7 +261,7 @@ export default class SignUpDashboard extends Component<Props> {
 				    					width: '45%',
 				    					fontSize:11,
 				    					left: '13%',
-				    					paddingTop: '2%',
+				    					textAlignVertical: 'center',
 				    					position: 'relative'
 				    				}}
 				    				placeholder ='INPUT CREATED USERNAME'
@@ -296,7 +276,7 @@ export default class SignUpDashboard extends Component<Props> {
 				    					width: '45%',
 				    					fontSize:11,
 				    					left: '55%',
-				    					paddingTop: '2%',
+				    					textAlignVertical: 'center',
 				    					position: 'relative'
 				    				}}
 				    				placeholder    ='INPUT CREATED PASSWORD'
@@ -317,7 +297,8 @@ export default class SignUpDashboard extends Component<Props> {
 				    					width: '38%',
 				    					fontSize: 14,
 				    					position: 'relative',
-				    					left: '30%'
+				    					left: '30%',
+				    					textAlignVertical: 'center'
 				    			}}>
 				    				INPUT BIRTHDAY
 				    			</Text>
@@ -326,7 +307,8 @@ export default class SignUpDashboard extends Component<Props> {
 				    					width: '45%',
 				    					fontSize: 14,
 				    					position: 'relative',
-				    					left: '170%'
+				    					left: '170%',
+				    					textAlignVertical: 'center'
 				    			}}>
 				    				CONFIRM PASSWORD
 				    			</Text>
@@ -345,7 +327,7 @@ export default class SignUpDashboard extends Component<Props> {
 				    					width: '45%',
 				    					fontSize:11,
 				    					left: '13%',
-				    					paddingTop: '2%',
+				    					textAlignVertical: 'center',
 				    					position: 'relative'
 				    				}}
 				    				placeholder='BIRTHDATE (mm/dd/yyyy)'
@@ -359,7 +341,7 @@ export default class SignUpDashboard extends Component<Props> {
 				    					width: '45%',
 				    					fontSize:11,
 				    					left: '55%',
-				    					paddingTop: '2%',
+				    					textAlignVertical: 'center',
 				    					position: 'relative'
 				    				}}
 				    				placeholder    ='CONFIRM YOUR PASSWORD'
@@ -380,6 +362,7 @@ export default class SignUpDashboard extends Component<Props> {
 				    					width: '38%',
 				    					fontSize: 14,
 				    					position: 'relative',
+				    					textAlignVertical: 'center',
 				    					left: '30%'
 				    			}}>
 				    				FULL NAME
@@ -389,6 +372,7 @@ export default class SignUpDashboard extends Component<Props> {
 				    					width: '45%',
 				    					fontSize: 14,
 				    					position: 'relative',
+				    					textAlignVertical: 'center',
 				    					left: '170%'
 				    			}}>
 				    				E-MAIL ADDRESS
@@ -408,7 +392,7 @@ export default class SignUpDashboard extends Component<Props> {
 				    					width: '45%',
 				    					fontSize:11,
 				    					left: '13%',
-				    					paddingTop: '2%',
+				    					textAlignVertical: 'center',
 				    					position: 'relative'
 				    				}}
 				    				placeholder ='FIRST & LAST NAME ONLY'
@@ -423,7 +407,7 @@ export default class SignUpDashboard extends Component<Props> {
 				    					width: '45%',
 				    					fontSize:11,
 				    					left: '55%',
-				    					paddingTop: '2%',
+				    					textAlignVertical: 'center',
 				    					position: 'relative'
 				    				}}
 				    				placeholder ='EMAIL'
@@ -443,6 +427,7 @@ export default class SignUpDashboard extends Component<Props> {
 				    					width: '38%',
 				    					fontSize: 14,
 				    					position: 'relative',
+				    					textAlignVertical: 'center',
 				    					left: '30%'
 				    			}}>
 				    				HOME ADDRESS
@@ -452,6 +437,7 @@ export default class SignUpDashboard extends Component<Props> {
 				    					width: '45%',
 				    					fontSize: 14,
 				    					position: 'relative',
+				    					textAlignVertical: 'center',
 				    					left: '170%'
 				    			}}>
 				    				PHONE NUMBER
@@ -471,7 +457,7 @@ export default class SignUpDashboard extends Component<Props> {
 				    					width: '45%',
 				    					fontSize:11,
 				    					left: '13%',
-				    					paddingTop: '2%',
+				    					textAlignVertical: 'center',
 				    					position: 'relative'
 				    				}}
 				    				placeholder='YOUR HOME ADDRESS'
@@ -486,7 +472,7 @@ export default class SignUpDashboard extends Component<Props> {
 				    					width: '45%',
 				    					fontSize:11,
 				    					left: '55%',
-				    					paddingTop: '2%',
+				    					textAlignVertical: 'center',
 				    					position: 'relative'
 				    				}}
 				    				placeholder='YOUR PHONE NUMBER'

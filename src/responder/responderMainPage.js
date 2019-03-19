@@ -29,6 +29,7 @@ export default class ResponderMainPage extends Component{
 			case Constants.RESPONDER_MAIN_PAGE.DEFAULT_PAGE:
 				return 	<DefaultPage
 							FirebaseObject         = {this.props.FirebaseObject}
+							doGetMylocation        = {this.props.doGetMylocation}
 							doSetResponderMainPage = {this.setResponderMainOperation} />;
 		}
 	}

@@ -6,12 +6,12 @@ import {Platform,
 	AsyncStorage, 
 	Image,
 	TextInput,
-	TouchableWithoutFeedback} 
+	TouchableWithoutFeedback,
+	FlatList} 
 	from 'react-native';
 import {Icon}    from 'native-base';
 import geolib    from 'geolib';
 import Constants from '../commons/Constants.js';
-import Geolocation from 'react-native-geolocation-service';
 
 
 export default class IncidentList extends Component{
@@ -38,13 +38,129 @@ export default class IncidentList extends Component{
 							initAllReports.push(allDatabaseReports[reportKey]);
 						});
 					this.setState({allReports:initAllReports});
-				}
+				}	
 			});
+	}
+
+	getGapDistance = (longitude,latitude)=>{
+		if(this.props.doGetMylocation.latitude){
+			return 	Number(geolib.getDistance(
+				     	{latitude: Number(this.props.doGetMylocation.latitude), 
+					    	longitude: Number(this.props.doGetMylocation.longitude) },
+					    {latitude: Number(latitude), 
+					    	longitude: Number(longitude) }))/1000 + 'kms from your location';
+		}
+		else return 'Getting location.. A moment..'
+	}
+
+	viewReportDetails = (report)=>{
+		this.props.doSetReportDetails(report);
+		this.props.doSetHomePage(Constants.RESPONDER_PAGE.INCIDENT_DETAILS);
 	}
 
 	displayAllReportInList = ()=>{
 		if(this.state.allReports.length!=0){
-
+			return 	<FlatList
+		            	data= {this.state.allReports}
+		            	renderItem={({item}) =>
+							( item.reportStatus == Constants.REPORT_STATUS.RESOLVED ? 
+									<React.Fragment></React.Fragment> :
+									<View style={{
+											height: 158,
+											width: '90%',
+											left: '5%',
+											position: 'relative',
+											borderWidth: 1.2,
+										    borderRadius: 2,
+										    borderColor: '#ddd',
+										    borderBottomWidth: 0,
+										    shadowColor: '#000',
+										    shadowOffset: {
+												width: 0,
+												height: 5,
+											},
+											shadowOpacity: 0.34,
+											shadowRadius: 6.27,
+											elevation: 10,
+										    backgroundColor: '#fff',
+										    top: '0%',
+										    marginBottom:15,
+										    marginTop: 10,
+										    paddingLeft:'1.5%'
+									}}>
+										<Text style={{
+												height:'12%',
+												width:'100%',
+												flexDirection: 'row',
+												position: 'relative',
+												fontSize: 14,
+												fontWeight: 'bold'
+										}}>
+											{item.timeReported}
+										</Text>
+										<Text style={{
+												height:'12%',
+												width:'100%',
+												flexDirection: 'row',
+												position: 'relative',
+												fontSize: 14,
+												fontWeight: 'bold'
+										}}>
+											Reporter: {item.reporter}
+										</Text>
+										<Text style={{
+												height:'12%',
+												width:'100%',
+												flexDirection: 'row',
+												position: 'relative',
+												fontSize: 14,
+												fontWeight: 'bold'
+										}}>
+											Incident: {item.incidentType}
+										</Text>
+										<Text style={{
+												height:'12%',
+												width:'100%',
+												flexDirection: 'row',
+												position: 'relative',
+												fontSize: 14,
+												fontWeight: 'bold'
+										}}>
+											Status: { item.reportStatus == Constants.REPORT_STATUS.UNRESOLVED ?
+												'Unresolved': 'Waiting for authority'}
+										</Text>
+										<Text style={{
+												height:'12%',
+												width:'100%',
+												flexDirection: 'row',
+												position: 'relative',
+												fontSize: 14,
+												fontWeight: 'bold'
+										}}>
+											Distance: {this.getGapDistance(item.userLongitude,
+												item.userLatitude)}
+										</Text>
+										<TouchableWithoutFeedback
+											onPress={()=>this.viewReportDetails(item)}>
+											<Text style={{
+													top: '7.5%',
+													borderWidth:2,
+													borderRadius: 100,
+													height: '23%',
+													width: '30%',
+													left: '68%', 
+													position: 'relative',
+													textAlignVertical: 'center',
+													textAlign: 'center',
+													borderColor: '#000'
+											}}>
+												View More
+											</Text>
+										</TouchableWithoutFeedback>
+									</View>
+							)
+						}
+						keyExtractor={item => item.key}/>
 		}
 		else{
 			return 	<Text style={{
@@ -66,7 +182,8 @@ export default class IncidentList extends Component{
 	    return (
 	    	<View style={{
 	    			height: '100%',
-	    			width: '100%'
+	    			width: '100%',
+	    			backgroundColor: '#f2f3f4'
 	    	}}>
 	    		<View style={{
 	    			height: '9%',
@@ -74,7 +191,8 @@ export default class IncidentList extends Component{
 	    			position: 'relative',
 	    			backgroundColor: '#88ef92',
 	    			top: '0%',
-	    			flexDirection: 'row'
+	    			flexDirection: 'row',
+	    			marginBottom: 15
 	    		}}>
 	    			<Text style={{
 	    					width:'80%',
@@ -91,9 +209,10 @@ export default class IncidentList extends Component{
 	    		</View>
 
 	    		<View style={{
-	    				height:'91%',
+	    				height:'87.5%',
 	    				width:' 100%',
-	    				position: 'relative'
+	    				position: 'relative',
+	    				backgroundColor: '#f2f3f4'
 	    		}}>
 	    			{this.displayAllReportInList()}
 	    		</View>

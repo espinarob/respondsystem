@@ -48,7 +48,7 @@ export default class PhoneNumber extends Component{
 		    					fontWeight: 'bold',
 		    					textAlign: 'center',
 		    					position: 'relative',
-		    					paddingTop: '1.5%',
+		    					textAlignVertical: 'center',
 		    					left: '10%'
 		    			}}>	
 		    				<Icon
@@ -64,8 +64,8 @@ export default class PhoneNumber extends Component{
 	    					width: '55%',
 	    					height: '100%',
 	    					fontSize: 16,
-	    					paddingTop: '3.4%',
 	    					textAlign: 'center',
+	    					textAlignVertical: 'center',
 	    					left: '100%'
 	    			}}>
 	    				PHONE NUMBER
@@ -80,6 +80,7 @@ export default class PhoneNumber extends Component{
 	    				top: '5%',
 	    				left: '15%',
 	    				textAlign: 'center',
+	    				textAlignVertical: 'center',
 	    				fontSize: 13,
 	    				fontWeight: 'bold'
 	    		}}>
@@ -93,9 +94,9 @@ export default class PhoneNumber extends Component{
 	    				top: '5.1%',
 	    				left: '10%',
 	    				textAlign: 'center',
+	    				textAlignVertical: 'center',
 	    				fontSize: 15,
-	    				fontWeight: 'bold',
-	    				paddingTop: '2.3%'
+	    				fontWeight: 'bold'
 	    		}}>
 	    			<Icon
 	    				style={{fontSize:30
@@ -112,6 +113,7 @@ export default class PhoneNumber extends Component{
 	    				top: '10%',
 	    				left: '15%',
 	    				textAlign: 'center',
+	    				textAlignVertical: 'center',
 	    				fontSize: 13,
 	    				fontWeight: 'bold'
 	    		}}>
@@ -141,7 +143,7 @@ export default class PhoneNumber extends Component{
 		    				left: '35%',
 		    				position: 'relative',
 		    				top: '25%',
-		    				paddingTop: '3%',
+		    				textAlignVertical: 'center',
 		    				borderWidth:2,
 		    				borderColor : '#454647',
 		    				color: '#000'

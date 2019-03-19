@@ -120,8 +120,8 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 							height: '100%',
 							fontSize: 12,
 							fontWeight: 'bold',
-							paddingTop:'5%',
-							paddingLeft: '5%',
+							textAlign: 'center',
+							textAlignVertical: 'center',
 							color : Constants.USER_ROLES.NOT_CHOSEN_ROLE_COLOR
 					}}>
 						Disabled for bystanders
@@ -134,8 +134,8 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 							fontSize: 13,
 							fontWeight: 'bold',
 							color: '#000',
-							paddingTop:'5%',
-							paddingLeft: '5%',
+							textAlign: 'center',
+							textAlignVertical: 'center',
 							color : Constants.USER_ROLES.NOT_CHOSEN_ROLE_COLOR,
 							borderColor : Constants.USER_ROLES.NOT_CHOSEN_ROLE_COLOR
 					}}>
@@ -201,17 +201,17 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    			width:'100%',
 		    			height:'10%',
 		    			top: '3%',
-		    			flexDirection: 'row'
+		    			flexDirection: 'row',
+		    			justifyContent: 'center'
 		    		}}>
 		    			<TouchableWithoutFeedback
 		    				onPress={()=>this.changeUserRole(Constants.USER_ROLES.CIVILIAN)}>
 			    			<Text style={{
 			    					width:'45%',
 			    					height: '100%',
-			    					left: '30%',
 			    					borderRightWidth:5,
-			    					paddingTop: '2%',
-			    					paddingLeft:'2%',
+			    					textAlign: 'center',
+			    					textAlignVertical: 'center',
 			    					fontWeight:'bold',
 			    					color: this.state.bystanderColor,
 			    					fontSize: 16
@@ -232,9 +232,8 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 			    			<Text style={{
 			    					width:'45%',
 			    					height: '100%',
-			    					left: '30%',
-			    					paddingTop: '2%',
-			    					paddingLeft:'2%',
+			    					textAlign: 'center',
+			    					textAlignVertical: 'center',
 			    					fontWeight:'bold',
 			    					fontSize: 16,
 			    					color: this.state.responderColor
@@ -256,17 +255,18 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    				height: '20%',
 		    				top: '4%',
 		    				width: '100%',
-		    				borderBottomWidth: 2
+		    				borderBottomWidth: 2,
+		    				justifyContent: 'center'
 		    		}}>
 
 		    			<Text style={{
 		    					width:'15%',
 		    					height: '100%',
-		    					left: '30%',
 		    					fontWeight:'bold',
 		    					position: 'relative',
 		    					color: '#000',
-		    					paddingTop: '3%'
+		    					textAlign: 'center',
+		    					textAlignVertical: 'center'
 		    			}}>
 		    				<Icon
 		    					style={{
@@ -281,8 +281,8 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    					width:'60%',
 		    					height: '100%',
 		    					left: '30%',
-		    					paddingTop: '2%',
-		    					paddingLeft:'2%',
+		    					textAlign: 'center',
+		    					textAlignVertical: 'center',
 		    					fontWeight:'bold',
 		    					position: 'relative',
 		    					fontSize: 14,
@@ -291,12 +291,14 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    				{this.state.userRoleContent}
 		    			</Text>
 		    		</View>
+
 		    		<Text style={{
-		    				width: '18%',
+		    				width: '20%',
 	    					fontSize: 14,
 	    					position: 'relative',
 	    					left: '12%',
 	    					height: '3.8%',
+	    					textAlignVertical: 'center',
 	    					top:'4.5%',
 	    					color: '#000'
 		    		}}>
@@ -309,7 +311,8 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    				borderWidth:2,
 		    				borderRadius: 6,
 		    				position: 'relative',
-		    				left: '15%',
+		    				alignItems: 'center',
+		    				left: '18%',
 		    				color: '#000'
 		    		}}>
 		    			<Picker
@@ -334,6 +337,7 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 	    					position: 'relative',
 	    					left: '12%',
 	    					height: '20%',
+	    					textAlignVertical: 'center',
 	    					color: '#000'
 		    			}}>
 		    				RESPONDER ORGANIZATION
@@ -360,8 +364,8 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 			    					width: '45%',
 			    					left: '105%',
 			    					position: 'relative',
-			    					paddingTop: '3%',
-			    					paddingLeft: '2%',
+			    					textAlign: 'center',
+			    					textAlignVertical: 'center',
 			    					fontSize: 15,
 			    					fontWeight: 'bold',
 			    					color: '#000'
@@ -378,7 +382,8 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 	    					position: 'relative',
 	    					left: '12%',
 	    					height: '20%',
-	    					color: '#000'
+	    					color: '#000',
+	    					textAlignVertical: 'center'
 		    			}}>
 		    				CALL SIGN
 		    			</Text>
@@ -395,7 +400,7 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 			    					width: '45%',
 			    					fontSize:11,
 			    					left: '100%',
-			    					paddingTop: '2%',
+			    					textAlignVertical: 'center',
 			    					position: 'relative',
 			    					color: '#000',
 			    					borderColor: this.state.responderColor
@@ -411,8 +416,8 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 			    					width: '45%',
 			    					left: '105%',
 			    					position: 'relative',
-			    					paddingTop: '3%',
-			    					paddingLeft: '2%',
+			    					textAlign: 'center',
+			    					textAlignVertical: 'center',
 			    					fontSize: 15,
 			    					fontWeight: 'bold',
 			    					color: '#000'
@@ -426,6 +431,7 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    			height: '8%',
 		    			position: 'relative',
 		    			top: '6.5%',
+		    			justifyContent: 'center',
 		    			flexDirection: 'row'
 		    		}}>
 		    			<CheckBox
@@ -434,15 +440,12 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    				style={{
 		    					width:'10%',
 		    					height:'90%',
-		    					position: 'relative',
-		    					left: '120%',
-		    					color: '#000'
+		    					position: 'relative'
 		    				}}/>
 		    			<Text style={{
 		    					height: '100%',
 		    					width: '30%',
 		    					position: 'relative',
-		    					left: '120%',
 		    					fontSize: 14,
 		    					color: '#000',
 		    					fontWeight: 'bold',
@@ -458,12 +461,12 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 			    					height: '100%',
 			    					width: '30%',
 			    					position: 'relative',
-			    					left: '135%',
 			    					fontSize: 14,
 			    					color: '#000',
 			    					fontWeight: 'bold',
 			    					textAlign: 'center',
 			    					borderLeftWidth:2,
+			    					textAlign: 'center',
 			    					textAlignVertical : 'center'
 			    			}}>
 			    				View terms of service
@@ -474,14 +477,14 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    		<TouchableWithoutFeedback
 		    			onPress={()=>this.submitRegistration()}>
 			    		<Text style={{
-			    				height: '6.7%',
-			    				width: '25%',
+			    				height: '8%',
+			    				width: '30%',
 			    				position: 'relative',
-			    				top: '9%',
+			    				top: '8%',
 			    				color:'#454647',
 			    				fontWeight: 'bold',
 			    				borderWidth:2,
-			    				left: '36%',
+			    				left: '35%',
 			    				textAlign: 'center',
 		    					textAlignVertical: 'center'
 			    		}}>

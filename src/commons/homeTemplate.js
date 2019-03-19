@@ -35,17 +35,19 @@ export default class HomeTemplate extends Component{
 							doLogoutAccount           = {this.props.doLogoutAccount}
 							doDisplayAlertMessage     = {this.props.doDisplayAlertMessage }
 							doSubmitUpdatedInfo       = {this.props.doSubmitUpdatedInfo}
-							doSubmitPhoneNumberUpdate = {this.props.doSubmitPhoneNumberUpdate} />;
+							doSubmitPhoneNumberUpdate = {this.props.doSubmitPhoneNumberUpdate}
+							doGetMylocation           = {this.props.doGetMylocation} />;
 			case Constants.USER_ROLES.CIVILIAN:
 				return 	<BystanderPage
+							FirebaseObject            = {this.props.FirebaseObject}
 							doSubmitIncidentReport    = {this.props.doSubmitIncidentReport}
 							doSubmitChangePassword    = {this.props.doSubmitChangePassword}
 							doGetLoggedAccount        = {this.props.doGetLoggedAccount}
 							doLogoutAccount           = {this.props.doLogoutAccount}
-							doSetUserlocation         = {this.props.doSetUserlocation}
 							doDisplayAlertMessage     = {this.props.doDisplayAlertMessage }
 							doSubmitUpdatedInfo       = {this.props.doSubmitUpdatedInfo}
-							doSubmitPhoneNumberUpdate = {this.props.doSubmitPhoneNumberUpdate} />;
+							doSubmitPhoneNumberUpdate = {this.props.doSubmitPhoneNumberUpdate}
+							doGetMylocation           = {this.props.doGetMylocation} />;
 			case Constants.USER_ROLES.DEFAULT:
 				return 	<NoRolePage />;
 		}

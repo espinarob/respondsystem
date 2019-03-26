@@ -183,6 +183,7 @@ export default class IncidentList extends Component{
 	    	<View style={{
 	    			height: '100%',
 	    			width: '100%',
+	    			alignItems: 'center',
 	    			backgroundColor: '#f2f3f4'
 	    	}}>
 	    		<View style={{
@@ -212,7 +213,8 @@ export default class IncidentList extends Component{
 	    				height:'87.5%',
 	    				width:' 100%',
 	    				position: 'relative',
-	    				backgroundColor: '#f2f3f4'
+	    				backgroundColor: '#f2f3f4',
+	    				justifyContent: 'center'
 	    		}}>
 	    			{this.displayAllReportInList()}
 	    		</View>

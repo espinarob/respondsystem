@@ -30,7 +30,8 @@ export default class LoadingScreen extends Component{
 		    				}}/>
 		    	<View style={{
 		    		width:'100%',
-		    		height:'100%'
+		    		height:'100%',
+		    		alignItems: 'center'
 		    	}}>
 		    		<View style={{
 		    				height: '26%',
@@ -78,7 +79,6 @@ export default class LoadingScreen extends Component{
 
 	    			<Text 	style={{
 	    						width:'70%',
-	    						left: '15%',
 	    						position: 'relative',
 	    						height: '10%',
 	    						fontSize: 16,

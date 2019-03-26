@@ -21,7 +21,8 @@ export default class ResolvePage extends Component{
 	resolvePageDisplay = ()=>{
 		return 	<View style={{
 		    			height: '100%',
-		    			width: '100%'
+		    			width: '100%',
+		    			alignItems: 'center'
 		    	}}>
 		    		<View style={{
 		    			height: '9%',
@@ -67,7 +68,6 @@ export default class ResolvePage extends Component{
 		    		<Text style={{
 		    				height: '5%',
 		    				width: '30%',
-		    				left: '10%',
 		    				position: 'relative',
 		    				top: '5%',
 		    				fontSize:15,
@@ -81,7 +81,6 @@ export default class ResolvePage extends Component{
 		    				height: '9%',
 		    				textAlignVertical:'top',
 		    				width: '65%',
-		    				left:'10%',
 		    				position:'relative',
 		    				borderBottomWidth:2,
 		    				paddingLeft: '3%',

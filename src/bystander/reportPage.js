@@ -136,12 +136,6 @@ export default class ReportPage extends Component{
 						    	longitude: Number(this.state.centerCoords.longitude) },
 						    this.state.centerCoords.radius
 						);
-		/*console.log(geolib.getDistance(
-		     {latitude: Number(this.state.userLocation.latitude), 
-		    	longitude: Number(this.state.userLocation.longitude) },
-		    {latitude: Number(this.state.centerCoords.latitude), 
-		    	longitude: Number(this.state.centerCoords.longitude) }
-		)); */
 		return result;
 	}
 
@@ -183,7 +177,8 @@ export default class ReportPage extends Component{
 	    return (
 	    	<View style={{
 	    			height: '100%',
-	    			width: '100%'
+	    			width: '100%',
+	    			alignItems:'center'
 	    	}}>
 	    		<View style={{
 	    			height: '9%',
@@ -249,8 +244,6 @@ export default class ReportPage extends Component{
 	    				position: 'relative',
 	    				fontSize: 12,
 	    				fontWeight: 'bold',
-	    				textAlignVertical: 'center',
-	    				left: '10%'
 	    		}}>
 	    			Time and Date: {this.state.timeReported}
 	    		</Text>
@@ -262,7 +255,6 @@ export default class ReportPage extends Component{
 	    				position: 'relative',
 	    				fontSize: 12,
 	    				fontWeight: 'bold',
-	    				left: '10%'
 	    		}}>
 	    			Message Report
 	    		</Text>
@@ -275,7 +267,6 @@ export default class ReportPage extends Component{
 	    				fontSize: 12,
 	    				borderBottomWidth:1,
 	    				top: '5.2%',
-	    				left: '10%',
 	    				textAlignVertical: 'center',
 	    				borderColor :'#454647'
 	    			}}	
@@ -290,8 +281,7 @@ export default class ReportPage extends Component{
 	    				position: 'relative',
 	    				fontSize: 12,
 	    				fontWeight: 'bold',
-	    				textAlignVertical: 'center',
-	    				left: '10%'
+	    				textAlignVertical: 'center'
 	    		}}>
 	    			Upload Photo
 	    		</Text>
@@ -342,7 +332,6 @@ export default class ReportPage extends Component{
 	    				position: 'relative',
 	    				fontSize: 12,
 	    				fontWeight: 'bold',
-	    				left: '10%',
 	    				textAlignVertical: 'center'
 	    		}}>
 	    			Type of Incident
@@ -356,7 +345,6 @@ export default class ReportPage extends Component{
 	    				fontSize: 12,
 	    				borderBottomWidth:2,
 	    				top: '10%',
-	    				left: '10%',
 	    				textAlignVertical: 'center',
 	    				borderColor :'#454647'
 	    			}}	
@@ -373,7 +361,6 @@ export default class ReportPage extends Component{
 		    				color:'#454647',
 		    				fontWeight: 'bold',
 		    				borderWidth:2,
-		    				left: '30%',
 		    				textAlign: 'center',
 		    				textAlignVertical: 'center'
 		    		}}>

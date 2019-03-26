@@ -57,7 +57,8 @@ export default class LoginDashboard extends Component{
 		    				}}/>
 		    	<View style={{
 		    		width:'100%',
-		    		height:'100%'
+		    		height:'100%',
+		    		alignItems:'center'
 		    	}}>
 		    		<View style={{
 		    				height: '7%',

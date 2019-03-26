@@ -97,7 +97,8 @@ export default class UserInformation extends Component{
 	    return (
 	    	<View style={{
 	    			height: '100%',
-	    			width: '100%'
+	    			width: '100%',
+	    			alignItems: 'center'
 	    	}}>
 	    		<View style={{
 	    			height: '9%',
@@ -392,7 +393,6 @@ export default class UserInformation extends Component{
 		    				textAlign: 'center',
 		    				textAlignVertical: 'center',
 		    				width: '30%',
-		    				left: '35%',
 		    				position: 'relative',
 		    				top: '10%',
 		    				borderWidth:2,

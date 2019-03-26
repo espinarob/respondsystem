@@ -31,7 +31,8 @@ export default class WelcomeDashboard extends Component{
 		    				}}/>
 		    	<View style={{
 		    		width:'100%',
-		    		height:'100%'
+		    		height:'100%',
+		    		alignItems: 'center'
 		    	}}>
 		    		<View style={{
 		    				height: '26%',
@@ -71,7 +72,8 @@ export default class WelcomeDashboard extends Component{
 		    		<View style={{
 		    				height: '26%',
 		    				width: '100%',
-		    				top:'36%'
+		    				top:'32%',
+		    				alignItems: 'center'
 		    		}}>
 		    			<TouchableWithoutFeedback
 		    				onPress={()=>this.props.doSetTemplateDisplay(Constants.PAGES.LOGIN_PAGE)}>
@@ -85,7 +87,6 @@ export default class WelcomeDashboard extends Component{
 		    						fontSize: 20,
 		    						position: 'relative',
 		    						borderRadius: 10,
-		    						left: '20%',
 		    						borderColor: '#454647',
 		    						textAlign: 'center',
 		    						textAlignVertical: 'center'
@@ -106,7 +107,6 @@ export default class WelcomeDashboard extends Component{
 		    						fontSize: 20,
 		    						position: 'relative',
 		    						borderRadius: 10,
-		    						left: '20%',
 		    						borderColor: '#454647',
 		    						textAlign: 'center',
 		    						textAlignVertical: 'center'
@@ -121,7 +121,6 @@ export default class WelcomeDashboard extends Component{
 		    				textAlign: 'center',
 		    				textAlignVertical: 'center',
 		    				top: '37%',
-		    				left: '10%',
 		    				fontWeight: 'bold',
 		    				fontSize:15,
 		    				color: '#454647'

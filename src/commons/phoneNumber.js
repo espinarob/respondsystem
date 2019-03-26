@@ -29,7 +29,8 @@ export default class PhoneNumber extends Component{
 	    return (
 	    	<View style={{
 	    			height: '100%',
-	    			width: '100%'
+	    			width: '100%',
+	    			alignItems: 'center'
 	    	}}>
 	    		<View style={{
 	    			height: '9%',
@@ -78,7 +79,6 @@ export default class PhoneNumber extends Component{
 	    				height: '4%',
 	    				width: '45%',
 	    				top: '5%',
-	    				left: '15%',
 	    				textAlign: 'center',
 	    				textAlignVertical: 'center',
 	    				fontSize: 13,
@@ -92,7 +92,6 @@ export default class PhoneNumber extends Component{
 	    				height: '9%',
 	    				width: '45%',
 	    				top: '5.1%',
-	    				left: '10%',
 	    				textAlign: 'center',
 	    				textAlignVertical: 'center',
 	    				fontSize: 15,
@@ -111,7 +110,6 @@ export default class PhoneNumber extends Component{
 	    				height: '4%',
 	    				width: '45%',
 	    				top: '10%',
-	    				left: '15%',
 	    				textAlign: 'center',
 	    				textAlignVertical: 'center',
 	    				fontSize: 13,
@@ -126,7 +124,6 @@ export default class PhoneNumber extends Component{
 	    			style={{
 	    				height:'8%',
 	    				width: '55%',
-	    				left: '18.5%',
 	    				borderBottomWidth:1,
 	    				top:'10.5%',
 	    				position: 'relative',
@@ -140,7 +137,6 @@ export default class PhoneNumber extends Component{
 		    				height: '8%',
 		    				textAlign: 'center',
 		    				width: '30%',
-		    				left: '35%',
 		    				position: 'relative',
 		    				top: '25%',
 		    				textAlignVertical: 'center',

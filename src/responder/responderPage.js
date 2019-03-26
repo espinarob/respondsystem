@@ -44,7 +44,7 @@ export default class ResponderPage extends Component{
 				return 	<ResponderMainPage
 							FirebaseObject            = {this.props.FirebaseObject}
 							doGetMylocation           = {this.props.doGetMylocation}
-							doLogoutAccount           = {this.props.doLogoutAccount} />;
+							doGetEmergencyIcon        = {this.props.doGetEmergencyIcon} />;
 			case Constants.RESPONDER_PAGE.LIST_PAGE:
 				return 	<IncidentList
 							doGetMylocation           = {this.props.doGetMylocation}

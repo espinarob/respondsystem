@@ -18,7 +18,8 @@ export default class MorePage extends Component{
 	    return (
 	    	<View style={{
 	    			height: '100%',
-	    			width: '100%'
+	    			width: '100%',
+	    			alignItems: 'center'
 	    	}}>
 	    		<View style={{
 	    			height: '9%',
@@ -34,13 +35,14 @@ export default class MorePage extends Component{
 	    				height: '15%',
 	    				width:'100%',
 	    				top: '5%',
-	    				flexDirection: 'row'
+	    				flexDirection: 'row',
+	    				justifyContent:'center',
+	    				alignItems:'center'
 	    		}}>
 	    			<Text style={{
 	    					width: '24%',
 	    					height: '100%',
 	    					position: 'relative',
-	    					left: '20%',
 	    					paddingTop: '4.5%',
 	    					textAlign: 'center',
 	    					textAlignVertical : 'center',
@@ -54,12 +56,10 @@ export default class MorePage extends Component{
 	    					name='user'
 	    					type='FontAwesome'/>
 	    			</Text>
-
 	    			<Text style={{
 	    					width: '70%',
 	    					height: '100%',
 	    					paddingLeft: '3%',
-	    					left: '23%',
 	    					fontSize: 16,
 	    					fontWeight: 'bold',
 	    					textAlignVertical: 'center',

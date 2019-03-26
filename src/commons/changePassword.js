@@ -36,7 +36,8 @@ export default class ChangePassword extends Component{
 	    return (
 	    	<View style={{
 	    			height: '100%',
-	    			width: '100%'
+	    			width: '100%',
+	    			alignItems: 'center'
 	    	}}>
 	    		<View style={{
 	    			height: '9%',
@@ -86,7 +87,6 @@ export default class ChangePassword extends Component{
 	    				top: '5%',
 	    				position: 'relative',
 	    				width: '40%',
-	    				left: '10%',
 	    				textAlignVertical: 'center'
 	    		}}>
 	    			Current Password
@@ -99,8 +99,7 @@ export default class ChangePassword extends Component{
 	    				fontSize: 12,
 	    				borderColor : '#454647',
 	    				borderBottomWidth:0.8,
-	    				top: '5.1%',
-	    				left: '10%'
+	    				top: '5.1%'
 	    			}}
 	    			secureTextEntry={true}
 	    			value          = {this.state.currentPassword}
@@ -112,7 +111,6 @@ export default class ChangePassword extends Component{
 	    				top: '5.5%',
 	    				position: 'relative',
 	    				width: '40%',
-	    				left: '10%',
 	    				textAlignVertical: 'center'
 	    		}}>
 	    			New Password
@@ -126,8 +124,7 @@ export default class ChangePassword extends Component{
 	    				fontSize: 12,
 	    				borderColor : '#454647',
 	    				borderBottomWidth:0.8,
-	    				top: '5.6%',
-	    				left: '10%'
+	    				top: '5.6%'
 	    			}}
 	    			secureTextEntry = {true}
 	    			value           = {this.state.newPassword}
@@ -140,7 +137,6 @@ export default class ChangePassword extends Component{
 	    				top: '6%',
 	    				position: 'relative',
 	    				width: '40%',
-	    				left: '10%',
 	    				textAlignVertical: 'center'
 	    		}}>
 	    			Confirm New Password
@@ -154,8 +150,7 @@ export default class ChangePassword extends Component{
 	    				fontSize: 12,
 	    				borderBottomWidth:0.8,
 	    				borderColor : '#454647',
-	    				top: '6.1%',
-	    				left: '10%'
+	    				top: '6.1%'
 	    			}}
 	    			secureTextEntry = {true}
 	    			value           = {this.state.confirmNewPassword}
@@ -167,7 +162,6 @@ export default class ChangePassword extends Component{
 		    				height: '8%',
 		    				textAlign: 'center',
 		    				width: '30%',
-		    				left: '35%',
 		    				position: 'relative',
 		    				top: '20%',
 		    				textAlignVertical: 'center',

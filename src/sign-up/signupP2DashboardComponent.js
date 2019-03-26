@@ -157,7 +157,8 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    				}}/>
 		    	<View style={{
 		    		width:'100%',
-		    		height:'100%'
+		    		height:'100%',
+		    		alignItems:'center'
 		    	}}>
 		    		<View style={{
 		    				height: '7%',
@@ -293,11 +294,11 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    		</View>
 
 		    		<Text style={{
-		    				width: '20%',
+		    				width: '100%',
 	    					fontSize: 14,
 	    					position: 'relative',
-	    					left: '12%',
 	    					height: '3.8%',
+	    					textAlign:'center',
 	    					textAlignVertical: 'center',
 	    					top:'4.5%',
 	    					color: '#000'
@@ -312,7 +313,6 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    				borderRadius: 6,
 		    				position: 'relative',
 		    				alignItems: 'center',
-		    				left: '18%',
 		    				color: '#000'
 		    		}}>
 		    			<Picker
@@ -332,11 +332,11 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    				position: 'relative'
 		    		}}>
 		    			<Text style={{
-		    				width: '60%',
+		    				width: '100%',
 	    					fontSize: 14,
 	    					position: 'relative',
-	    					left: '12%',
 	    					height: '20%',
+	    					textAlign:'center',
 	    					textAlignVertical: 'center',
 	    					color: '#000'
 		    			}}>
@@ -345,7 +345,9 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    			<View style={{
 		    					height: '25%',
 		    					width: '100%',
-		    					flexDirection: 'row'
+		    					flexDirection: 'row',
+		    					alignItems:'center',
+		    					justifyContent: 'center'
 		    			}}>
 		    				<View style={{
 				    				width: '45%',
@@ -353,7 +355,6 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 				    				borderWidth:2,
 				    				borderRadius: 6,
 				    				position: 'relative',
-				    				left: '105%',
 				    				color: '#000'
 				    		}}>
 				    			{this.generateOrganizationOption()}
@@ -362,7 +363,6 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 			    			<Text style={{
 			    					height: '100%',
 			    					width: '45%',
-			    					left: '105%',
 			    					position: 'relative',
 			    					textAlign: 'center',
 			    					textAlignVertical: 'center',
@@ -377,12 +377,12 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 			    		</View>
 
 		    			<Text style={{
-		    				width: '60%',
+		    				width: '100%',
 	    					fontSize: 14,	
 	    					position: 'relative',
-	    					left: '12%',
 	    					height: '20%',
 	    					color: '#000',
+	    					textAlign: 'center',
 	    					textAlignVertical: 'center'
 		    			}}>
 		    				CALL SIGN
@@ -391,7 +391,9 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    			<View style={{
 		    					height: '25%',
 		    					width: '100%',
-		    					flexDirection: 'row'
+		    					flexDirection: 'row',
+		    					alignItems:'center',
+		    					justifyContent: 'center'
 		    			}}>
 			    			<TextInput
 			    				style={{
@@ -399,7 +401,6 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 			    					height: '100%',
 			    					width: '45%',
 			    					fontSize:11,
-			    					left: '100%',
 			    					textAlignVertical: 'center',
 			    					position: 'relative',
 			    					color: '#000',
@@ -414,7 +415,6 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 			    			<Text style={{
 			    					height: '100%',
 			    					width: '45%',
-			    					left: '105%',
 			    					position: 'relative',
 			    					textAlign: 'center',
 			    					textAlignVertical: 'center',
@@ -432,6 +432,7 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    			position: 'relative',
 		    			top: '6.5%',
 		    			justifyContent: 'center',
+		    			alignItems:'center',
 		    			flexDirection: 'row'
 		    		}}>
 		    			<CheckBox
@@ -477,14 +478,13 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    		<TouchableWithoutFeedback
 		    			onPress={()=>this.submitRegistration()}>
 			    		<Text style={{
-			    				height: '8%',
+			    				height: '7.5%',
 			    				width: '30%',
 			    				position: 'relative',
-			    				top: '8%',
+			    				top: '7%',
 			    				color:'#454647',
 			    				fontWeight: 'bold',
 			    				borderWidth:2,
-			    				left: '35%',
 			    				textAlign: 'center',
 		    					textAlignVertical: 'center'
 			    		}}>

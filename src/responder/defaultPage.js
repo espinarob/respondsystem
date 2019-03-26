@@ -13,17 +13,19 @@ import {Marker}    from 'react-native-maps';
 import MapView     from 'react-native-maps';
 import Constants   from '../commons/Constants.js';
 import geolib      from 'geolib';
+
 const  responderIcon  = require('../img/map-icon/responderIcon1.png');
 const  centerIcon     = require('../img/map-icon/centerIcon.png');
-const  emergencyIcon  = require('../img/map-icon/emergency.png');
 
 export default class DefaultPage extends Component{
 
 	state = {
-		allReports        : [],
-		centerCoords      : [],
-		nearbyFlag        : false,
-		tracksViewChanges : false
+		allReports              : [],
+		centerCoords            : [],
+		nearbyFlag              : false,
+		tracksViewChangesUsers  : true,
+		tracksViewChangesCenter : true,
+		tracksViewChangesReport : true
 	}
 
 	getAllReports = ()=>{
@@ -38,6 +40,10 @@ export default class DefaultPage extends Component{
 						.keys(allDatabaseReports)
 						.forEach((reportKey)=>{
 							initAllReports.push(allDatabaseReports[reportKey]);
+							if(allDatabaseReports[reportKey].reportStatus
+								== Constants.REPORT_STATUS.UNRESOLVED && this.state.nearbyFlag == false){
+								this.setState({nearbyFlag:true});
+							}
 						});
 					this.setState({allReports:initAllReports});
 				}
@@ -63,16 +69,45 @@ export default class DefaultPage extends Component{
 	}
 
 
+	onLoadUsersLocationImage = ()=>{
+		if(responderIcon){
+			setTimeout(()=>{
+				this.setState({tracksViewChangesUsers:false});
+			},1500);
+		}
+	}
+
+	onLoadCenterLocationImage = ()=>{
+		if(centerIcon){
+			setTimeout(()=>{
+				this.setState({tracksViewChangesCenter:false});
+			},1500);
+		}
+			
+	}
+
+	onLoadReportIcon = ()=>{
+		if(this.props.doGetEmergencyIcon){
+			setTimeout(()=>{
+				this.setState({tracksViewChangesReport:false});
+			},1500);
+		}
+	}
+
+
 	displayCenterLocation = ()=>{
 		if(this.state.centerCoords.length!=0){
 		 	return 	<Marker
 				      	coordinate={{latitude:this.state.centerCoords.latitude,
 				      		longitude:this.state.centerCoords.longitude}}
+			      		tracksViewChanges = {this.state.tracksViewChangesCenter}
 				      	title={'Center Location'}
 				      	description={String(Number(this.state.centerCoords.radius)/1000)+
 				      		'kms. around this center is accepted'}>
 
-				      	<Image source={centerIcon}
+				      	<Image
+				      		onLoad={this.onLoadCenterLocationImage} 
+				      		source={centerIcon}
 				      		style={{height:40,width:40}}/>
 				    </Marker>
 		}
@@ -81,31 +116,37 @@ export default class DefaultPage extends Component{
 
 
 	displayMarker = ()=>{
-		return 	this.state.allReports.map(report => {
-					if(report.reportStatus == Constants.REPORT_STATUS.UNRESOLVED){
-						return 	<Marker
-							      	coordinate={{latitude:report.userLatitude,
-							      		longitude:report.userLongitude}}
-							      	title={report.incidentType}
-							      	key  ={report.key}
-							      	description={report.reportInfo}>
-							      	<Image source={emergencyIcon}
-						      		style={{height:40,width:40}}/>
-							    </Marker>
-					}	
-			  	});
+		markers =	this.state.allReports.map(report => {
+						if(report.reportStatus == Constants.REPORT_STATUS.UNRESOLVED){
+							return 	<Marker
+										tracksViewChanges = {this.state.tracksViewChangesReport}
+								      	coordinate={{latitude:report.userLatitude,
+								      		longitude:report.userLongitude}}
+								      	title={report.incidentType}
+								      	key  ={report.key}
+								      	description={report.reportInfo}>
+								      	<Image
+								      		onLoad={this.onLoadReportIcon} 
+								      		source={this.props.doGetEmergencyIcon}
+							      			style={{height:40,width:40}}/>
+								    </Marker>
+						}	
+			  		});
+		return markers;
 	}
 
 	displayUsersLocation = ()=>{
 		if(this.props.doGetMylocation.latitude){
-			return 	<Marker
+			return	<Marker
 				      	coordinate={{latitude:this.props.doGetMylocation.latitude,
 				      		longitude:this.props.doGetMylocation.longitude}}
-			      		tracksViewChanges = {false}
+			      		tracksViewChanges = {this.state.tracksViewChangesUsers}
 				      	title={'Hello responder!'}
 				      	description={'Here is your location'}>
 
-				      	<Image source={responderIcon}
+				      	<Image
+				      		onLoad={this.onLoadUsersLocationImage} 
+				      		source={responderIcon}
 				      		style={{height:45,width:45}}/>
 				    </Marker>
 		}
@@ -141,7 +182,7 @@ export default class DefaultPage extends Component{
 	}
 
 	displayAlertForEmergency = ()=>{
-		if(this.state.allReports.length!=0){
+		if(this.state.nearbyFlag == true){
 			return 	<Text style={{
 	    					height:'9%',
 	    					top: '6%',
@@ -188,7 +229,7 @@ export default class DefaultPage extends Component{
     					textAlignVertical: 'center',
     					fontSize: 11,
     					left: '80%',
-    					backgroundColor: (this.state.allReports.length == 0 ?
+    					backgroundColor: (this.state.nearbyFlag == false ?
     						'#88ef92' : '#c6311d' ),
     					fontWeight: 'bold',
     			}}>

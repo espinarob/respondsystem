@@ -28,6 +28,7 @@ export default class ResponderMainPage extends Component{
 		switch(this.state.mainPageOperation){
 			case Constants.RESPONDER_MAIN_PAGE.DEFAULT_PAGE:
 				return 	<DefaultPage
+							doGetEmergencyIcon     = {this.props.doGetEmergencyIcon}
 							FirebaseObject         = {this.props.FirebaseObject}
 							doGetMylocation        = {this.props.doGetMylocation}
 							doSetResponderMainPage = {this.setResponderMainOperation} />;

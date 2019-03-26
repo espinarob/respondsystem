@@ -41,7 +41,7 @@ export default class SignUpDashboard extends Component<Props> {
 
 	goToNextPageRegistration = ()=>{
 		this.props.doDisplayAlertMessage('');
-		if(this.state.inputUsername.length<Constants.SIGNUP_FORMS.USERNAME_MIN_LENGTH){
+		/*if(this.state.inputUsername.length<Constants.SIGNUP_FORMS.USERNAME_MIN_LENGTH){
 			this.props.doDisplayAlertMessage('Username input length minimum is '+
 				Constants.SIGNUP_FORMS.USERNAME_MIN_LENGTH+' characters');
 			setTimeout(()=>this.props.doDisplayAlertMessage(''),Constants.SIGNUP_FORMS.ERROR_TIME_DISPLAY);
@@ -67,7 +67,7 @@ export default class SignUpDashboard extends Component<Props> {
 			this.props.doDisplayAlertMessage(this.state.inputPhoneError);
 			setTimeout(()=>this.props.doDisplayAlertMessage(''),Constants.SIGNUP_FORMS.ERROR_TIME_DISPLAY);
 		}
-		else{
+		else{ */
 			const data = {
 				inputUsername        : this.state.inputUsername,
 				inputPassword        : this.state.inputPassword,
@@ -79,7 +79,7 @@ export default class SignUpDashboard extends Component<Props> {
 				inputPhoneNumber     : this.state.inputPhoneNumber
 			} 
 			this.props.doSaveFirstCredential(data);
-		}
+		//}
 	}
 
 	validateInputPhoneNumber = ()=>{
@@ -147,14 +147,17 @@ export default class SignUpDashboard extends Component<Props> {
 				    				}}/>
 				    	<View style={{
 				    		width:'100%',
-				    		height:'100%'
+				    		height:'100%',
+				    		alignItems: 'center'
 				    	}}>
 				    		<View style={{
 				    				height: '7%',
 				    				width: '100%',
 				    				flexDirection: 'row',
 				    				position:'relative',
-				    				top: '2%'
+				    				top: '2%',
+				    				justifyContent:'flex-start',
+				    				alignItems:'center'
 				    		}}>
 				    			<TouchableWithoutFeedback
 				    				onPress={()=>this.getBackToWelcomePage()}>
@@ -162,7 +165,7 @@ export default class SignUpDashboard extends Component<Props> {
 					    					height:'100%',
 					    					position: 'relative',
 					    					width: '10%',
-					    					left: '23%'
+					    					left: '15%'
 					    			}}>
 					    				<Icon
 					    					style={{
@@ -175,19 +178,21 @@ export default class SignUpDashboard extends Component<Props> {
 					    		</TouchableWithoutFeedback>
 					    		<Text style={{
 				    					height: '100%',
-				    					width: '47%',
+				    					width: '50%',
 				    					fontSize: 18,
-				    					left: '180%',
 				    					paddingTop: '2.5%',
 				    					fontWeight: 'bold',
-				    					position: 'relative'
+				    					textAlign:'center',
+				    					textAlignVertical:'center',
+				    					position: 'relative',
+				    					left: '125%'
 				    			}}>
 				    				Registration 1 of 2
 				    			</Text>
 				    		</View>
 
 				    		<View style={{
-				    				height: '24%',
+				    				height: '21%',
 				    				width: '100%',
 				    				top:'4%',
 				    				alignItems: 'center'
@@ -224,8 +229,9 @@ export default class SignUpDashboard extends Component<Props> {
 				    		<View style={{
 				    				height:'5%',
 				    				width:'100%',
-				    				top:'8.6%',
-				    				flexDirection: 'row'
+				    				top:'6.5%',
+				    				flexDirection: 'row',
+				    				alignItems:'center'
 				    		}}>	
 				    			<Text style={{
 				    					width: '38%',
@@ -252,7 +258,8 @@ export default class SignUpDashboard extends Component<Props> {
 				    				height:'7%',
 				    				width:'100%',
 				    				top:'8%',
-				    				flexDirection: 'row'
+				    				flexDirection: 'row',
+				    				alignItems:'center'
 				    		}}>
 				    			<TextInput
 				    				style={{
@@ -286,12 +293,41 @@ export default class SignUpDashboard extends Component<Props> {
 				    				onChangeText   ={(inputPassword)=>this.setState({inputPassword:inputPassword})} />	
 
 				    		</View>
+				    		<View style={{
+				    				height:'4%',
+				    				width:'100%',
+				    				top:'8.6%',
+				    				flexDirection: 'row',
+				    				alignItems:'center'
+				    		}}>	
+				    			<Text style={{
+				    					width: '50%',
+				    					fontSize: 11,
+				    					position: 'relative',
+				    					textAlignVertical: 'center',
+				    					paddingLeft: '3%',
+				    					color: '#e82c2c'
+				    			}}>
+				    				Minimum of{' '+Constants.SIGNUP_FORMS.USERNAME_MIN_LENGTH+' characters'}
+				    			</Text>
 
+				    			<Text style={{
+				    					width: '50%',
+				    					fontSize: 11,
+				    					position: 'relative',
+				    					textAlignVertical: 'center',
+				    					paddingLeft: '3%',
+				    					color: '#e82c2c'
+				    			}}>
+				    				Minimum of{' '+Constants.SIGNUP_FORMS.PASSWORD_MIN_LENGTH+' characters'}
+				    			</Text>
+				    		</View>
 				    		<View style={{
 				    				height:'5%',
 				    				width:'100%',
 				    				top:'10%',
-				    				flexDirection: 'row'
+				    				flexDirection: 'row',
+				    				alignItems:'center'
 				    		}}>	
 				    			<Text style={{
 				    					width: '38%',
@@ -318,7 +354,8 @@ export default class SignUpDashboard extends Component<Props> {
 				    				height:'7%',
 				    				width:'100%',
 				    				top:'8%',
-				    				flexDirection: 'row'
+				    				flexDirection: 'row',
+				    				alignItems:'center'
 				    		}}>
 				    			<TextInput
 				    				style={{
@@ -356,7 +393,8 @@ export default class SignUpDashboard extends Component<Props> {
 				    				height:'5%',
 				    				width:'100%',
 				    				top:'10%',
-				    				flexDirection: 'row'
+				    				flexDirection: 'row',
+				    				alignItems:'center'
 				    		}}>	
 				    			<Text style={{
 				    					width: '38%',
@@ -383,7 +421,8 @@ export default class SignUpDashboard extends Component<Props> {
 				    				height:'7%',
 				    				width:'100%',
 				    				top:'8%',
-				    				flexDirection: 'row'
+				    				flexDirection: 'row',
+				    				alignItems:'center'
 				    		}}>
 				    			<TextInput
 				    				style={{
@@ -421,7 +460,8 @@ export default class SignUpDashboard extends Component<Props> {
 				    				height:'5%',
 				    				width:'100%',
 				    				top:'10%',
-				    				flexDirection: 'row'
+				    				flexDirection: 'row',
+				    				alignItems:'center'
 				    		}}>	
 				    			<Text style={{
 				    					width: '38%',
@@ -448,7 +488,8 @@ export default class SignUpDashboard extends Component<Props> {
 				    				height:'7%',
 				    				width:'100%',
 				    				top:'8%',
-				    				flexDirection: 'row'
+				    				flexDirection: 'row',
+				    				alignItems:'center'
 				    		}}>
 				    			<TextInput
 				    				style={{
@@ -492,7 +533,6 @@ export default class SignUpDashboard extends Component<Props> {
 					    				color:'#454647',
 					    				fontWeight: 'bold',
 					    				borderWidth:2,
-					    				left: '35%',
 					    				textAlign: 'center',
 		    							textAlignVertical: 'center'
 					    		}}>

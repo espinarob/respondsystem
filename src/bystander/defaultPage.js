@@ -13,22 +13,48 @@ import {Marker}    from  'react-native-maps';
 import MapView     from  'react-native-maps';
 import Constants   from '../commons/Constants.js';
 const  bystanderIcon  = require('../img/map-icon/responderIcon1.png');
-const  centerIcon     = require('../img/map-icon/centerIcon.png');
+const  centerIcon     = require('../img/map-icon/centerIcon.png');;
 const  emergencyIcon  = require('../img/map-icon/emergency.png');
 
 export default class DefaultPage extends Component{
 
 	state = {
-		allReports   : [],
-		centerCoords : []
+		allReports              : [],
+		centerCoords            : [],
+		tracksViewChangesUsers  : true,
+		tracksViewChangesCenter : true,
+		tracksViewChangesReport : true
 	}
-
 
 	componentDidMount(){
 		this.getAllReports();
 		this.getLocationCenterFocus();
 	}
 
+	onLoadUsersLocationImage = ()=>{
+		if(bystanderIcon){
+			setTimeout(()=>{
+				this.setState({tracksViewChangesUsers:false});
+			},1500);
+		}
+	}
+
+	onLoadCenterLocationImage = ()=>{
+		if(centerIcon){
+			setTimeout(()=>{
+				this.setState({tracksViewChangesCenter:false});
+			},1500);
+		}
+			
+	}
+
+	onLoadReportImages = ()=>{
+		if(emergencyIcon){
+			setTimeout(()=>{
+				this.setState({tracksViewChangesReport:false});
+			},1500);
+		}
+	}
 
 	getLocationCenterFocus = ()=>{
 		this.props.FirebaseObject
@@ -66,12 +92,14 @@ export default class DefaultPage extends Component{
 		 	return 	<Marker
 				      	coordinate={{latitude:this.state.centerCoords.latitude,
 				      		longitude:this.state.centerCoords.longitude}}
-			      		tracksViewChanges = {false}
+			      		tracksViewChanges = {this.state.tracksViewChangesCenter}
 				      	title={'Center Location'}
 				      	description={String(Number(this.state.centerCoords.radius)/1000)+
 				      		'kms. around this center is accepted'}>
 
-				      	<Image source={centerIcon}
+				      	<Image
+				      		onLoad={this.onLoadCenterLocationImage} 
+				      		source={centerIcon}
 				      		style={{height:40,width:40}}/>
 				    </Marker>
 		}
@@ -79,19 +107,41 @@ export default class DefaultPage extends Component{
 	}
 
 	displayMarker = ()=>{
-		return 	this.state.allReports.map(report => {
-					if(report.reportStatus == Constants.REPORT_STATUS.UNRESOLVED){
-						return 	<Marker
-							      	coordinate={{latitude:report.userLatitude,
-							      		longitude:report.userLongitude}}
-							      	title={report.incidentType}
-							      	key  ={report.key}
-							      	description={report.reportInfo}>
-							      	<Image source={emergencyIcon}
-						      		style={{height:40,width:40}}/>
-							    </Marker>
-					}	
-			  	});
+		markers =	this.state.allReports.map(report => {
+						if(report.reportStatus == Constants.REPORT_STATUS.UNRESOLVED){
+							return 	<Marker
+										tracksViewChanges = {this.state.tracksViewChangesReport}
+								      	coordinate={{latitude:report.userLatitude,
+								      		longitude:report.userLongitude}}
+								      	title={report.incidentType}
+								      	key  ={report.key}
+								      	description={report.reportInfo}>
+								      	<Image source={emergencyIcon}
+							      		style={{height:40,width:40}}/>
+								    </Marker>
+						}	
+			  		});
+		this.onLoadReportImages();
+		return markers;
+
+	}
+
+	displayUsersLocation = ()=>{
+		if(this.props.doGetMylocation.latitude){
+			return	<Marker
+				      	coordinate={{latitude:this.props.doGetMylocation.latitude,
+				      		longitude:this.props.doGetMylocation.longitude}}
+			      		tracksViewChanges = {this.state.tracksViewChangesUsers}
+				      	title={'Hello bystander!'}
+				      	description={'Here is your location'}>
+
+				      	<Image
+				      		onLoad={this.onLoadUsersLocationImage} 
+				      		source={bystanderIcon}
+				      		style={{height:45,width:45}}/>
+				    </Marker>
+		}
+		else return;
 	}
 
 	displayMap = ()=>{
@@ -104,16 +154,7 @@ export default class DefaultPage extends Component{
 			                latitudeDelta: 0.0922*2,
 			                longitudeDelta: 0.0421*2,
 		                }}>
-		                <Marker
-					      	coordinate={{latitude:this.props.doGetMylocation.latitude,
-					      		longitude:this.props.doGetMylocation.longitude}}
-				      		tracksViewChanges = {false}
-					      	title={'Hello bystander!'}
-					      	description={'Here is your location'}>
-
-					      	<Image source={bystanderIcon}
-					      		style={{height:45,width:45}}/>
-					    </Marker>
+		                {this.displayUsersLocation()}
 					    {this.displayCenterLocation()}
 					    {this.displayMarker()}
         			</MapView>
@@ -148,10 +189,11 @@ export default class DefaultPage extends Component{
 
 	    		<View style={{
 	    				position: 'absolute',
-	    				width: '20%',
-	    				height: '11%',
+	    				width: 70,
+	    				height: 70,
 	    				top: '85%',
 	    				left: '75%',
+	    				borderRadius: 100,
 	    				backgroundColor: '#88ef92',
 	    				borderColor: '#000'
 	    		}}>
@@ -164,7 +206,8 @@ export default class DefaultPage extends Component{
 		    					textAlign: 'center',
 		    					textAlignVertical: 'center',
 		    					fontSize: 11,
-		    					fontWeight: 'bold'
+		    					fontWeight: 'bold',
+		    					color: '#000'
 		    			}}>
 		    				<Icon
 		    					style={{

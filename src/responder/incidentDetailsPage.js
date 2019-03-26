@@ -29,7 +29,8 @@ export default class IncidentDetailsPage extends Component{
 	    return (
 	    	<View style={{
 	    			height: '100%',
-	    			width: '100%'
+	    			width: '100%',
+	    			alignItems:'center'
 	    	}}>
 	    		<View style={{
 	    			height: '9%',

@@ -31,6 +31,8 @@ import LoadingScreen          from './commons/loadingScreen.js';
 import LogDisplay             from './commons/logDisplay.js';
 import HomeTemplate           from './commons/homeTemplate.js';
 
+const  emergencyIcon  = require('./img/map-icon/emergency.png');
+
 export default class Main extends Component{
 
 
@@ -714,11 +716,17 @@ export default class Main extends Component{
 	}
 
 	getUserLocation = ()=>{
-		Geolocation.watchPosition((position)=>{
+		Geolocation.getCurrentPosition((position)=>{
 			this.setState({userLocation:position.coords});
 			console.log('Got the location');
 		}, (error) => console.log(JSON.stringify(error)),
 		{ enableHighAccuracy: true});
+
+		Geolocation.watchPosition((position)=>{
+			this.setState({userLocation:position.coords});
+			console.log('Got the location');
+		}, (error) => console.log(JSON.stringify(error)),
+		{ enableHighAccuracy: true,distanceFilter:50});
 	}
 
 
@@ -748,6 +756,7 @@ export default class Main extends Component{
 							doDisplayAlertMessage      = {this.displayAlertMessage}
 							doSubmitUpdatedInfo        = {this.submitUpdatedInfo}
 							doGetMylocation            = {this.state.userLocation}
+							doGetEmergencyIcon         = {emergencyIcon}
 							doSubmitPhoneNumberUpdate  = {this.submitPhoneNumberUpdate} />;
 			case Constants.PAGES.SIGN_UP_PAGE:
 				return <SignUpDashboard

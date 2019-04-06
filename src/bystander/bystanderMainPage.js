@@ -30,7 +30,8 @@ export default class BystanderMainPage extends Component{
 				return 	<DefaultPage
 							FirebaseObject            = {this.props.FirebaseObject}
 							setBystanderMainOperation = {this.setBystanderMainOperation}
-							doGetMylocation           = {this.props.doGetMylocation} />;
+							doGetMylocation           = {this.props.doGetMylocation}
+							doGetEmergencyIcon        = {this.props.doGetEmergencyIcon} />;
 			case Constants.CIVILIAN_MAIN_PAGE.REPORT_PAGE:
 				return 	<ReportPage
 							FirebaseObject            = {this.props.FirebaseObject}

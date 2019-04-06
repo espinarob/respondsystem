@@ -164,6 +164,7 @@ export default class DefaultPage extends Component{
 			                longitudeDelta: 0.0421*2,
 		                }}>
 		             	{this.displayUsersLocation()}
+		             	{this.displayCenterLocation()}
 		             	{this.displayMarker()}
         			</MapView>
 		}

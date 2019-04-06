@@ -48,14 +48,15 @@ export default class DefaultPage extends Component{
 			
 	}
 
-	onLoadReportImages = ()=>{
-		if(emergencyIcon){
+	onLoadReportIcon = ()=>{
+		if(this.props.doGetEmergencyIcon){
 			setTimeout(()=>{
 				this.setState({tracksViewChangesReport:false});
 			},1500);
 		}
 	}
 
+	
 	getLocationCenterFocus = ()=>{
 		this.props.FirebaseObject
 			.database()
@@ -116,14 +117,14 @@ export default class DefaultPage extends Component{
 								      	title={report.incidentType}
 								      	key  ={report.key}
 								      	description={report.reportInfo}>
-								      	<Image source={emergencyIcon}
-							      		style={{height:40,width:40}}/>
+								      	<Image
+								      		onLoad={this.onLoadReportIcon} 
+								      		source={this.props.doGetEmergencyIcon}
+							      			style={{height:40,width:40}}/>
 								    </Marker>
 						}	
 			  		});
-		this.onLoadReportImages();
 		return markers;
-
 	}
 
 	displayUsersLocation = ()=>{

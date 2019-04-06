@@ -37,7 +37,8 @@ export default class BystanderPage extends Component{
 							FirebaseObject            = {this.props.FirebaseObject}
 							doSubmitIncidentReport    = {this.props.doSubmitIncidentReport}
 							doDisplayAlertMessage     = {this.props.doDisplayAlertMessage}
-							doGetMylocation           = {this.props.doGetMylocation} />;
+							doGetMylocation           = {this.props.doGetMylocation}
+							doGetEmergencyIcon        = {this.props.doGetEmergencyIcon} />;
 			case Constants.COMMON_PAGE.CHANGE_PASS_PAGE:
 				return 	<ChangePassword
 							doSubmitChangePassword    = {this.props.doSubmitChangePassword}

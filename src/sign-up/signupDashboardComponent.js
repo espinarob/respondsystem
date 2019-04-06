@@ -41,7 +41,7 @@ export default class SignUpDashboard extends Component<Props> {
 
 	goToNextPageRegistration = ()=>{
 		this.props.doDisplayAlertMessage('');
-		/*if(this.state.inputUsername.length<Constants.SIGNUP_FORMS.USERNAME_MIN_LENGTH){
+		if(this.state.inputUsername.length<Constants.SIGNUP_FORMS.USERNAME_MIN_LENGTH){
 			this.props.doDisplayAlertMessage('Username input length minimum is '+
 				Constants.SIGNUP_FORMS.USERNAME_MIN_LENGTH+' characters');
 			setTimeout(()=>this.props.doDisplayAlertMessage(''),Constants.SIGNUP_FORMS.ERROR_TIME_DISPLAY);
@@ -67,7 +67,7 @@ export default class SignUpDashboard extends Component<Props> {
 			this.props.doDisplayAlertMessage(this.state.inputPhoneError);
 			setTimeout(()=>this.props.doDisplayAlertMessage(''),Constants.SIGNUP_FORMS.ERROR_TIME_DISPLAY);
 		}
-		else{ */
+		else{ 
 			const data = {
 				inputUsername        : this.state.inputUsername,
 				inputPassword        : this.state.inputPassword,
@@ -79,7 +79,7 @@ export default class SignUpDashboard extends Component<Props> {
 				inputPhoneNumber     : this.state.inputPhoneNumber
 			} 
 			this.props.doSaveFirstCredential(data);
-		//}
+		}
 	}
 
 	validateInputPhoneNumber = ()=>{

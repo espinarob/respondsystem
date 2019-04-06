@@ -48,7 +48,8 @@ export default class HomeTemplate extends Component{
 							doDisplayAlertMessage     = {this.props.doDisplayAlertMessage }
 							doSubmitUpdatedInfo       = {this.props.doSubmitUpdatedInfo}
 							doSubmitPhoneNumberUpdate = {this.props.doSubmitPhoneNumberUpdate}
-							doGetMylocation           = {this.props.doGetMylocation} />;
+							doGetMylocation           = {this.props.doGetMylocation}
+							doGetEmergencyIcon        = {this.props.doGetEmergencyIcon} />;
 			case Constants.USER_ROLES.DEFAULT:
 				return 	<NoRolePage />;
 		}

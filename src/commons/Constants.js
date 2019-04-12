@@ -64,7 +64,8 @@ const Constants = {
 		GETTING                 : 'Getting Connection. Please Wait...',
 		LOGGING_IN              : 'Getting your account, a moment..',
 		LOGGING_OUT             : 'Logging you out, a moment..',
-		SUBMIT_REPORT           : 'Submitting your report. Please Wait...'
+		SUBMIT_REPORT           : 'Submitting your report. Please Wait...',
+		RESOLVE_REPORT          : 'Resolving report, a moment..'
 	},
 
 	SIGNUP_FORMS                : {

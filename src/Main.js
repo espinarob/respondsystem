@@ -466,6 +466,94 @@ export default class Main extends Component{
 
 	// refer to respondingList.js of responder folder
 	// refer to resolvePage.js of responder folder
+
+	submitResolve = (data)=>{
+		this.setState({loadingMessage:Constants.LOADING_MESSAGES.RESOLVE_REPORT});
+		this.setTemplateDisplay(Constants.PAGES.LOADING_PAGE);
+		firebase
+			.database()
+			.ref("Reports/"+String(data.reportKey))
+			.update({
+				'reportStatus' : Constants.REPORT_STATUS.RESOLVED
+			})
+			.then(()=>{
+				firebase
+					.database()
+					.ref("Reports/"+String(data.reportKey)+"/responding/")
+					.once("value",snapshot=>{
+						if(snapshot.exists()){
+							const reportRespondingDetails = JSON.parse(JSON.stringify(snapshot.val()));
+							Object
+								.keys(reportRespondingDetails)
+								.forEach((resKey)=>{
+									const responderKey = reportRespondingDetails[resKey].responderKey;
+									firebase
+										.database()
+										.ref("Accounts/"+String(responderKey)+"/responding/")
+										.remove();
+								});
+							this.uploadImageResolve(data.imagePath,'resolved_img',String(data.reportKey),Constants.DEFAULT_IMG_TYPE)
+								.then((response)=>{
+									firebase
+										.database()
+										.ref("Reports/"+String(data.reportKey)+"/resolved")
+										.update({
+											'resolved_img' : String(response),
+											'remarks'      : String(data.remarks),
+											'resolvedBy'   : String(data.reporter)
+										})
+										.then(()=>{
+											this.setState({loadingMessage:''});
+											this.displayAlertMessage('Successfully Submitted');
+											setTimeout(()=>{
+												this.displayAlertMessage('');
+												this.setTemplateDisplay(Constants.PAGES.HOME_PAGE);
+											},Constants.CONSOLE_TIME_DISPLAY);
+										});
+								});
+						}
+						else{
+							this.setState({loadingMessage:''});
+							this.displayAlertMessage('Successfully Submitted');
+							setTimeout(()=>{
+								this.displayAlertMessage('');
+								this.setTemplateDisplay(Constants.PAGES.HOME_PAGE);
+							},Constants.CONSOLE_TIME_DISPLAY);
+						}
+					});
+			})
+			.catch((error)=>{
+				this.displayAlertMessage('Error in submitting the resolve');
+				setTimeout(()=>this.displayAlertMessage(''),
+					Constants.CONSOLE_TIME_DISPLAY);
+			});
+	}
+
+	uploadImageResolve = (uri,imageName,addPath,mime = 'image/jpg')=>{
+    	return new Promise((resolve, reject) => {
+      		const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+      		let uploadBlob  = null;
+     		const imageRef  = firebase.storage().ref('imagesResolve/'+String(addPath)).child(imageName);
+      		fs.readFile(uploadUri, 'base64')
+      		.then((data) => {
+        		return Blob.build(data, { type: `${mime};BASE64` })
+      		})
+      		.then((blob) => {
+        		uploadBlob = blob
+        		return imageRef.put(blob, { contentType: mime })
+      		})
+      		.then(() => {
+        		uploadBlob.close()
+       			 return imageRef.getDownloadURL()
+     		})
+      		.then((url) => {
+        		resolve(url)
+     		})
+      		.catch((error) => {
+        		reject(error)
+     	 	});
+   		});
+  	}
 	/* -- End ofIncident Module -- */
 
 	
@@ -726,7 +814,7 @@ export default class Main extends Component{
 			this.setState({userLocation:position.coords});
 			console.log('Got the location');
 		}, (error) => console.log(JSON.stringify(error)),
-		{ enableHighAccuracy: true,distanceFilter:5,fastestInterval:4000});
+		{ enableHighAccuracy: true,distanceFilter:10,fastestInterval:4000});
 	}
 
 	setLoggedAccountDetails = (accountInformation)=>{
@@ -753,6 +841,7 @@ export default class Main extends Component{
 			case Constants.PAGES.HOME_PAGE:
 				return 	<HomeTemplate 
 							FirebaseObject             = {firebase}
+							doSubmitResolve            = {this.submitResolve}
 							doSubmitIncidentReport     = {this.submitIncidentReport}
 							doLogoutAccount			   = {this.logoutAccount}
 							doSetLoggedAccount         = {this.setLoggedAccountDetails}

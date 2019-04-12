@@ -63,6 +63,10 @@ export default class ResponderPage extends Component{
 							doSetHomePage             = {this.setHomePage} />;
 			case Constants.RESPONDER_PAGE.RESOLVE_PAGE:
 				return  <ResolvePage
+							FirebaseObject            = {this.props.FirebaseObject}
+							doSubmitResolve           = {this.props.doSubmitResolve}
+							doDisplayAlertMessage     = {this.props.doDisplayAlertMessage}
+							doGetLoggedAccount        = {this.props.doGetLoggedAccount}
 							doGetReportDetails        = {this.state.reportDetails}
 							doSetHomePage             = {this.setHomePage} />;
 			case Constants.COMMON_PAGE.CHANGE_PASS_PAGE:

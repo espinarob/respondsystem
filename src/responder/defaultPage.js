@@ -239,8 +239,8 @@ export default class DefaultPage extends Component{
 			            region = {{
 			                latitude: this.props.doGetMylocation.latitude,
 			                longitude: this.props.doGetMylocation.longitude,
-			                latitudeDelta: 0.0922*1,
-			                longitudeDelta: 0.0421*1,
+			                latitudeDelta: 0.0922*0.8,
+			                longitudeDelta: 0.0421*0.8,
 		                }}>
 		             	{this.displayUsersLocation()}
 		             	{this.displayCenterLocation()}
@@ -406,7 +406,7 @@ export default class DefaultPage extends Component{
 		    					height:105,
 		    					width:'65%',
 		    					left: '20%',
-		    					top: '70%',
+		    					top: '73%',
 		    					position:'absolute',
 		    					backgroundColor: '#fff',
 		    					backgroundColor: '#fff',

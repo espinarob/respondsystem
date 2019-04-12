@@ -30,6 +30,7 @@ export default class HomeTemplate extends Component{
 			case Constants.USER_ROLES.RESPONDER:
 				return 	<ResponderPage
 							FirebaseObject            = {this.props.FirebaseObject}
+							doSubmitResolve           = {this.props.doSubmitResolve}
 							doSubmitChangePassword    = {this.props.doSubmitChangePassword}
 							doSetLoggedAccount        = {this.props.doSetLoggedAccount}
 							doGetLoggedAccount        = {this.props.doGetLoggedAccount}

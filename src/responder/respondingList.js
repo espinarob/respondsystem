@@ -55,7 +55,8 @@ export default class RespondingList extends Component{
 					'key'          : String(respondingKey.key),
 					'responder'    : this.props.doGetLoggedAccount.fullName,
 					'organization' : this.props.doGetLoggedAccount.organization, 
-					'ETA'          : String(this.state.estimateTimeInput)
+					'ETA'          : String(this.state.estimateTimeInput),
+					'responderKey' : String(this.props.doGetLoggedAccount.key)
  				})
  				.then(()=>{
  					this.props.FirebaseObject
@@ -86,7 +87,7 @@ export default class RespondingList extends Component{
 									setTimeout(()=>{
 										this.props.doDisplayAlertMessage('');
 										this.setState({submittingRespond:false});
-										this.props.doSetHomePage(Constants.RESPONDER_PAGE.INCIDENT_DETAILS)
+										this.props.doSetHomePage(Constants.RESPONDER_PAGE.MAIN_PAGE);
 									},1500);
  								});
  						})

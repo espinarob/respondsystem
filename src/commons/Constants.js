@@ -28,7 +28,8 @@ const Constants = {
 		MAIN_PAGE               : 'MAIN_PAGE',
 		LIST_PAGE               : 'LIST_PAGE',
 		INCIDENT_DETAILS        : 'INCIDENT_DETAILS',
-		RESOLVE_PAGE            : 'RESOLVE_PAGE'
+		RESOLVE_PAGE            : 'RESOLVE_PAGE',
+		RESPONDING_LIST         : 'RESPONDING_LIST'
 	},
 
 	RESPONDER_MAIN_PAGE         : {
@@ -108,7 +109,10 @@ const Constants = {
   		storageOptions          : {
     		skipBackup          : true,
     		path                : 'images'
-  		}
+  		},
+  		quality                 : 0.6,
+  		maxWidth                : 500, 
+  		maxHeight               : 450.
 	},
 
 	UPLOAD_IMAGE_LOG        : {

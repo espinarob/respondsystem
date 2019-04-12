@@ -22,7 +22,7 @@ export default class IncidentDetailsPage extends Component{
 	}
 
 	componentDidMount(){
-		console.log(this.props.doGetReportDetails);
+		
 	}	
 	
 	render() {
@@ -79,43 +79,47 @@ export default class IncidentDetailsPage extends Component{
 	         		source = {{uri:this.props.doGetReportDetails.imgURL}}
 		         	style = {{width:'100%',position:'relative',height:'45%',resizeMode:'contain',marginBottom:'2%'}}/>
 		        <Text style={{
-		        		height:34,
-		        		width: '100%',
+		        		height:35.5,
+		        		width: '95%',
 		        		paddingLeft:'2%',
 		        		fontSize: 12.3,
-		        		paddingLeft:'2%'
+		        		paddingLeft:'2%',
+		        		color:'#000'
 		        }}>
 		        	Address: {this.props.doGetReportDetails.addressName}
 		        </Text>
 		        <Text style={{
 		        		height:17.5,
-		        		width: '100%',
+		        		width: '95%',
 		        		paddingLeft:'2%',
 		        		fontSize: 12.3,
-		        		paddingLeft:'2%'
+		        		paddingLeft:'2%',
+		        		color:'#000'
 		        }}>
 		        	Time: {this.props.doGetReportDetails.timeReported}
 		        </Text>
 		        <Text style={{
 		        		height:17.5,
-		        		width: '100%',
+		        		width: '95%',
 		        		paddingLeft:'2%',
 		        		fontSize: 12.3,
-		        		paddingLeft:'2%'
+		        		paddingLeft:'2%',
+		        		color:'#000'
 		        }}>
 		        	Incident: {this.props.doGetReportDetails.incidentType}
 		        </Text>
 		        <Text style={{
 		        		height:'8%',
-		        		width: '100%',
+		        		width: '95%',
 		        		paddingLeft:'2%',
 		        		fontSize: 15,
-		        		fontWeight:'bold'
+		        		fontWeight:'bold',
+		        		color:'#000'
 		        }}>
 		        	Details: {this.props.doGetReportDetails.reportInfo}
 		        </Text>
 		        <View style={{
-		        		height: '9%',
+		        		height: '8.5%',
 		        		width: '100%',
 		        		justifyContent: 'space-evenly',
 		        		position: 'relative',
@@ -126,28 +130,47 @@ export default class IncidentDetailsPage extends Component{
 		        		onPress={()=>this.props.doSetHomePage(Constants.RESPONDER_PAGE.RESOLVE_PAGE)}>
 			        	<Text style={{
 			        			height: '100%',
-			        			width: '30%',
+			        			width: '26%',
 			        			position: 'relative',
 			        			borderRadius: 100,
 			        			borderWidth: 2,
 			        			textAlign:'center',
 			        			textAlignVertical: 'center',
 			        			fontSize: 15,
-			        			fontWeight: 'bold'
+			        			fontWeight: 'bold',
+		        				color:'#000'
 			        	}}>
 			        		Resolve
 			        	</Text>
 			        </TouchableWithoutFeedback>
+			        <TouchableWithoutFeedback
+		        		onPress={()=>this.props.doSetHomePage(Constants.RESPONDER_PAGE.RESPONDING_LIST)}>
+			        	<Text style={{
+			        			height: '100%',
+			        			width: '26%',
+			        			position: 'relative',
+			        			borderRadius: 100,
+			        			borderWidth: 2,
+			        			textAlign:'center',
+			        			textAlignVertical: 'center',
+			        			fontSize: 15,
+			        			fontWeight: 'bold',
+	        					color:'#000'
+			        	}}>
+			        		Respond
+			        	</Text>
+			        </TouchableWithoutFeedback>
 		        	<Text style={{
-		        			width:'50%',
+		        			width:'39%',
 		        			textAlign:'center',
 		        			textAlignVertical: 'center',
 		        			height: '100%',
 		        			position: 'relative',
 		        			borderRadius: 100,
 		        			borderWidth: 2,
-		        			fontSize: 15,
-		        			fontWeight: 'bold'
+		        			fontSize: 13.5,
+		        			fontWeight: 'bold',
+        					color:'#000'
 		        	}}>
 		        		Ask For Assistance
 		        	</Text>

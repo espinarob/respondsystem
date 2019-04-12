@@ -5,7 +5,6 @@ import {Platform,
 	StyleSheet, 
 	Text, 
 	View, 
-	AsyncStorage,
 	NetInfo,
 	PermissionsAndroid} 
 	from 'react-native';
@@ -465,7 +464,8 @@ export default class Main extends Component{
 
 	/* -- Start of Incident Module -- */
 
-
+	// refer to respondingList.js of responder folder
+	// refer to resolvePage.js of responder folder
 	/* -- End ofIncident Module -- */
 
 	
@@ -726,9 +726,13 @@ export default class Main extends Component{
 			this.setState({userLocation:position.coords});
 			console.log('Got the location');
 		}, (error) => console.log(JSON.stringify(error)),
-		{ enableHighAccuracy: true,distanceFilter:50});
+		{ enableHighAccuracy: true,distanceFilter:5,fastestInterval:4000});
 	}
 
+	setLoggedAccountDetails = (accountInformation)=>{
+		this.setState({accountLoggedDetails:accountInformation});
+		this.cacheInAccountDetails(accountInformation);
+	}
 
 
 	mainTemplateDisplay = ()=>{
@@ -751,6 +755,7 @@ export default class Main extends Component{
 							FirebaseObject             = {firebase}
 							doSubmitIncidentReport     = {this.submitIncidentReport}
 							doLogoutAccount			   = {this.logoutAccount}
+							doSetLoggedAccount         = {this.setLoggedAccountDetails}
 							doGetLoggedAccount         = {this.state.accountLoggedDetails}
 							doSubmitChangePassword     = {this.submitChangePassword}
 							doDisplayAlertMessage      = {this.displayAlertMessage}

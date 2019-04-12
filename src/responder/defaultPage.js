@@ -14,7 +14,7 @@ import MapView     from 'react-native-maps';
 import Constants   from '../commons/Constants.js';
 import geolib      from 'geolib';
 
-const  responderIcon  = require('../img/map-icon/responderIcon1.png');
+const  responderIcon  = require('../img/map-icon/userIcon.png');
 const  centerIcon     = require('../img/map-icon/centerIcon.png');
 
 export default class DefaultPage extends Component{
@@ -25,29 +25,85 @@ export default class DefaultPage extends Component{
 		nearbyFlag              : false,
 		tracksViewChangesUsers  : true,
 		tracksViewChangesCenter : true,
-		tracksViewChangesReport : true
+		tracksViewChangesReport : true,
+		pinMapContentShow       : false,
+		pressedReportDetails    : {},
+		firebaseReportObject    : '',
+		firebaseAccountObject   : '',
+		respondingDetails       : {}
+	}
+
+	cancelResponding = ()=>{
+		this.props.doDisplayAlertMessage('Cancelling respond to the incident, a moment..');
+		this.props.FirebaseObject
+			.database()
+			.ref("Reports/"
+				+String(this.state.respondingDetails.reportKey)
+				+"/responding/"
+				+String(this.state.respondingDetails.key))
+			.remove()
+			.then(()=>{
+				this.props.FirebaseObject
+					.database()
+					.ref("Accounts/"
+						+String(this.props.doGetLoggedAccount.key)
+						+"/responding")
+					.remove()
+					.then(()=>{
+						this.props.doDisplayAlertMessage('Done');
+						setTimeout(()=>{
+							this.props.doDisplayAlertMessage('');
+						},Constants.CONSOLE_TIME_DISPLAY);
+					});
+			})
+			.catch((error)=>{
+				this.props.doDisplayAlertMessage('Error connecting to the server');
+				setTimeout(()=>{
+					this.props.doDisplayAlertMessage('');
+				},Constants.CONSOLE_TIME_DISPLAY);
+			});
+	}
+
+	getCurrentAccount = ()=>{
+		const accountKey = 	this.props.FirebaseObject
+								.database()
+								.ref("Accounts/"+String(this.props.doGetLoggedAccount.key))
+								.on("value",snapshot=>{
+									if(snapshot.exists()){
+										const accountDetails      = JSON.parse(JSON.stringify(snapshot.val()));
+										let initRespondingDetails = {};
+										if(accountDetails.responding){
+											initRespondingDetails = JSON.parse(JSON.stringify(accountDetails.responding));
+										}
+										else initRespondingDetails = {};
+										this.props.doSetLoggedAccount(accountDetails);
+										this.setState({respondingDetails:initRespondingDetails});
+									}
+								});
+		this.setState({firebaseAccountObject:accountKey});
 	}
 
 	getAllReports = ()=>{
-		this.props.FirebaseObject
-			.database()
-			.ref("Reports")
-			.on("value",snapshot=>{
-				if(snapshot.exists()){
-					const allDatabaseReports = JSON.parse(JSON.stringify(snapshot.val()));
-					const initAllReports     = [];
-					Object
-						.keys(allDatabaseReports)
-						.forEach((reportKey)=>{
-							initAllReports.push(allDatabaseReports[reportKey]);
-							if(allDatabaseReports[reportKey].reportStatus
-								== Constants.REPORT_STATUS.UNRESOLVED && this.state.nearbyFlag == false){
-								this.setState({nearbyFlag:true});
-							}
-						});
-					this.setState({allReports:initAllReports});
-				}
-			});
+		const firebaseKey = 	this.props.FirebaseObject
+									.database()
+									.ref("Reports")
+									.on("value",snapshot=>{
+										if(snapshot.exists()){
+											const allDatabaseReports = JSON.parse(JSON.stringify(snapshot.val()));
+											const initAllReports     = [];
+											Object
+												.keys(allDatabaseReports)
+												.forEach((reportKey)=>{
+													initAllReports.push(allDatabaseReports[reportKey]);
+													if(allDatabaseReports[reportKey].reportStatus
+														== Constants.REPORT_STATUS.UNRESOLVED && this.state.nearbyFlag == false){
+														this.setState({nearbyFlag:true});
+													}
+												});
+											this.setState({allReports:initAllReports});
+										}
+									});
+		this.setState({firebaseReportObject:firebaseKey});
 	}
 
 	getLocationCenterFocus = ()=>{
@@ -66,6 +122,18 @@ export default class DefaultPage extends Component{
 	componentDidMount(){
 		this.getAllReports();
 		this.getLocationCenterFocus();
+		this.getCurrentAccount();
+	}
+
+	componentWillUnmount(){
+		this.props.FirebaseObject
+			.database()
+			.ref("Reports")
+			.off("value",this.state.firebaseReportObject);
+		this.props.FirebaseObject
+			.database()
+			.ref("Accounts/"+String(this.props.doGetLoggedAccount.key))
+			.off("value",this.state.firebaseAccountObject);
 	}
 
 
@@ -118,18 +186,29 @@ export default class DefaultPage extends Component{
 	displayMarker = ()=>{
 		markers =	this.state.allReports.map(report => {
 						if(report.reportStatus == Constants.REPORT_STATUS.UNRESOLVED){
-							return 	<Marker
-										tracksViewChanges = {this.state.tracksViewChangesReport}
-								      	coordinate={{latitude:report.userLatitude,
-								      		longitude:report.userLongitude}}
-								      	title={report.incidentType}
-								      	key  ={report.key}
-								      	description={report.reportInfo}>
-								      	<Image
-								      		onLoad={this.onLoadReportIcon} 
-								      		source={this.props.doGetEmergencyIcon}
-							      			style={{height:40,width:40}}/>
-								    </Marker>
+							if(this.state.respondingDetails.reportKey){
+								if(String(this.state.respondingDetails.reportKey) == 
+									String(report.key)){
+									return 	<Marker
+												onPress={()=>this.navigateToIncidentDetails(report)}
+												tracksViewChanges = {this.state.tracksViewChangesReport}
+										      	coordinate={{latitude:report.userLatitude,
+										      		longitude:report.userLongitude}}
+										      	title={report.incidentType}
+										      	key  ={report.key}
+										      	description={report.reportInfo}/>;
+								}
+							}
+							else{ 
+								return 	<Marker
+											onPress={()=>this.navigateToIncidentDetails(report)}
+											tracksViewChanges = {this.state.tracksViewChangesReport}
+									      	coordinate={{latitude:report.userLatitude,
+									      		longitude:report.userLongitude}}
+									      	title={report.incidentType}
+									      	key  ={report.key}
+									      	description={report.reportInfo}/>;
+					      	}
 						}	
 			  		});
 		return markers;
@@ -160,8 +239,8 @@ export default class DefaultPage extends Component{
 			            region = {{
 			                latitude: this.props.doGetMylocation.latitude,
 			                longitude: this.props.doGetMylocation.longitude,
-			                latitudeDelta: 0.0922*2,
-			                longitudeDelta: 0.0421*2,
+			                latitudeDelta: 0.0922*1,
+			                longitudeDelta: 0.0421*1,
 		                }}>
 		             	{this.displayUsersLocation()}
 		             	{this.displayCenterLocation()}
@@ -204,13 +283,243 @@ export default class DefaultPage extends Component{
 		else return;
 	}
 
+	navigateToIncidentDetails = (report)=>{
+		this.props.doSetReportDetails(report);
+		this.setState({
+			pinMapContentShow:true,
+			pressedReportDetails:report
+		});
+	}
 
+	closePinMapContent = ()=>{
+		this.setState({
+			pinMapContentShow:false,
+			pressedReportDetails:{}
+		})
+	}
+
+	displayPinMapContent = ()=>{
+		if(this.state.pinMapContentShow){
+			return 	<View style = {{
+		    				position: 'absolute',
+		    				height: '40%',
+		    				borderRadius: 15,
+		    				width: '70%',
+		    				top: '27%',
+		    				backgroundColor: '#fff',
+		    				alignItems: 'center',
+		    				borderColor: '#ddd',
+						    borderBottomWidth: 0,
+						    shadowColor: '#000',
+						    shadowOffset: {
+								width: 0,
+								height: 5,
+							},
+							shadowOpacity: 0.34,
+							shadowRadius: 3.27,
+							elevation: 10
+		    		}}>
+		    			<Text style = {{
+		    					height: '10.5%',
+		    					width:'95%',
+		    					fontSize:14,
+		    					fontWeight: 'bold',
+		    					textAlignVertical:'center',
+		    					textAlign: 'center',
+		    					top: '5%',
+		    					color: '#000'
+		    			}}>
+		    				Incident Details
+		    			</Text>
+		    			<Text style = {{
+		    					height: '23%',
+		    					width:'95%',
+		    					fontSize:13,
+		    					textAlignVertical:'center',
+		    					textAlign: 'center',
+		    					top: '5%',
+		    					color: '#000'
+		    			}}>
+		    				{'Address: '+String(this.state.pressedReportDetails.addressName)}
+		    			</Text>
+		    			<Text style = {{
+		    					height: '10%',
+		    					width:'95%',
+		    					fontSize:13,
+		    					textAlignVertical:'center',
+		    					textAlign: 'center',
+		    					top: '5%',
+		    					color: '#000',
+		    					fontStyle: 'italic',
+		    					fontWeight:'bold'
+		    			}}>
+		    				{'Incident: '+String(this.state.pressedReportDetails.incidentType)}
+		    			</Text>
+
+		    			<TouchableWithoutFeedback
+		    				onPress={()=>this.props.doSetHomePage(Constants.RESPONDER_PAGE.INCIDENT_DETAILS)}>
+			    			<Text style = {{
+			    					height: '20%',
+			    					width:'40%',
+			    					fontSize:16,
+			    					textAlignVertical:'center',
+			    					textAlign: 'center',
+			    					top: '5%',
+			    					color: '#000',
+			    					fontWeight: 'bold',
+			    					top: '22%',
+			    					borderWidth:2
+			    			}}>
+			    				View
+			    			</Text>
+			    		</TouchableWithoutFeedback>
+
+		    			<TouchableWithoutFeedback
+		    				onPress={()=>this.closePinMapContent()}>
+			    			<Text style = {{
+			    					height: '10%',
+			    					width: '12%',
+			    					textAlign: 'center',
+			    					textAlignVertical: 'center',
+			    					fontSize: 15,
+			    					fontWeight:'bold',
+			    					color: '#000',
+			    					position: 'absolute',
+			    					left: '3%',
+			    					top: '1.5%'
+			    			}}>
+			    				<Icon 
+			    					style ={{fontSize:20,color:'#88ef92'}}
+			    					name = 'close'
+			    					type = 'FontAwesome'/>
+			    			</Text>
+			    		</TouchableWithoutFeedback>
+		    		</View>
+    	}
+    	else return;
+	}
+
+	respondingToContent = ()=>{
+		if(this.props.doGetLoggedAccount.responding){
+			return 	<React.Fragment>
+						<View style = {{
+		    					height:105,
+		    					width:'65%',
+		    					left: '20%',
+		    					top: '70%',
+		    					position:'absolute',
+		    					backgroundColor: '#fff',
+		    					backgroundColor: '#fff',
+			    				borderColor: '#ddd',
+							    borderBottomWidth: 0,
+							    shadowColor: '#000',
+							    shadowOffset: {
+									width: 0,
+									height: 5,
+								},
+								shadowOpacity: 0.34,
+								shadowRadius: 3.27,
+								elevation: 9,
+								borderRadius: 15,
+								alignItems:'center'
+		    			}}>
+		    				{
+		    					!this.state.respondingDetails.reportKey ? 
+		    					<Text style = {{
+			    						height: '20%',
+			    						width: '90%',
+			    						fontSize: 13,
+			    						color: '#000',
+			    						top: '30%',
+			    						textAlign: 'center',
+			    						textAlignVertical :'center'
+			    				}}>
+			    					Loading data, a moment..
+			    				</Text>:
+		    					<React.Fragment>
+		    						<Text style ={{
+		    								height: '15.4%',
+		    								width:'90%',
+		    								textAlignVertical:'center',
+		    								textAlign: 'center',
+		    								fontSize: 13,
+		    								color: '#000',
+		    								top: '2%',
+		    								position: 'relative'
+		    						}}>
+		    							{'Reporter: '+this.state.respondingDetails.reporter}
+		    						</Text>
+		    						<Text style ={{
+		    								height: '15.4%',
+		    								width:'90%',
+		    								textAlignVertical:'center',
+		    								textAlign: 'center',
+		    								fontSize: 13,
+		    								color: '#000',
+		    								top: '2%',
+		    								position: 'relative',
+		    								fontStyle: 'italic'
+		    						}}>
+		    							{'Incident: '+this.state.respondingDetails.incidentType}
+		    						</Text>
+		    						<TouchableWithoutFeedback
+		    							onPress = {()=>this.cancelResponding()}>
+			    						<Text style = {{
+			    								height: '33%',
+			    								width: '43%',
+			    								position: 'relative',
+			    								textAlign:'center',
+			    								textAlignVertical:'center',
+			    								fontSize: 15.3,
+			    								fontWeight:'bold',
+			    								borderRadius: 100,
+			    								borderWidth: 2,
+			    								top: '20%',
+			    								color: '#000'
+			    						}}>
+			    							Cancel
+			    						</Text>
+			    					</TouchableWithoutFeedback>
+		    					</React.Fragment>
+			    			}
+		    			</View>
+		    			<Text style = {{
+		    					height: 65,
+		    					width: 65,
+		    					position:'absolute',
+		    					left: '77%',
+		    					top: '83%',
+		    					fontSize: 10.4,
+		    					textAlignVertical:'center',
+		    					textAlign: 'center',
+		    					fontWeight:'bold',
+		    					color: '#000',
+		    					borderRadius: 100,
+		    					backgroundColor: '#fff',
+			    				borderColor: '#ddd',
+							    borderBottomWidth: 0,
+							    shadowColor: '#000',
+							    shadowOffset: {
+									width: 0,
+									height: 5,
+								},
+								shadowOpacity: 0.34,
+								shadowRadius: 5.27,
+								elevation: 10
+		    			}}>
+		    				Responding
+		    			</Text>
+					</React.Fragment>
+		}
+		else return;
+	}
 
 	render() {
 	    return (
 	    	<View style={{
 	    			height: '100%',
-	    			width: '100%'
+	    			width: '100%',
+	    			alignItems: 'center'
 	    	}}>	
 	    		<View style={{
 	    			height: '100%',
@@ -243,6 +552,9 @@ export default class DefaultPage extends Component{
     					type='MaterialCommunityIcons'/>{'\n'}
     					Alarm
     			</Text>
+
+    			{this.displayPinMapContent()}
+    			{this.respondingToContent()}
 	    	</View>
 	    );
 	}

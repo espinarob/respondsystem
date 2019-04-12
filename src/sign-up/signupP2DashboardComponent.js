@@ -203,19 +203,20 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    			height:'10%',
 		    			top: '3%',
 		    			flexDirection: 'row',
-		    			justifyContent: 'center'
+		    			justifyContent: 'space-evenly'
 		    		}}>
 		    			<TouchableWithoutFeedback
 		    				onPress={()=>this.changeUserRole(Constants.USER_ROLES.CIVILIAN)}>
 			    			<Text style={{
 			    					width:'45%',
 			    					height: '100%',
-			    					borderRightWidth:5,
 			    					textAlign: 'center',
 			    					textAlignVertical: 'center',
 			    					fontWeight:'bold',
 			    					color: this.state.bystanderColor,
-			    					fontSize: 16
+			    					fontSize: 16,
+			    					borderWidth:2,
+			    					borderRadius:15
 			    			}}>
 			    				<Icon
 			    					style={{
@@ -237,6 +238,9 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 			    					textAlignVertical: 'center',
 			    					fontWeight:'bold',
 			    					fontSize: 16,
+			    					borderWidth:2,
+			    					borderRadius:15,
+			    					borderColor : this.state.responderColor,
 			    					color: this.state.responderColor
 			    			}}>
 			    				<Icon

@@ -24,6 +24,20 @@ export default class IncidentList extends Component{
 		this.getAllReports();
 	}
 
+	reverseArray = (array)=>{
+		if(array.length==0){
+			this.setState({allReports:[]});
+			return;
+		}
+		else{
+			const reverseArrayReports = [];
+			for(index=(array.length-1);index>=0;index--){
+				reverseArrayReports.push(array[index]);
+			}
+			this.setState({allReports:reverseArrayReports});
+		}
+	}
+
 	getAllReports = ()=>{
 		this.props.FirebaseObject
 			.database()
@@ -37,7 +51,7 @@ export default class IncidentList extends Component{
 						.forEach((reportKey)=>{
 							initAllReports.push(allDatabaseReports[reportKey]);
 						});
-					this.setState({allReports:initAllReports});
+					this.reverseArray(initAllReports);
 				}	
 			});
 	}
@@ -166,7 +180,7 @@ export default class IncidentList extends Component{
 			return 	<Text style={{
 							height: '6%',
 							width: '100%',
-							top: '40%',
+							top: '20%',
 							position: 'relative',
 							textAlign: 'center',
 							textAlignVertical: 'center',

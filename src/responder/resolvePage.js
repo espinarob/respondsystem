@@ -42,7 +42,8 @@ export default class ResolvePage extends Component{
 			    					textAlign: 'center',
 			    					position: 'relative',
 			    					textAlignVertical: 'center',
-			    					left: '10%'
+			    					left: '10%',
+			    					color:'#000'
 			    			}}>	
 			    				<Icon
 			    					style={{
@@ -61,7 +62,8 @@ export default class ResolvePage extends Component{
 		    				fontWeight: 'bold',
 		    				textAlignVertical: 'center',
 		    				textAlign: 'center',
-		    				position: 'relative'
+		    				position: 'relative',
+		    				color:'#000'
 		    		}}>
 		    			Resolve Incident
 		    		</Text>
@@ -72,7 +74,8 @@ export default class ResolvePage extends Component{
 		    				top: '5%',
 		    				fontSize:15,
 		    				fontWeight:'bold',
-		    				textAlignVertical:'center'
+		    				textAlignVertical:'center',
+		    				color:'#000'
 		    		}}>	
 		    			Input Remarks
 		    		</Text>

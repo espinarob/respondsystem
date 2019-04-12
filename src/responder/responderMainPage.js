@@ -28,6 +28,11 @@ export default class ResponderMainPage extends Component{
 		switch(this.state.mainPageOperation){
 			case Constants.RESPONDER_MAIN_PAGE.DEFAULT_PAGE:
 				return 	<DefaultPage
+							doDisplayAlertMessage  = {this.props.doDisplayAlertMessage}
+							doSetLoggedAccount     = {this.props.doSetLoggedAccount}
+							doGetLoggedAccount     = {this.props.doGetLoggedAccount}
+							doSetHomePage          = {this.props.doSetHomePage}
+							doSetReportDetails     = {this.props.doSetReportDetails}
 							doGetEmergencyIcon     = {this.props.doGetEmergencyIcon}
 							FirebaseObject         = {this.props.FirebaseObject}
 							doGetMylocation        = {this.props.doGetMylocation}

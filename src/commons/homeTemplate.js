@@ -31,6 +31,7 @@ export default class HomeTemplate extends Component{
 				return 	<ResponderPage
 							FirebaseObject            = {this.props.FirebaseObject}
 							doSubmitChangePassword    = {this.props.doSubmitChangePassword}
+							doSetLoggedAccount        = {this.props.doSetLoggedAccount}
 							doGetLoggedAccount        = {this.props.doGetLoggedAccount}
 							doLogoutAccount           = {this.props.doLogoutAccount}
 							doDisplayAlertMessage     = {this.props.doDisplayAlertMessage }

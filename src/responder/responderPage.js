@@ -18,6 +18,7 @@ import ResponderMainPage   from './responderMainPage.js';
 import IncidentList        from './incidentList.js';
 import IncidentDetailsPage from './incidentDetailsPage.js';
 import ResolvePage         from './resolvePage.js';
+import RespondingList      from './respondingList.js';
 
 export default class ResponderPage extends Component{
 
@@ -42,8 +43,13 @@ export default class ResponderPage extends Component{
 							doLogoutAccount           = {this.props.doLogoutAccount} />;
 			case Constants.RESPONDER_PAGE.MAIN_PAGE:
 				return 	<ResponderMainPage
+							doSetHomePage             = {this.setHomePage}
+							doGetLoggedAccount        = {this.props.doGetLoggedAccount}
+							doSetReportDetails        = {this.setReportDetails}
 							FirebaseObject            = {this.props.FirebaseObject}
+							doSetLoggedAccount        = {this.props.doSetLoggedAccount}
 							doGetMylocation           = {this.props.doGetMylocation}
+							doDisplayAlertMessage     = {this.props.doDisplayAlertMessage}
 							doGetEmergencyIcon        = {this.props.doGetEmergencyIcon} />;
 			case Constants.RESPONDER_PAGE.LIST_PAGE:
 				return 	<IncidentList
@@ -74,6 +80,14 @@ export default class ResponderPage extends Component{
 							doSetHomePage             = {this.setHomePage}
 							doGetLoggedAccount        = {this.props.doGetLoggedAccount}
 							doSubmitPhoneNumberUpdate = {this.props.doSubmitPhoneNumberUpdate} />;
+			case Constants.RESPONDER_PAGE.RESPONDING_LIST:
+				return 	<RespondingList
+							FirebaseObject            = {this.props.FirebaseObject}
+							doGetReportDetails        = {this.state.reportDetails}
+							doDisplayAlertMessage     = {this.props.doDisplayAlertMessage}
+							doSetLoggedAccount        = {this.props.doSetLoggedAccount}
+							doGetLoggedAccount        = {this.props.doGetLoggedAccount}
+							doSetHomePage             = {this.setHomePage} />;
 		}		
 
 	}

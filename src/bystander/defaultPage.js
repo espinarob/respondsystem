@@ -6,15 +6,16 @@ import {Platform,
 	AsyncStorage, 
 	Image,
 	TextInput,
-	TouchableWithoutFeedback} 
+	TouchableWithoutFeedback,
+	FlatList,
+	ScrollView} 
 	from 'react-native';
 import {Icon}      from 'native-base';
 import {Marker}    from  'react-native-maps';
 import MapView     from  'react-native-maps';
 import Constants   from '../commons/Constants.js';
-const  bystanderIcon  = require('../img/map-icon/responderIcon1.png');
-const  centerIcon     = require('../img/map-icon/centerIcon.png');;
-const  emergencyIcon  = require('../img/map-icon/emergency.png');
+const  bystanderIcon  = require('../img/map-icon/userIcon.png');
+const  centerIcon     = require('../img/map-icon/centerIcon.png');
 
 export default class DefaultPage extends Component{
 
@@ -23,12 +24,25 @@ export default class DefaultPage extends Component{
 		centerCoords            : [],
 		tracksViewChangesUsers  : true,
 		tracksViewChangesCenter : true,
-		tracksViewChangesReport : true
+		tracksViewChangesReport : true,
+		pinMapContentShow       : false,
+		loadingContentData      : true,
+		respondingList          : [],
+		pressedIncidentDetails  : {},
+		firebaseReportObject    : ''
 	}
 
 	componentDidMount(){
 		this.getAllReports();
 		this.getLocationCenterFocus();
+	}
+
+
+	componentWillUnmount(){
+		this.props.FirebaseObject
+			.database()
+			.ref("Reports")
+			.off("value",this.state.firebaseReportObject);
 	}
 
 	onLoadUsersLocationImage = ()=>{
@@ -71,21 +85,22 @@ export default class DefaultPage extends Component{
 	}
 
 	getAllReports = ()=>{
-		this.props.FirebaseObject
-			.database()
-			.ref("Reports")
-			.on("value",snapshot=>{
-				if(snapshot.exists()){
-					const allDatabaseReports = JSON.parse(JSON.stringify(snapshot.val()));
-					const initAllReports     = [];
-					Object
-						.keys(allDatabaseReports)
-						.forEach((reportKey)=>{
-							initAllReports.push(allDatabaseReports[reportKey]);
-						});
-					this.setState({allReports:initAllReports});
-				}
-			});
+		const firebaseKey = 	this.props.FirebaseObject
+									.database()
+									.ref("Reports")
+									.on("value",snapshot=>{
+										if(snapshot.exists()){
+											const allDatabaseReports = JSON.parse(JSON.stringify(snapshot.val()));
+											const initAllReports     = [];
+											Object
+												.keys(allDatabaseReports)
+												.forEach((reportKey)=>{
+													initAllReports.push(allDatabaseReports[reportKey]);
+												});
+											this.setState({allReports:initAllReports});
+										}
+									});
+		this.setState({firebaseReportObject:firebaseKey});
 	}
 
 	displayCenterLocation = ()=>{
@@ -111,17 +126,13 @@ export default class DefaultPage extends Component{
 		markers =	this.state.allReports.map(report => {
 						if(report.reportStatus == Constants.REPORT_STATUS.UNRESOLVED){
 							return 	<Marker
+										onPress = {()=>this.getContentInCloud(report)}
 										tracksViewChanges = {this.state.tracksViewChangesReport}
 								      	coordinate={{latitude:report.userLatitude,
 								      		longitude:report.userLongitude}}
 								      	title={report.incidentType}
 								      	key  ={report.key}
-								      	description={report.reportInfo}>
-								      	<Image
-								      		onLoad={this.onLoadReportIcon} 
-								      		source={this.props.doGetEmergencyIcon}
-							      			style={{height:40,width:40}}/>
-								    </Marker>
+								      	description={report.reportInfo}/>
 						}	
 			  		});
 		return markers;
@@ -152,8 +163,8 @@ export default class DefaultPage extends Component{
 			            region = {{
 			                latitude: this.props.doGetMylocation.latitude,
 			                longitude: this.props.doGetMylocation.longitude,
-			                latitudeDelta: 0.0922*2,
-			                longitudeDelta: 0.0421*2,
+			                latitudeDelta: 0.0922*0.8,
+			                longitudeDelta: 0.0421*0.8,
 		                }}>
 		                {this.displayUsersLocation()}
 					    {this.displayCenterLocation()}
@@ -174,11 +185,234 @@ export default class DefaultPage extends Component{
 		}
 	}
 
+	getContentInCloud = (report)=>{
+		this.setState({
+			pinMapContentShow      : true,
+			respondingList         : [],
+			pressedIncidentDetails : report,
+			loadingContentData     : true
+		});
+
+		this.props.FirebaseObject
+			.database()
+			.ref("Reports/"+String(report.key))
+			.once("value",snapshot=>{
+				if(snapshot.exists()){
+					const currentData = JSON.parse(JSON.stringify(snapshot.val()));
+				 	if(currentData.responding){
+				 		const allCurrentResponding = JSON.parse(JSON.stringify(currentData.responding));
+				 		const initRespondingList = [];
+				 		Object
+				 			.keys(allCurrentResponding)
+				 			.forEach((resKey)=>{
+				 				initRespondingList.push(allCurrentResponding[resKey]);
+				 			});
+				 		this.setState({respondingList:initRespondingList});
+				 	}
+					this.setState({loadingContentData:false});
+				}
+			});	
+
+	}
+
+	closePinMapContent = ()=>{
+		this.setState({
+			pinMapContentShow      : false,
+			respondingList         : [],
+			pressedIncidentDetails : {},
+			loadingContentData     : true
+		});
+	}
+
+	displayPinMapContent = ()=>{
+		if(this.state.pinMapContentShow){
+			return 	<View style = {{
+		    				position: 'absolute',
+		    				height: '55%',
+		    				borderRadius: 15,
+		    				width: '78%',
+		    				top: '20%',
+		    				backgroundColor: '#fff',
+		    				alignItems: 'center',
+		    				borderColor: '#ddd',
+						    borderBottomWidth: 0,
+						    shadowColor: '#000',
+						    shadowOffset: {
+								width: 0,
+								height: 5,
+							},
+							shadowOpacity: 0.34,
+							shadowRadius: 3.27,
+							elevation: 10
+		    		}}>
+			    		{	this.state.loadingContentData == true ?
+			    			<Text style ={{
+				    				height: '20%',
+				    				fontSize: 15,
+				    				width: '90%',
+				    				textAlignVertical:'center',
+				    				textAlign:'center',
+				    				color: '#000',
+				    				top: '40%'
+				    		}}>
+				    			Loading data, a moment..
+				    		</Text> : 
+				    		<React.Fragment>
+				    			<ScrollView
+				    				style ={{width:'100%'}}
+				    				contentContainerStyle={{
+				    					alignItems:'center',
+				    					paddingBottom:40,
+				    					marginTop:20}}>
+					    			<Text style ={{
+					    					height: 23,
+					    					width: '100%',
+					    					textAlign: 'center',
+					    					textAlignVertical:'center',
+					    					fontSize:14,
+					    					color: '#000',
+					    					fontWeight: 'bold'
+					    			}}>	
+					    				Incident Details
+					    			</Text>
+					    			<Text style ={{
+					    					height: 46.7,
+					    					width: '100%',
+					    					textAlign: 'center',
+					    					textAlignVertical:'center',
+					    					fontSize:12,
+					    					color: '#000'
+					    			}}>	
+					    				{'Address: '+String(this.state.pressedIncidentDetails.addressName)}
+					    			</Text>
+					    			<Text style = {{
+					    					height:35,
+					    					width: '100%',
+					    					textAlignVertical: 'center',
+					    					textAlign:'center',
+					    					fontSize:12,
+					    					color: '#000'
+					    			}}>
+					    				{'Time reported: '+String(this.state.pressedIncidentDetails.timeReported)}
+					    			</Text>
+					    			<Text style = {{
+					    					height:19,
+					    					width: '100%',
+					    					textAlignVertical: 'center',
+					    					textAlign:'center',
+					    					fontSize:12,
+					    					fontWeight: 'bold',
+					    					color: '#000'
+					    			}}>
+					    				{'Incident: '+String(this.state.pressedIncidentDetails.incidentType)}
+					    			</Text>
+					    			<Text style = {{
+					    					height:20,
+					    					width: '100%',
+					    					textAlignVertical: 'center',
+					    					textAlign:'center',
+					    					fontSize:12,
+					    					fontStyle: 'italic',
+					    					color: '#000'
+					    			}}>
+					    				Incoming Responders:
+					    			</Text>
+					    			<View style ={{
+											height: '50%',
+											width:'100%',
+											position:'relative',
+											alignItems:'center'
+									}}>	
+					    				{this.displayResponding()}
+				    				</View>
+					    		</ScrollView>
+				    		</React.Fragment>
+				    	}
+				    	<TouchableWithoutFeedback
+		    				onPress={()=>this.closePinMapContent()}>
+			    			<Text style = {{
+			    					height: '10%',
+			    					width: '12%',
+			    					textAlign: 'center',
+			    					textAlignVertical: 'center',
+			    					fontSize: 15,
+			    					fontWeight:'bold',
+			    					color: '#000',
+			    					position: 'absolute',
+			    					left: '3%',
+			    					top: '1.5%'
+			    			}}>
+			    				<Icon 
+			    					style ={{fontSize:20,color:'#88ef92'}}
+			    					name = 'close'
+			    					type = 'FontAwesome'/>
+			    			</Text>
+			    		</TouchableWithoutFeedback>
+		    		</View>;
+		}
+		else return;
+	}
+
+
+	displayResponding = ()=>{
+		if(this.state.respondingList.length!=0){
+			return	<FlatList
+						data = {this.state.respondingList}
+						renderItem = {({item}) =>
+							<View style = {{
+									height:65,
+									borderBottomWidth:2,
+									width:253,
+									position:'relative',
+									marginBottom: 15,
+									marginTop: 10
+							}}>
+								<Text style = {{
+										height: '24.4%',
+										position:'relative',
+										width: '90%',
+										textAlignVertical:'center',
+										textAlign:'center',
+										fontSize: 13,
+										color: '#000'
+								}}>
+									{'Responder: '+item.responder}
+								</Text>
+								<Text style = {{
+										height: '24.4%',
+										position:'relative',
+										width: '90%',
+										textAlignVertical:'center',
+										textAlign:'center',
+										fontSize: 13,
+										color: '#000'
+								}}>
+									{'Organization: '+item.organization}
+								</Text>
+								<Text style = {{
+										height: '24.4%',
+										position:'relative',
+										width: '90%',
+										textAlignVertical:'center',
+										textAlign:'center',
+										fontSize: 13,
+										color: '#000'
+								}}>
+									{'ETA: '+item.ETA}
+								</Text>
+							</View>
+						}
+						keyExtractor={item => item.key}/>;
+		}
+		else return;
+	}
+
 	render() {
 	    return (
 	    	<View style={{
 	    			height: '100%',
-	    			width: '100%'
+	    			width: '100%',
+	    			alignItems: 'center'
 	    	}}>	
 	    		<View style={{
 	    			height: '100%',
@@ -221,7 +455,8 @@ export default class DefaultPage extends Component{
 		    			</Text>
 		    		</TouchableWithoutFeedback>
 	    		</View>
-	    	</View>
+	    		{this.displayPinMapContent()}
+	    	</View>	
 	    );
 	}
 }

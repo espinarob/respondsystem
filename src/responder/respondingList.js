@@ -25,7 +25,14 @@ export default class RespondingList extends Component{
 	}
 
 	respondToIncident = ()=>{
-		if(this.state.submittingRespond == true){
+		if(this.props.doGetLoggedAccount.accountStatus == Constants.ACCOUNT_STATUS.BLOCKED){
+			this.props.doDisplayAlertMessage('Sorry, your account was blocked, send a problem');
+			setTimeout(()=>{
+				this.props.doDisplayAlertMessage('');
+			},Constants.CONSOLE_TIME_DISPLAY);
+			return;
+		}
+		else if(this.state.submittingRespond == true){
 			this.props.doDisplayAlertMessage('Currently submitting, you may try again later');
 			setTimeout(()=>{
 				this.props.doDisplayAlertMessage('');

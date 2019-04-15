@@ -185,19 +185,20 @@ export default class Main extends Component{
 															            			.ref("Accounts")
 															            			.push();
 													const finalCredentialData = {
-														'username'     : currentRegistrationCredential.registerUsername,
-														'password'     : currentRegistrationCredential.registerPassword,
-														'email'        : currentRegistrationCredential.registerEmailAddress,
-														'birthday'     : currentRegistrationCredential.registerBirthday,
-														'fullName'     : currentRegistrationCredential.registerFullName,
-														'address'      : currentRegistrationCredential.registerHomeAddress,
-														'phoneNumber'  : currentRegistrationCredential.registerPhoneNumber,
-														'gender'       : currentRegistrationCredential.registerGender,
-														'callSign'     : currentRegistrationCredential.registerCallSign,
-														'organization' : (currentRegistrationCredential.role == Constants.USER_ROLES.CIVILIAN ? 
+														'username'      : currentRegistrationCredential.registerUsername,
+														'password'      : currentRegistrationCredential.registerPassword,
+														'email'         : currentRegistrationCredential.registerEmailAddress,
+														'birthday'      : currentRegistrationCredential.registerBirthday,
+														'fullName'      : currentRegistrationCredential.registerFullName,
+														'address'       : currentRegistrationCredential.registerHomeAddress,
+														'phoneNumber'   : currentRegistrationCredential.registerPhoneNumber,
+														'gender'        : currentRegistrationCredential.registerGender,
+														'callSign'      : currentRegistrationCredential.registerCallSign,
+														'organization'  : (currentRegistrationCredential.role == Constants.USER_ROLES.CIVILIAN ? 
 															'' : currentRegistrationCredential.registerOrganization) ,
-														'role'         : currentRegistrationCredential.registerRole,
-														'key'          : registerAccountKey.key
+														'role'          : currentRegistrationCredential.registerRole,
+														'key'           : registerAccountKey.key,
+														'accountStatus' : Constants.ACCOUNT_STATUS.NOT_BLOCKED
 													}
 
 													registerAccountKey
@@ -243,7 +244,7 @@ export default class Main extends Component{
 								});
 						}
 						else{
-							this.displayAlertMessage('Error 004: The organization and call sign does not match');
+							this.displayAlertMessage('Error 004: The call sign does not match');
 							setTimeout(()=>this.displayAlertMessage(''),Constants.CONSOLE_TIME_DISPLAY);
 							return;
 						}

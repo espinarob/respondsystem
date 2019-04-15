@@ -11,7 +11,10 @@ const Constants = {
 	CIVILIAN_PAGE               : {
 		MAIN_PAGE               : 'MAIN_PAGE',
 	},
-
+	ACCOUNT_STATUS              : {
+		BLOCKED                 : 'BLOCKED',
+		NOT_BLOCKED             : 'NOT_BLOCKED'
+	},
 	COMMON_PAGE                 : {
 		USER_INFO_PAGE          : 'USER_INFO_PAGE',
 		CHANGE_PASS_PAGE        : 'CHANGE_PASS_PAGE',

@@ -34,6 +34,7 @@ export default class BystanderMainPage extends Component{
 							doGetEmergencyIcon        = {this.props.doGetEmergencyIcon} />;
 			case Constants.CIVILIAN_MAIN_PAGE.REPORT_PAGE:
 				return 	<ReportPage
+							doGetLoggedAccount        = {this.props.doGetLoggedAccount}
 							FirebaseObject            = {this.props.FirebaseObject}
 							doSubmitIncidentReport    = {this.props.doSubmitIncidentReport}
 							doDisplayAlertMessage     = {this.props.doDisplayAlertMessage}

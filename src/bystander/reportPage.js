@@ -160,6 +160,10 @@ export default class ReportPage extends Component{
 			this.props.doDisplayAlertMessage('The location is not supported by the application');
 			setTimeout(()=>this.props.doDisplayAlertMessage(''),Constants.CONSOLE_TIME_DISPLAY);
 		}
+		else if(this.props.doGetLoggedAccount.accountStatus == Constants.ACCOUNT_STATUS.BLOCKED){
+			this.props.doDisplayAlertMessage('Sorry, your account was blocked, send a problem');
+			setTimeout(()=>this.props.doDisplayAlertMessage(''),Constants.CONSOLE_TIME_DISPLAY);
+		}
 		else {
 			const data = {
 				imagePath    : this.state.imagePath,

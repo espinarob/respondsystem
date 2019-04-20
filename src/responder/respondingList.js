@@ -21,7 +21,8 @@ export default class RespondingList extends Component{
 		firebaseReportObject : '',
 		loadingResponding    : true,
 		submittingRespond    : false,
-		estimateTimeInput    : ''
+		estimateTimeInput    : '',
+		firebaseAccountObject : ''
 	}
 
 	respondToIncident = ()=>{
@@ -63,7 +64,8 @@ export default class RespondingList extends Component{
 					'responder'    : this.props.doGetLoggedAccount.fullName,
 					'organization' : this.props.doGetLoggedAccount.organization, 
 					'ETA'          : String(this.state.estimateTimeInput),
-					'responderKey' : String(this.props.doGetLoggedAccount.key)
+					'responderKey' : String(this.props.doGetLoggedAccount.key),
+					'status'       : Constants.RESPONDING_STATUS.GOING
  				})
  				.then(()=>{
  					this.props.FirebaseObject
@@ -79,7 +81,8 @@ export default class RespondingList extends Component{
 							'userAltitude'  : this.props.doGetReportDetails.userAltitude,
 							'reporter'      : this.props.doGetReportDetails.reporter,
 							'incidentType'  : this.props.doGetReportDetails.incidentType,
-							'reportKey'     : String(this.props.doGetReportDetails.key)  
+							'reportKey'     : String(this.props.doGetReportDetails.key),
+							'status'        : Constants.RESPONDING_STATUS.GOING  
  						})
  						.then(()=>{
  							this.props.FirebaseObject
@@ -115,7 +118,17 @@ export default class RespondingList extends Component{
 	}
 
 	componentDidMount(){
+		const firebaseAccountObject =	this.props.FirebaseObject
+											.database()
+											.ref("Accounts/"+String(this.props.doGetLoggedAccount.key))
+											.on("value",snapshot=>{
+												if(snapshot.exists()){
+													const updatedAccount = JSON.parse(JSON.stringify(snapshot.val()));
+													this.props.doSetLoggedAccount(updatedAccount);
+												}
+											});
 		this.listenToResponding();
+		this.setState({firebaseAccountObject:firebaseAccountObject});
 	}
 
 	listenToResponding = ()=>{
@@ -150,7 +163,10 @@ export default class RespondingList extends Component{
 	}
 
 	componentWillUnmount(){
-		console.log(this.props.doGetLoggedAccount);
+		this.props.FirebaseObject
+			.database()
+			.ref("Accounts/"+String(this.props.doGetLoggedAccount.key))
+			.off("value",this.state.firebaseAccountObject);
 		this.props.FirebaseObject
 			.database()
 			.ref("Reports")
@@ -210,7 +226,7 @@ export default class RespondingList extends Component{
 	    				style ={{fontSize:25}}
 	    				name = 'fire-truck'
 	    				type = 'MaterialCommunityIcons'/> 
-	    			{' '}Incoming Responders
+	    			{' '}Responded
 	    		</Text>
 
 	    		<View style = {{
@@ -266,7 +282,7 @@ export default class RespondingList extends Component{
 										{'Organization: '+item.organization}
 									</Text>
 									<Text style ={{
-											height: '25.5%',
+											height: '25%',
 											width: '100%',
 											textAlign: 'center',
 											textAlignVertical :'center',
@@ -274,6 +290,17 @@ export default class RespondingList extends Component{
 											color: '#000'
 									}}>
 										{'ETA: '+item.ETA}
+									</Text>
+									<Text style ={{
+											height: '23%',
+											width: '100%',
+											textAlign: 'center',
+											textAlignVertical :'center',
+											fontSize: 11,
+											color: '#000'
+									}}>
+										{'Status: '+(item.status == Constants.RESPONDING_STATUS.ARRIVED ?
+											'Arrived' : 'On their way')}
 									</Text>
 								</View>
 							}

@@ -47,6 +47,7 @@ export default class HomeTemplate extends Component{
 							doSubmitChangePassword    = {this.props.doSubmitChangePassword}
 							doGetLoggedAccount        = {this.props.doGetLoggedAccount}
 							doLogoutAccount           = {this.props.doLogoutAccount}
+							doSetLoggedAccount        = {this.props.doSetLoggedAccount}
 							doDisplayAlertMessage     = {this.props.doDisplayAlertMessage }
 							doSubmitUpdatedInfo       = {this.props.doSubmitUpdatedInfo}
 							doSubmitPhoneNumberUpdate = {this.props.doSubmitPhoneNumberUpdate}

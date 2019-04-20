@@ -49,7 +49,10 @@ const Constants = {
 		RESOLVED                : 'RESOLVED',
 		WAITING_FOR_AUTHORITY   : 'WAITING_FOR_AUTHORITY'
 	},
-
+	RESPONDING_STATUS           : {
+		GOING                   : 'GOING',
+		ARRIVED                 : 'ARRIVED'
+	},
 	PAGES                       : {
 		LOGIN_PAGE              : 'LOGIN_PAGE',
 		SIGN_UP_PAGE            : 'SIGN_UP_PAGE',
@@ -125,8 +128,9 @@ const Constants = {
 		EXCEED   : 'Image file size exceeds limit',
 		SUCCESS  : 'One image selected'
 	},
-	IMAGE_FILE_SIZE_LIMIT : 10000000, // 10MB for firebase,
-	DEFAULT_IMG_TYPE      : 'image/jpg'
+	IMAGE_FILE_SIZE_LIMIT    : 10000000, // 10MB for firebase,
+	DEFAULT_IMG_TYPE         : 'image/jpg',
+	ARRIVED_DISTANCE_MINIMUM : 1000 // 1km nearby incident to declare official arrival
 }; 
 
 

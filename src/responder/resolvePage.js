@@ -22,7 +22,7 @@ export default class ResolvePage extends Component{
     	imageType     : '',
     	imageFileSize : '',
     	imageLog      : Constants.UPLOAD_IMAGE_LOG.NO_IMAGE,
-    	imageSuccess  : false,
+    	imageSuccess  : false
 	}
 
 	selectPhoto = ()=>{
@@ -110,6 +110,12 @@ export default class ResolvePage extends Component{
 					}
 					else if(String(this.props.doGetLoggedAccount.responding.reportKey)!=String(this.props.doGetReportDetails.key)){
 						this.props.doDisplayAlertMessage('You must respond to this specific incident');
+						setTimeout(()=>{
+							this.props.doDisplayAlertMessage('');
+						},Constants.CONSOLE_TIME_DISPLAY);
+					}
+					else if(String(this.props.doGetLoggedAccount.responding.status)!=Constants.RESPONDING_STATUS.ARRIVED){
+						this.props.doDisplayAlertMessage('You must first arrive on the scene');
 						setTimeout(()=>{
 							this.props.doDisplayAlertMessage('');
 						},Constants.CONSOLE_TIME_DISPLAY);

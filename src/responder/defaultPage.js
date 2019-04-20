@@ -64,6 +64,67 @@ export default class DefaultPage extends Component{
 			});
 	}
 
+	signalArrival = ()=>{
+		if(this.props.doGetMylocation.latitude);
+		else{
+			this.props.doDisplayAlertMessage('Still preparing server infomation, a moment..');
+			setTimeout(()=>{
+				this.props.doDisplayAlertMessage('');
+			},Constants.CONSOLE_TIME_DISPLAY);
+			return;
+		}
+		const distance = Number(geolib.getDistance({
+			latitude  : Number(this.state.respondingDetails.userLatitude),
+			longitude : Number(this.state.respondingDetails.userLongitude)
+		},{
+			latitude  : Number(this.props.doGetMylocation.latitude), 
+			longitude : Number(this.props.doGetMylocation.longitude)
+		}));
+
+		if(distance>Constants.ARRIVED_DISTANCE_MINIMUM){
+			this.props.doDisplayAlertMessage('You must be atleast '
+				+ String(Constants.ARRIVED_DISTANCE_MINIMUM/1000)
+				+ ' km nearby on the incident');
+			setTimeout(()=>{
+				this.props.doDisplayAlertMessage('');
+			},Constants.CONSOLE_TIME_DISPLAY);
+		}
+		else{
+			this.props.doDisplayAlertMessage('Notifying, a moment..');
+			this.props.FirebaseObject
+				.database()
+				.ref("Reports/"
+					+String(this.state.respondingDetails.reportKey)
+					+"/responding/"
+					+String(this.state.respondingDetails.key))
+				.update({
+					'status' : Constants.RESPONDING_STATUS.ARRIVED
+				})
+				.then(()=>{
+					this.props.FirebaseObject
+						.database()
+						.ref("Accounts/"
+							+String(this.props.doGetLoggedAccount.key)
+							+"/responding/")
+						.update({
+							'status' : Constants.RESPONDING_STATUS.ARRIVED
+						})
+						.then(()=>{
+							this.props.doDisplayAlertMessage('Done');
+							setTimeout(()=>{
+								this.props.doDisplayAlertMessage('');
+							},Constants.CONSOLE_TIME_DISPLAY);
+						});
+				})
+				.catch((error)=>{
+					this.props.doDisplayAlertMessage('Error connecting to the server');
+					setTimeout(()=>{
+						this.props.doDisplayAlertMessage('');
+					},Constants.CONSOLE_TIME_DISPLAY);
+				});
+		}
+	}
+
 	getCurrentAccount = ()=>{
 		const accountKey = 	this.props.FirebaseObject
 								.database()
@@ -406,7 +467,7 @@ export default class DefaultPage extends Component{
 		    					height:105,
 		    					width:'65%',
 		    					left: '20%',
-		    					top: '73%',
+		    					top: '68.5%',
 		    					position:'absolute',
 		    					backgroundColor: '#fff',
 		    					backgroundColor: '#fff',
@@ -462,24 +523,64 @@ export default class DefaultPage extends Component{
 		    						}}>
 		    							{'Incident: '+this.state.respondingDetails.incidentType}
 		    						</Text>
-		    						<TouchableWithoutFeedback
-		    							onPress = {()=>this.cancelResponding()}>
-			    						<Text style = {{
+		    						{
+		    							this.props.doGetLoggedAccount.responding.status == Constants.RESPONDING_STATUS.ARRIVED ?
+		    							<Text style ={{
+		    									height: '33%',
+		    									width: '100%',
+		    									fontSize: 13,
+		    									fontWeight: 'bold',
+		    									textAlign: 'center',
+		    									textAlignVertical:'center',
+		    									top: '8%',
+		    									color: '#000'
+		    							}}>
+		    								{'You declared on site'}
+		    							</Text>:
+			    						<View 	style ={{
 			    								height: '33%',
-			    								width: '43%',
-			    								position: 'relative',
-			    								textAlign:'center',
-			    								textAlignVertical:'center',
-			    								fontSize: 15.3,
-			    								fontWeight:'bold',
-			    								borderRadius: 100,
-			    								borderWidth: 2,
-			    								top: '20%',
-			    								color: '#000'
+			    								width: '100%',
+			    								flexDirection: 'row',
+			    								justifyContent: 'space-evenly',
+			    								top: '8%'
 			    						}}>
-			    							Cancel
-			    						</Text>
-			    					</TouchableWithoutFeedback>
+			    							<TouchableWithoutFeedback
+				    							onPress = {()=>this.signalArrival()}>
+					    						<Text style = {{
+					    								height: '100%',
+					    								width: '43%',
+					    								position: 'relative',
+					    								textAlign:'center',
+					    								textAlignVertical:'center',
+					    								fontSize: 14,
+					    								fontWeight:'bold',
+					    								borderRadius: 100,
+					    								borderWidth: 2,
+					    								color: '#000'
+					    						}}>
+					    							Arrived
+					    						</Text>
+					    					</TouchableWithoutFeedback>
+
+			    							<TouchableWithoutFeedback
+				    							onPress = {()=>this.cancelResponding()}>
+					    						<Text style = {{
+					    								height: '100%',
+					    								width: '43%',
+					    								position: 'relative',
+					    								textAlign:'center',
+					    								textAlignVertical:'center',
+					    								fontSize: 14,
+					    								fontWeight:'bold',
+					    								borderRadius: 100,
+					    								borderWidth: 2,
+					    								color: '#000'
+					    						}}>
+					    							Cancel
+					    						</Text>
+					    					</TouchableWithoutFeedback>
+			    						</View>
+		    						}
 		    					</React.Fragment>
 			    			}
 		    			</View>

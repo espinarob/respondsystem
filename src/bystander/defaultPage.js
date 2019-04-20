@@ -360,7 +360,7 @@ export default class DefaultPage extends Component{
 						data = {this.state.respondingList}
 						renderItem = {({item}) =>
 							<View style = {{
-									height:65,
+									height:70,
 									borderBottomWidth:2,
 									width:253,
 									position:'relative',
@@ -384,7 +384,7 @@ export default class DefaultPage extends Component{
 										width: '90%',
 										textAlignVertical:'center',
 										textAlign:'center',
-										fontSize: 13,
+										fontSize: 11,
 										color: '#000'
 								}}>
 									{'Organization: '+item.organization}
@@ -399,6 +399,20 @@ export default class DefaultPage extends Component{
 										color: '#000'
 								}}>
 									{'ETA: '+item.ETA}
+								</Text>
+								<Text style = {{
+										height: '22%',
+										position:'relative',
+										width: '90%',
+										textAlignVertical:'center',
+										textAlign:'center',
+										fontSize: 11,
+										color: '#000',
+										fontWeight: 'bold'
+								}}>
+									{'Status: '+
+									(item.status == Constants.RESPONDING_STATUS.GOING ?
+										'On their way' : 'Arrived'  )}
 								</Text>
 							</View>
 						}

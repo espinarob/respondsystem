@@ -24,6 +24,11 @@ export default class IncidentDetailsPage extends Component{
 	componentDidMount(){
 		
 	}	
+
+
+	askAssistance = ()=>{
+		
+	}
 	
 	render() {
 	    return (
@@ -79,7 +84,7 @@ export default class IncidentDetailsPage extends Component{
 	         		source = {{uri:this.props.doGetReportDetails.imgURL}}
 		         	style = {{width:'100%',position:'relative',height:'45%',resizeMode:'contain',marginBottom:'2%'}}/>
 		        <Text style={{
-		        		height:35.5,
+		        		height: 45,
 		        		width: '95%',
 		        		paddingLeft:'2%',
 		        		fontSize: 12.3,
@@ -160,20 +165,23 @@ export default class IncidentDetailsPage extends Component{
 			        		Respond
 			        	</Text>
 			        </TouchableWithoutFeedback>
-		        	<Text style={{
-		        			width:'39%',
-		        			textAlign:'center',
-		        			textAlignVertical: 'center',
-		        			height: '100%',
-		        			position: 'relative',
-		        			borderRadius: 100,
-		        			borderWidth: 2,
-		        			fontSize: 13.5,
-		        			fontWeight: 'bold',
-        					color:'#000'
-		        	}}>
-		        		Ask For Assistance
-		        	</Text>
+			        <TouchableWithoutFeedback
+			        	onPress = {()=>this.askAssistance()}>
+			        	<Text style={{
+			        			width:'39%',
+			        			textAlign:'center',
+			        			textAlignVertical: 'center',
+			        			height: '100%',
+			        			position: 'relative',
+			        			borderRadius: 100,
+			        			borderWidth: 2,
+			        			fontSize: 13.5,
+			        			fontWeight: 'bold',
+	        					color:'#000'
+			        	}}>
+			        		Ask For Assistance
+			        	</Text>
+			        </TouchableWithoutFeedback>
 		        </View>
 	    	</View>
 	    );

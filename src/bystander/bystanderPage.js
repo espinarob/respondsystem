@@ -34,6 +34,7 @@ export default class BystanderPage extends Component{
 							doLogoutAccount           = {this.props.doLogoutAccount} />;
 			case Constants.CIVILIAN_PAGE.MAIN_PAGE:
 				return	<BystanderMainPage
+							doSetLoggedAccount        = {this.props.doSetLoggedAccount}
 							doGetLoggedAccount        = {this.props.doGetLoggedAccount}
 							FirebaseObject            = {this.props.FirebaseObject}
 							doSubmitIncidentReport    = {this.props.doSubmitIncidentReport}

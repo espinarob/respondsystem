@@ -32,7 +32,8 @@ export default class ReportPage extends Component{
     	incidentType   : '',
     	addressName    : '',
     	centerCoords   : {},
-    	userLocation   : {}
+    	userLocation   : {},
+    	firebaseAccountObject : ''
 	}	
 
 	componentDidMount(){
@@ -61,6 +62,27 @@ export default class ReportPage extends Component{
 		let today = new Date();
 		this.setState({timeReported:today.toString()});
 
+		this.listeToUserAccount();
+	}
+
+	componentWillUnmount(){
+		this.props.FirebaseObject
+			.database()
+			.ref("Accounts/"+String(this.props.doGetLoggedAccount.key))
+			.off("value",this.state.firebaseAccountObject);
+	}
+
+	listeToUserAccount = ()=>{
+		const firebaseAccountObject = 	this.props.FirebaseObject
+											.database()
+											.ref("Accounts/"+String(this.props.doGetLoggedAccount.key))
+											.on("value",snapshot=>{
+												if(snapshot.exists()){
+													const updatedAccount = JSON.parse(JSON.stringify(snapshot.val()));
+													this.props.doSetLoggedAccount(updatedAccount);
+												}
+											});
+		this.setState({firebaseAccountObject:firebaseAccountObject});
 	}
 
 	getLocationCenterFocus = ()=>{
@@ -140,7 +162,11 @@ export default class ReportPage extends Component{
 	}
 
 	submitReport = ()=>{
-		if(this.state.locationFlag == false){
+		if(this.props.doGetLoggedAccount.accountStatus == Constants.ACCOUNT_STATUS.BLOCKED){
+			this.props.doDisplayAlertMessage('Sorry, your account was blocked, send a problem');
+			setTimeout(()=>this.props.doDisplayAlertMessage(''),Constants.CONSOLE_TIME_DISPLAY);
+		}
+		else if(this.state.locationFlag == false){
 			this.props.doDisplayAlertMessage('Error: We couldn\'t get your location');
 			setTimeout(()=>this.props.doDisplayAlertMessage(''),Constants.CONSOLE_TIME_DISPLAY);
 		}
@@ -158,10 +184,6 @@ export default class ReportPage extends Component{
 		}
 		else if(this.isInsideMaximumRange() == false){
 			this.props.doDisplayAlertMessage('The location is not supported by the application');
-			setTimeout(()=>this.props.doDisplayAlertMessage(''),Constants.CONSOLE_TIME_DISPLAY);
-		}
-		else if(this.props.doGetLoggedAccount.accountStatus == Constants.ACCOUNT_STATUS.BLOCKED){
-			this.props.doDisplayAlertMessage('Sorry, your account was blocked, send a problem');
 			setTimeout(()=>this.props.doDisplayAlertMessage(''),Constants.CONSOLE_TIME_DISPLAY);
 		}
 		else {

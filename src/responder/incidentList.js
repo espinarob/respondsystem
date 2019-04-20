@@ -217,7 +217,8 @@ export default class IncidentList extends Component{
 	    					textAlignVertical: 'center',
 	    					left: '80%',
 	    					fontWeight: 'bold',
-	    					fontSize: 16
+	    					fontSize: 16,
+	    					color: '#000'
 	    			}}>
 	    				INCIDENT LIST
 	    			</Text>

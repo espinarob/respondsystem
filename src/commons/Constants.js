@@ -61,7 +61,8 @@ const Constants = {
 		LOADING_PAGE            : 'LOADING_PAGE',
 		HOME_PAGE               : 'HOME_PAGE',
 		RESPONDER_PAGE          : 'RESPONDER_HOME_PAGE',
-		CIVILIAN_PAGE           : 'CIVILIAN_HOME_PAGE'
+		CIVILIAN_PAGE           : 'CIVILIAN_HOME_PAGE',
+		SERVICE_AGREEMENT       : 'SERVICE_AGREEMENT'
 	},  
 
 	LOADING_MESSAGES            : {

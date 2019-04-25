@@ -24,6 +24,7 @@ window.Blob = Blob;
 import LoginDashboard         from './login/loginDashboardComponent.js';
 import SignUpDashboard        from './sign-up/signupDashboardComponent.js';
 import SignUpPartTwoDashboard from './sign-up/signupP2DashboardComponent';
+import TermsOfService         from './sign-up/termsOfServiceComponent.js';
 import Constants              from './commons/Constants.js';
 import WelcomeDashboard       from './commons/welcomeDashboard.js';
 import LoadingScreen          from './commons/loadingScreen.js';
@@ -504,12 +505,18 @@ export default class Main extends Component{
 											'resolvedBy'   : String(data.reporter)
 										})
 										.then(()=>{
-											this.setState({loadingMessage:''});
-											this.displayAlertMessage('Successfully Submitted');
-											setTimeout(()=>{
-												this.displayAlertMessage('');
-												this.setTemplateDisplay(Constants.PAGES.HOME_PAGE);
-											},Constants.CONSOLE_TIME_DISPLAY);
+											firebase
+												.database()
+												.ref("Reports/"+String(data.reportKey)+"/askHelp")
+												.remove()
+												.then(()=>{
+													this.setState({loadingMessage:''});
+													this.displayAlertMessage('Successfully Submitted');
+													setTimeout(()=>{
+														this.displayAlertMessage('');
+														this.setTemplateDisplay(Constants.PAGES.HOME_PAGE);
+													},Constants.CONSOLE_TIME_DISPLAY);
+												});
 										});
 								});
 						}
@@ -869,6 +876,9 @@ export default class Main extends Component{
 							doSubmitRegistration       = {this.submitRegistrationToDatabase}
 							doGetValidOrganizations    = {this.state.validOrganizations}
 							getRegistrationCredentials = {this.state.registrationCredentials} />;				
+			case Constants.PAGE.SERVICE_AGREEMENT:
+				return 	<TermsOfService
+							doSetTemplateDisplay       = {this.setTemplateDisplay}/>;
 		}
 	
 	}

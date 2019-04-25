@@ -27,7 +27,41 @@ export default class IncidentDetailsPage extends Component{
 
 
 	askAssistance = ()=>{
-		
+		if(!this.props.doGetLoggedAccount.responding){
+			this.props.doDisplayAlertMessage('You must first respond and arrive in the incident');
+			setTimeout(()=>{
+				this.props.doDisplayAlertMessage('');
+			},Constants.CONSOLE_TIME_DISPLAY);
+		}
+		else if(this.props.doGetLoggedAccount.responding.reportKey == String(this.props.doGetReportDetails.key) 
+			&& this.props.doGetLoggedAccount.responding.status == String(Constants.RESPONDING_STATUS.ARRIVED)){
+			this.props.doDisplayAlertMessage('Submitting, a moment..');
+			this.props.FirebaseObject
+				.database()
+				.ref("Reports/"
+					+String(this.props.doGetReportDetails.key))
+				.update({
+					'askHelp' : 'true'
+				})
+				.then(()=>{
+					this.props.doDisplayAlertMessage('Success');
+					setTimeout(()=>{
+						this.props.doDisplayAlertMessage('');
+					},Constants.CONSOLE_TIME_DISPLAY);
+				})
+				.catch((error)=>{
+					this.props.doDisplayAlertMessage('An error has occured, try again');
+					setTimeout(()=>{
+						this.props.doDisplayAlertMessage('');
+					},Constants.CONSOLE_TIME_DISPLAY);
+				});
+		}
+		else{
+			this.props.doDisplayAlertMessage('You must first respond and arrive in the incident');
+			setTimeout(()=>{
+				this.props.doDisplayAlertMessage('');
+			},Constants.CONSOLE_TIME_DISPLAY);
+		}
 	}
 	
 	render() {

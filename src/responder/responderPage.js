@@ -59,6 +59,9 @@ export default class ResponderPage extends Component{
 							doSetReportDetails        = {this.setReportDetails} />;
 			case Constants.RESPONDER_PAGE.INCIDENT_DETAILS: 
 				return  <IncidentDetailsPage 
+							doGetLoggedAccount        = {this.props.doGetLoggedAccount}
+							doDisplayAlertMessage     = {this.props.doDisplayAlertMessage}
+							FirebaseObject            = {this.props.FirebaseObject}
 							doGetReportDetails        = {this.state.reportDetails}
 							doSetHomePage             = {this.setHomePage} />;
 			case Constants.RESPONDER_PAGE.RESOLVE_PAGE:

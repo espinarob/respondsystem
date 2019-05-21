@@ -876,7 +876,7 @@ export default class Main extends Component{
 							doSubmitRegistration       = {this.submitRegistrationToDatabase}
 							doGetValidOrganizations    = {this.state.validOrganizations}
 							getRegistrationCredentials = {this.state.registrationCredentials} />;				
-			case Constants.PAGE.SERVICE_AGREEMENT:
+			case Constants.PAGES.SERVICE_AGREEMENT:
 				return 	<TermsOfService
 							doSetTemplateDisplay       = {this.setTemplateDisplay}/>;
 		}

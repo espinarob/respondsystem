@@ -461,7 +461,7 @@ export default class SignUpPartTwoDashboard extends Component<Props> {
 		    			</Text>
 
 		    			<TouchableWithoutFeedback
-		    				onPress={()=>console.log('view')}>
+		    				onPress={()=>this.props.doSetTemplateDisplay(Constants.PAGES.SERVICE_AGREEMENT)}>
 			    			<Text style={{
 			    					height: '100%',
 			    					width: '30%',
